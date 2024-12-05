@@ -1,0 +1,22 @@
+# Python-specifikke filer
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+
+# Virtuelt miljø
+.venv/
+env/
+venv/
+
+# PyCharm-projektfiler
+.idea/
+
+# Flask-specifikke filer
+instance/
+*.sqlite3
+*.db
+
+# Nøgler og hemmelige filer
+.env
+*.key

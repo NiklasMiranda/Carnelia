@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="Logo" class="logo">
+            </a>
+            <a href="#">Shop</a>
+            <a href="{{ url_for('brand') }}">Brand</a>
+            <a href="#">Blog</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="navbar-center">
+            <img src="{{ url_for('static', filename='assets/img/company_name.png') }}" alt="Company Name" class="company-name">
+        </div>
+
+        <div class="navbar-right">
+            <a href="#login">
+                <img src="{{ url_for('static', filename='assets/icons/login.png') }}" alt="Login" class="icon">
+            </a>
+            <a href="#cart">
+                <img src="{{ url_for('static', filename='assets/icons/cart.png') }}" alt="Shopping Cart" class="icon">
+            </a>
+            <a href="#search">
+                <img src="{{ url_for('static', filename='assets/icons/search.png') }}" alt="Search" class="icon">
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 My Flask App. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="/static/js/carousel.js"></script>
+
+</body>
+</html>
