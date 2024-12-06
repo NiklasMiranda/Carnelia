@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Sustainable Fashion{% endblock %}
+{% block title %}Carnelia - Modern and eco-conscious lingerie{% endblock %}
 
 {% block content %}
 
     <section class="hero">
         <div class="hero-inner">
             <img src="/static/assets/img/frontpage_hero.jpg" alt="Hero Image" class="hero-img">
-            <div class="hero-text">
+            <div class="hero-title">
                 <h1 class="hero-header">Fighting unrealistic beauty standards</h1>
                 <a href="din-landingpage.html" class="hero-button">Shop</a>
             </div>
@@ -15,10 +15,14 @@
     </section>
     <section class="text-block">
         <div class="text-container">
-            <h2 class="animated-header">Eco-consciousness in lingerie</h2>
-            <p class="animated-text">Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. The core of lingerie is making people feel beautiful, confident, and at ease in their body. This goes beyond their size, gender, or how they define their femininity.</p>
-            <p class="animated-text">Our first collection, The Four Seasons consists of 4 sets: Spring, Summer, Autumn, and Winter. The idea behind the collection came from the similarities between the changes of the body and the changes of the seasons.</p>
-            <a class="view-button" href="#">Eco-consciousness</a>
+            <div class="text-title">
+                <span class="block"></span>
+                <h2 class="animated-header">Eco-consciousness in lingerie</h2>
+            </div>
+            <div class="text-content">
+                <p class="animated-text">Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. The core of lingerie is making people feel beautiful, confident, and at ease in their body. This goes beyond their size, gender, or how they define their femininity.</p>
+                <a class="view-button" href="#">Eco-consciousness</a>
+            </div>
         </div>
     </section>
     <div class="carousel-body">
@@ -42,14 +46,14 @@
                     <img src="{{ url_for('static', filename='assets/img/Autumn.png') }}" alt="Autumn Collection">
                     <div class="carousel-caption">
                         <h3>Autumn collection</h3>
-                        <p>Cozy up with earthy hues and comfortable fits.</p>
+                        <p>Coming soon.</p>
                     </div>
                 </div>
                 <div class="carousel-slide">
                     <img src="{{ url_for('static', filename='assets/img/Summer.png') }}" alt="Summer Collection">
                     <div class="carousel-caption">
                         <h3>Summer collection</h3>
-                        <p>Celebrate warmth with vibrant colors and breathable fabrics.</p>
+                        <p>Coming soon.</p>
                     </div>
                 </div>
             </div>
@@ -65,27 +69,6 @@
                 <p>We aim to redefine the outdated idea that comfort, aesthetic and sustainability are mutually exclusive. <br><br> This means fighting unrealistic beauty standards, unhealthy body images, and predetermined notions of femininity by returning to the true subject: the female body.</p>
                 <button type="submit" class="shop-button">Read more</button>
             </div>
-        </div>
-    </section>
-    <section class="contact-section">
-        <div class="contact-container">
-            <h3>Contact Us</h3>
-            <p>Have questions or want to learn more? Fill out the form below, and we’ll get back to you as soon as possible.</p>
-            <form action="/submit-form" method="post" class="contact-form">
-                <div class="form-group">
-                    <label for="name">Your Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Your Message:</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Write your message here" required></textarea>
-                </div>
-                <button type="submit" class="submit-button">Send Message</button>
-            </form>
         </div>
     </section>
     <section class="text-block">

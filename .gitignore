@@ -20,3 +20,5 @@ instance/
 # Nøgler og hemmelige filer
 .env
 *.key
+
+implements.txt
