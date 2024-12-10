@@ -1,5 +1,10 @@
 /* General styling */
 
+@font-face {
+    font-family: 'Francescas Handwriting';
+    src: url('/static/assets/fonts/Francescas-handwriting.ttf');
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -12,36 +17,54 @@ body {
     font-size: 0.9rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: 0.1em;
-    word-spacing: 0.3em;
     font-weight: 400;
+    color: #FFFFFF;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Raleway', sans-serif;
     line-height: 1.2;
     margin: 0.5em 0;
-    letter-spacing: 0.1em;
-    word-spacing: 0.2em;
+    color: #FFFFFF;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 300;
+    color: #EEE7F1;
+    opacity: 0;
+    transform: translateY(30px); /* Starter lidt nedenunder sin position */
+    animation: fadeLineUp 1.5s ease-out forwards; /* Animation med både fade og linjering */
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 2.3rem;
     font-weight: 300;
+    font-style: oblique;
+    opacity: 0;
+    transform: translateY(30px); /* Starter lidt nedenunder sin position */
+    animation: fadeLineUp 1.5s ease-out forwards; /* Animation med både fade og linjering */
 }
 
 h3 {
     font-style: oblique;
+    opacity: 0;
+    transform: translateY(30px); /* Starter lidt nedenunder sin position */
+    animation: fadeLineUp 1.5s ease-out forwards; /* Animation med både fade og linjering */
 }
 
-h3, h4, h5, h6 {
+h3, {
     font-size: 1.8rem;
     font-weight: 200;
+}
+
+h4, h5, h6 {
+    font-size: 1.2rem;
+    font-weight: 200;
+}
+
+p {
+    animation: fadeIn 2s ease-in;
 }
 
 
@@ -61,6 +84,7 @@ h3, h4, h5, h6 {
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    animation: fadeIn 2s ease-in;
 }
 
 .shop-button:hover {
@@ -110,6 +134,7 @@ h3, h4, h5, h6 {
 }
 
 .navbar-left a {
+    position: relative;
     margin-right: 1rem;
     color: white;
     text-decoration: none;
@@ -117,8 +142,24 @@ h3, h4, h5, h6 {
     transition: color 0.3s ease;
 }
 
-.navbar-left a:hover {
-    color: #7A5190;
+
+.navbar-left a:not(.logo-link)::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  border-radius: 4px;
+  background-color: #EEE7F1;
+  bottom: -3px; /* Adjust this value if needed */
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform .3s ease-in-out;
+}
+
+.navbar-left a:not(.logo-link):hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
 .logo {
@@ -164,6 +205,7 @@ h3, h4, h5, h6 {
 .navbar-right a:hover {
     color: #7A5190;
 }
+
 
 .icon {
     height: 35px;
@@ -226,16 +268,30 @@ h3, h4, h5, h6 {
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      height: 200px;
+      height: 300px;
       overflow: hidden;
       }
 
 .hero-header {
-  position: relative;
-  color: white;
-  max-width: 800px;
-  z-index: 2;
-  animation: fadeIn 1.5s ease-in;
+      position: relative;
+      color: white;
+      max-width: 800px;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeLineUp 1s ease-out forwards;
+}
+
+
+@keyframes fadeLineUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeIn {
@@ -276,8 +332,7 @@ h3, h4, h5, h6 {
 /* Text block styling */
 
 .text-block {
-    color: #000000;
-    padding: 8rem 2rem;
+    padding: 2rem 2rem;
     text-align: center;
     animation: fadeIn 3s forwards;
     transform: translateY(20px);
@@ -288,6 +343,7 @@ h3, h4, h5, h6 {
 
 .text-container {
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
     height: 400px;  /* Ændret fra 800px til auto */
     display: flex;  /* Tilføj denne linje */
@@ -301,69 +357,11 @@ h3, h4, h5, h6 {
 }
 
 .text-block p {
-    line-height: 1.6;
+
+   line-height: 1.6;
     margin-bottom: 2rem;
 }
 
-
-.text-title {
-    width: 250px;
-    height: 250px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    .animated-header {
-        position: relative;
-        font-size: 32px;
-        opacity: 0;
-        display: flex;
-        align-items: baseline;
-        animation: fadeInHeader 2s forwards;
-        animation-delay: 1.6s;
-        z-index: 2; /* Lavere end .block */
-        width: fit-content;
-
-
-        .block {
-            height: inherit;
-            width: 0%;
-            background: rgba(76, 0, 138, 0.5);
-            position: absolute; /* Ændret fra sticky */
-            bottom: inherit; /* Placerer den midt i containeren */
-            animation: mainBlock 2s cubic-bezier(.74, .06, .4, .92) forwards;
-            z-index: 3; /* Højere end .animated-header */
-            transform: translateY(50%);
-        }
-    }
-}
-
-@keyframes fadeInHeader {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes mainBlock {
-    0% {
-        width: 0%;
-        left: 0;
-    }
-    50% {
-        width: 30%;
-        left: 0;
-    }
-    100% {
-        width: 0;
-        left: 100%;
-    }
-}
 
 .icon {
     height: 35px;
@@ -418,14 +416,13 @@ h3, h4, h5, h6 {
     filter: brightness(50%);
 }
 
-
-
 /* Seasonal carousel styling */
 
 .carousel-body {
+    height: 90vh;
     margin: 0;
     padding: 100px;
-    background: url('/static/assets/img/Background_6.png') no-repeat center center;
+    background: url('/static/assets/img/Background_5.png') no-repeat center center;
     background-size: cover;
 }
 
@@ -456,7 +453,7 @@ h3, h4, h5, h6 {
     max-width: 400px;
 }
 
-.carousel-caption {
+.carousel-slides h3 {
     position: absolute;
     top: 0px;
     left: 20px;
@@ -465,6 +462,11 @@ h3, h4, h5, h6 {
     text-align: center;
     padding: 0px;
     border-radius: 5px;
+    color: #4C008A;
+}
+
+.carousel-slides p {
+    position: relative;
     color: #4C008A;
 }
 
@@ -535,11 +537,12 @@ h3, h4, h5, h6 {
 .picture-text {
     flex: 0 0 40%; /* Ændret fra 30% til 40% */
     max-width: 40%; /* Ændret fra 30% til 40% */
-    color: #000000;
     text-align: left;
     opacity: 1;
     transition: opacity 2s ease, transform 2s ease;
 }
+
+
 
 .picture-text button {
     display: block;
@@ -567,11 +570,29 @@ h3, h4, h5, h6 {
 
 /* Contact form styling */
 
+.contact-form-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.contact-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 50px;
+    justify-content: center;
+}
+
 .contact-section {
     padding: 10rem 2rem;
     background-color: #FFFFFF;
     text-align: center;
-    background-image: url('/static/assets/img/Background_2.png'); /* Erstat med din billedsti */
+    background-image: url('/static/assets/img/Background_2.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -617,9 +638,9 @@ h3, h4, h5, h6 {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #4C008A;
-    border-radius: 10px;
+    border-radius: 30px;
     font-family: 'Raleway', sans-serif;
     background-color: #EEE7F1;
 }
@@ -657,10 +678,10 @@ h3, h4, h5, h6 {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 600px; /* Justér efter dine elementer */
+    height: 700px; /* Justér efter dine elementer */
     display: flex;
     align-items: center;
-    background-color: #f9f9f9;
+    background-image: url('/static/assets/img/Background_2.png');
 }
 
 .slider-track {
@@ -679,51 +700,95 @@ h3, h4, h5, h6 {
 }
 
 .slider-item {
+    position: relative; /* Ensure the pseudo-elements are positioned relative to the slider item */
     flex: 0 0 auto;
-    width: 300px;
+    width: 700px;
+    border-radius: 50px;
     margin: 0 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     text-align: center;
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     white-space: normal;
+    overflow: hidden; /* Hide the overflow of pseudo-elements */
+}
+
+.slider-item::before {
+    transition: all 0.5s ease;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #333;
+    transform: scale(0);
+    z-index: 1; /* Ensure it appears above the image */
+}
+
+.slider-item:hover::before {
+    opacity: 0.3;
+    border-radius: 50px;
+    transform: scale(1);
+    background: #7A5190;
+}
+
+.slider-item::after {
+    transition: all 0.6s ease 0.2s;
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid #aaa;
+    background: #EEE7F1;
+    opacity: 0;
+    border-radius: 50px;
+    transform: scale(0);
+    z-index: 2; /* Ensure it appears above the ::before element */
+}
+
+.slider-item:hover::after {
+    opacity: 0.3;
+    border-radius: 50px;
+    transform: scale(1);
 }
 
 .slider-image {
     width: 100%;
-    height: 400px;
+    height: 600px;
+    border-radius: 50px;
     object-fit: cover;
 }
 
-.slider-content h3 {
-    font-size: 1.2rem;
-    color: #333;
-    margin: 10px 0 5px;
+
+.slider-content h4 {
+    position: absolute;
+    font-size: 1.8rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #FFFFFF;
+    border-radius: 50px;
+    z-index: 4;
 }
 
-.slider-content p {
-    font-size: 1rem;
-    color: #666;
+.slider-item:hover .slider-content h4 {
+    opacity: 1;
 }
 
-.slider-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #7A5190;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.slider-button:hover {
-    background-color: #5a3b6d;
-}
 
 @keyframes slide {
     from {

@@ -12,6 +12,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentIndex = 0;
 
+    const heroHeader = document.querySelector('.hero-header');
+
+    // Funktion til at tjekke om et element er i viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // Funktion til at starte animationen
+    function startAnimation() {
+        if (isInViewport(heroHeader)) {
+            heroHeader.classList.add('animate');
+            window.removeEventListener('scroll', startAnimation);
+        }
+    }
+
+    // Lyt efter scroll event
+    window.addEventListener('scroll', startAnimation);
+
+    // Kør også ved load, i tilfælde af at elementet er synligt ved start
+    startAnimation();
+
     // Funktion til at flytte karusellen
     function moveCarousel(direction) {
         const carousel = document.querySelector('.carousel');
@@ -39,9 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Slide-in effekt for h1 og p
-    const h1Element = document.querySelector('.hero-text h1');
-    const pElement = document.querySelector('.hero-text p');
+
 
     // Funktion til at tjekke synlighed
     function checkVisibility() {

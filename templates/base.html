@@ -11,13 +11,13 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-left">
-            <a href="{{ url_for('home') }}">
+            <a href="{{ url_for('home') }}" class="logo-link">
                 <img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="Logo" class="logo">
             </a>
             <a href="#">Shop</a>
             <a href="{{ url_for('brand') }}">Brand</a>
             <a href="#">Blog</a>
-            <a href="#contact">Contact</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
         </div>
 
         <div class="navbar-center">
