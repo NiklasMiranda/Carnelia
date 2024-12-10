@@ -26,5 +26,29 @@ def submit_form():
     flash("Thank you for contacting us! We'll get back to you soon.")
     return redirect("/")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route("/responsibility")
+def responsibility():
+    return render_template("responsibility.html")
+
+@app.route("/brand/community")
+def brand_community():
+    return render_template("brand_community.html")
+
+@app.route("/brand/purpose")
+def brand_purpose():
+    return render_template("brand_purpose.html")
+
+@app.route("/responsibility/comfort")
+def responsibility_comfort():
+    return render_template("responsibility_comfort.html")
+
+@app.route("/responsibility/self-defined-feminity")
+def responsibility_self_defined_feminity():
+    return render_template("responsibility_self_defined_feminity.html")
+
+@app.route("/responsibility/eco-consciousness")
+def responsibility_eco_consciousness():
+    return render_template("responsibility_eco_consciousness.html")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -6,6 +6,7 @@
     <title>{% block title %}My Flask App{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='assets/icons/favicon.png') }}" type="image/x-icon">
 </head>
 <body>
     <!-- Navbar -->
@@ -15,8 +16,21 @@
                 <img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="Logo" class="logo">
             </a>
             <a href="#">Shop</a>
-            <a href="{{ url_for('brand') }}">Brand</a>
-            <a href="#">Blog</a>
+            <div class="dropdown">
+                <a href="{{ url_for('brand') }}" class="dropbtn">Brand</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('brand_community') }}">Community</a>
+                    <a href="{{ url_for('brand_purpose') }}">Purpose</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="{{ url_for('responsibility') }}">Responsibility</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('responsibility_comfort') }}">Comfort</a>
+                    <a href="{{ url_for('responsibility_self_defined_feminity') }}">Self-defined Feminity</a>
+                    <a href="{{ url_for('responsibility_eco_consciousness') }}">Eco-consciousness</a>
+                </div>
+            </div>
             <a href="{{ url_for('contact') }}">Contact</a>
         </div>
 

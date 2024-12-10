@@ -18,14 +18,14 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #4C008A;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Raleway', sans-serif;
     line-height: 1.2;
     margin: 0.5em 0;
-    color: #FFFFFF;
+    color: #4C008A;
 }
 
 h1 {
@@ -115,6 +115,7 @@ p {
     background-color: #EEE7F1;
 }
 
+
 /* Navbar styling */
 
 .navbar {
@@ -129,8 +130,56 @@ p {
     transition: background-color 0.7s ease;
 }
 
-.navbar.scrolled {
+.navbar {
+    position: fixed;
+    width: 100%;
+    height: 75px;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.7s ease;
+}
+
+.navbar.scrolled,
+.navbar:hover {
     background-color: rgba(76, 0, 138, 0.5);
+}
+
+.navbar .dropdown {
+    position: relative;
+    display: inline-block;
+    text-align: center; /* Sørger for, at dropdown-indholdet er centreret */
+}
+
+.navbar .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Placerer dropdown-indholdet lige under overkategorien */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    min-width: 120px; /* Sikrer en minimumsbredde for dropdown-indholdet */
+}
+
+.navbar .dropdown-content a {
+    color: #EEE7F1;
+    padding: 12px 12px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+    background-color: #7A5190;
+    z-index: 2;
+}
+
+.navbar .dropdown-content a:hover {
+    background-color: rgba(76, 0, 138);
+}
+
+.navbar .dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .navbar-left a {
@@ -150,16 +199,18 @@ p {
   height: 3px;
   border-radius: 4px;
   background-color: #EEE7F1;
-  bottom: -3px; /* Adjust this value if needed */
+  bottom: 0px; /* Adjust this value if needed */
   left: 0;
   transform-origin: right;
   transform: scaleX(0);
   transition: transform .3s ease-in-out;
+  z-index: 5;
 }
 
 .navbar-left a:not(.logo-link):hover::before {
-  transform-origin: left;
-  transform: scaleX(1);
+    transform-origin: left;
+    transform: scaleX(1);
+    z-index: 5;
 }
 
 .logo {
@@ -332,7 +383,8 @@ p {
 /* Text block styling */
 
 .text-block {
-    padding: 2rem 2rem;
+    position: relative;
+    max-height: 400px;
     text-align: center;
     animation: fadeIn 3s forwards;
     transform: translateY(20px);
@@ -342,26 +394,18 @@ p {
 }
 
 .text-container {
-    max-width: 1000px;
+    max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    height: 400px;  /* Ændret fra 800px til auto */
-    display: flex;  /* Tilføj denne linje */
-    background-image: url('/static/assets/img/Background_2.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    display: flex;
     flex-direction: column;  /* Tilføj denne linje */
     justify-content: center;
     align-items: center;  /* Tilføj denne linje */
 }
 
 .text-block p {
-
-   line-height: 1.6;
-    margin-bottom: 2rem;
+    line-height: 1.6;
 }
-
 
 .icon {
     height: 35px;
@@ -418,12 +462,24 @@ p {
 
 /* Seasonal carousel styling */
 
+.circle-background {
+  width: 500px;
+  height: 500px;
+  background-color: #ff4c68;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(10px);
+  background: radial-gradient(circle, rgba(255, 76, 104, 1) 0%, rgba(255, 76, 104, 0) 70%);
+}
+
+
 .carousel-body {
     height: 90vh;
     margin: 0;
     padding: 100px;
-    background: url('/static/assets/img/Background_5.png') no-repeat center center;
-    background-size: cover;
 }
 
 .carousel-container {
@@ -502,15 +558,11 @@ p {
 .picture-section {
     position: relative;
     width: 100%;
-    height: 100vh;
+    max-height: 600px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('/static/assets/img/Background_3.png'); /* Erstat med din billedsti */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .picture-inner {
@@ -576,46 +628,32 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    border-radius: 50px;
     z-index: 1;
 }
 
 .contact-container {
+    position: relative;
     max-width: 400px;
-    margin: 0 auto;
     text-align: center;
-    border-radius: 50px;
+    border-radius: 60px;
     justify-content: center;
-}
-
-.contact-section {
-    padding: 10rem 2rem;
-    background-color: #FFFFFF;
-    text-align: center;
-    background-image: url('/static/assets/img/Background_2.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.contact-container {
-    margin: 0 auto;
-    background-color: #EEE7F1; /* Hvid baggrund */
-    border: 2px solid #ddd; /* Lys grå kant */
+    margin: 0;
+    background-color: rgba(76, 0, 138, 0.5);
+    border: 5px solid #7A5190; /* Lys grå kant */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Subtil skygge */
     padding: 60px; /* Indvendig margin */
-    max-width: 500px; /* Maksimal bredde for elementet */
     text-align: center; /* Centrer tekst og billeder */
 }
 
+
 .contact-container h3 {
     margin-bottom: 10px;
-    color: #4C008A;
+    color: #EEE7F1;
 }
 
 .contact-container p {
     margin-bottom: 20px;
-    color: #4C008A;
+    color: #EEE7F1;
 }
 
 .contact-form {
@@ -632,7 +670,7 @@ p {
 
 .form-group label {
     margin-bottom: 5px;
-    color: #4C008A;
+    color: #EEE7F1;
 }
 
 .form-group input,
@@ -640,7 +678,7 @@ p {
     width: 100%;
     padding: 5px;
     border: 1px solid #4C008A;
-    border-radius: 30px;
+    border-radius: 20px;
     font-family: 'Raleway', sans-serif;
     background-color: #EEE7F1;
 }
@@ -681,7 +719,6 @@ p {
     height: 700px; /* Justér efter dine elementer */
     display: flex;
     align-items: center;
-    background-image: url('/static/assets/img/Background_2.png');
 }
 
 .slider-track {
@@ -914,4 +951,85 @@ p {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+/* Media size adaptation */
+
+/* Mobiltelefoner (op til 600px) */
+@media (max-width: 600px) {
+    body {
+        font-size: 0.8rem;
+    }
+
+    .navbar {
+        height: 60px;
+    }
+
+    .hero {
+        height: 80vh;
+    }
+
+    .shop-button, .view-button {
+        width: 100px;
+        padding: 8px 16px;
+    }
+
+    .text-block {
+        padding: 1rem;
+        height: auto;
+    }
+
+    .carousel-body {
+        padding: 50px;
+    }
+}
+
+/* Tablets (op til 768px) */
+@media (max-width: 768px) {
+    .navbar {
+        height: 70px;
+    }
+
+    .hero {
+        height: 90vh;
+    }
+
+    .shop-button, .view-button {
+        width: 120px;
+        padding: 9px 18px;
+    }
+
+    .text-block {
+        padding: 1.5rem;
+        height: auto;
+    }
+
+    .carousel-body {
+        padding: 75px;
+    }
+}
+
+/* Desktops og større skærme */
+@media (min-width: 769px) {
+    .navbar {
+        height: 75px;
+    }
+
+    .hero {
+        height: 100vh;
+    }
+
+    .shop-button, .view-button {
+        width: 150px;
+        padding: 10px 20px;
+    }
+
+    .text-block {
+        padding: 2rem;
+        height: 700px;
+    }
+
+    .carousel-body {
+        padding: 100px;
+    }
 }
