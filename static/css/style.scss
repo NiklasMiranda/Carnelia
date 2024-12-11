@@ -557,7 +557,6 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px !important;
 }
 
 .picture-inner {
@@ -572,10 +571,11 @@ p {
 
 .picture-img {
     flex: 0 0 60%;
-    width: 70%;
-    height: 70%;
+    width: 500px;
+    height: 500px;
     object-fit: cover;
-    border-radius: 50px;
+    border-radius: 10%;
+    border: 2px solid #7A5190; /* Lys grå kant */
 }
 
 .picture-text {
@@ -592,6 +592,7 @@ p {
     display: block;
     margin-top: 20px;
     width: 110px;
+    margin-left: 0;
 }
 
 @media (max-width: 768px) {
