@@ -23,40 +23,51 @@
             </div>
         </div>
     </section>
-    <div class="carousel-body">
+
+    <section class="carousel">
         <div class="carousel-container">
-            <div class="carousel-slides">
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='assets/img/Spring.png') }}" alt="Spring Collection">
-                    <div class="carousel-caption">
-                        <h3>Spring collection</h3>
+            <div class="carousel-track">
+                <div class="carousel-item">
+                    <div class="carousel-content">
+                        <h2>Spring</h2>
+                        <p>Spring collection.</p>
+                    </div>
+                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Spring.png') }}');"></div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Winter.png') }}');"></div>
+                    <div class="carousel-content">
+                        <h2>Winter</h2>
+                        <p>Winter collection.</p>
                     </div>
                 </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='assets/img/Winter.png') }}" alt="Winter Collection">
-                    <div class="carousel-caption">
-                        <h3>Winter collection</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='assets/img/Autumn.png') }}" alt="Autumn Collection">
-                    <div class="carousel-caption">
-                        <h3>Autumn collection</h3>
+
+                <div class="carousel-item">
+                    <div class="carousel-content">
+                        <h2>Autumn</h2>
                         <p>Coming soon.</p>
                     </div>
+                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Autumn.png') }}');"></div>
                 </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='assets/img/Summer.png') }}" alt="Summer Collection">
-                    <div class="carousel-caption">
-                        <h3>Summer collection</h3>
+                <div class="carousel-item">
+                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Summer.png') }}');"></div>
+                    <div class="carousel-content">
+                        <h2>Summer</h2>
                         <p>Coming soon.</p>
                     </div>
                 </div>
             </div>
-            <button class="carousel-btn prev-btn">&#10094;</button>
-            <button class="carousel-btn next-btn">&#10095;</button>
         </div>
-    </div>
+        <div class="carousel-controls">
+            <button id="next" class="carousel-btn next-btn">❮</button>
+            <button id="prev" class="carousel-btn prev-btn">❯</button>
+        </div>
+    </section>
+
+
+
+
     <section class="picture-section">
         <div class="picture-inner">
             <img src="/static/assets/img/Frontpage_Picture.jpg" alt="Picture Image" class="picture-img">
