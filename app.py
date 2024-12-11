@@ -50,5 +50,9 @@ def responsibility_self_defined_feminity():
 def responsibility_eco_consciousness():
     return render_template("responsibility_eco_consciousness.html")
 
+@app.route("/shop/find-your-size")
+def find_your_size():
+    return render_template("find_your_size.html")
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

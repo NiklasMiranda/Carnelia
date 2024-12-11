@@ -83,25 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Kald funktionen ved scroll og load
-    window.addEventListener('scroll', checkVisibility);
-    window.addEventListener('load', checkVisibility);
-
-    const pictureSection = document.querySelector('.picture-section');
-    const pictureImg = document.querySelector('.picture-img');
-    const pictureText = document.querySelector('.picture-text');
-
-    // Brug Intersection Observer API til at detektere når sektionen er synlig
-    const pictureObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Når sektionen er synlig, aktiver fade-in effekten
-                pictureImg.classList.add('fade-in');
-                pictureText.classList.add('fade-in');
-            }
-        });
-    }, { threshold: 0.5 }); // Observer sektionen når 50% af den er synlig
-
     // Begynd at observere picture-section
     pictureObserver.observe(pictureSection);
 

@@ -15,7 +15,12 @@
             <a href="{{ url_for('home') }}" class="logo-link">
                 <img src="{{ url_for('static', filename='assets/img/logo.png') }}" alt="Logo" class="logo">
             </a>
-            <a href="#">Shop</a>
+            <div class="dropdown">
+                <a href="#">Shop</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('find_your_size') }}">Find your size</a>
+                </div>
+            </div>
             <div class="dropdown">
                 <a href="{{ url_for('brand') }}" class="dropbtn">Brand</a>
                 <div class="dropdown-content">
@@ -64,7 +69,6 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="/static/js/carousel.js"></script>
 
 </body>
 </html>
