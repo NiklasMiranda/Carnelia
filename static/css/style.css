@@ -440,23 +440,19 @@ p {
 }
 
 /* Seasonal carousel styling */
-@keyframes slidein {
-  0% {
-    top: -400px;
+@keyframes fadeIn {
+  from {
     opacity: 0;
   }
-  100% {
+  to {
     opacity: 1;
-    top: 0px;
   }
 }
-@keyframes slideout {
-  0% {
-    top: 0;
+@keyframes fadeOut {
+  from {
     opacity: 1;
   }
-  100% {
-    top: -400px;
+  to {
     opacity: 0;
   }
 }
@@ -468,6 +464,7 @@ p {
   position: relative;
   box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
   margin: 0 auto;
+  border-radius: 50px;
 }
 
 #left-zone {
@@ -476,6 +473,7 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 50px;
 }
 
 #middle-border {
@@ -492,6 +490,7 @@ p {
   position: relative;
   overflow: visible;
   z-index: 1;
+  border-radius: 50px;
 }
 
 .list {
@@ -531,36 +530,37 @@ label:hover {
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 1s, visibility 1s;
 }
 
 input[type=radio]:checked ~ #right-zone .content {
   opacity: 0;
   visibility: hidden;
+  animation: fadeOut 1s forwards;
 }
 
 #winter:checked ~ #right-zone .content[data-season=winter] {
   opacity: 1;
   visibility: visible;
-  animation: slidein 0.5s forwards;
+  animation: fadeIn 1s forwards;
 }
 
 #spring:checked ~ #right-zone .content[data-season=spring] {
   opacity: 1;
   visibility: visible;
-  animation: slidein 0.5s forwards;
+  animation: fadeIn 1s forwards;
 }
 
 #autumn:checked ~ #right-zone .content[data-season=autumn] {
   opacity: 1;
   visibility: visible;
-  animation: slidein 0.5s forwards;
+  animation: fadeIn 1s forwards;
 }
 
 #summer:checked ~ #right-zone .content[data-season=summer] {
   opacity: 1;
   visibility: visible;
-  animation: slidein 0.5s forwards;
+  animation: fadeIn 1s forwards;
 }
 
 input[type=radio]:checked + label {
@@ -574,6 +574,7 @@ input[type=radio]:checked + label {
   box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
   margin-bottom: 20px;
   z-index: 10;
+  border-radius: 50px;
   display: block;
 }
 
@@ -582,9 +583,10 @@ input[type=radio]:checked + label {
   width: 80px; /* Adjust the size as needed */
   height: 80px; /* Adjust the size as needed */
   margin-right: 10px; /* Space between icon and text */
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   vertical-align: middle;
-  object-fit: contain;
+  object-fit: scale-down;
 }
 
 .list .item:nth-child(1) .icon {
@@ -630,8 +632,9 @@ input[type=radio]:checked + label {
   width: 500px;
   height: 500px;
   object-fit: cover;
+  border-radius: 50px;
   border: 2px solid #7A5190;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
 }
 
 .picture-text {
@@ -677,9 +680,9 @@ input[type=radio]:checked + label {
   position: relative;
   max-width: 400px;
   text-align: center;
-  border-radius: 60px;
   justify-content: center;
   margin: 0;
+  border-radius: 50px;
   background-color: rgba(76, 0, 138, 0.5);
   border: 2px solid #7A5190; /* Lys grå kant */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Subtil skygge */
@@ -751,39 +754,31 @@ input[type=radio]:checked + label {
 }
 
 /* Slider styling */
-.slider-container {
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  padding-bottom: 200px;
+  justify-items: center;
+}
+
+.grid-item {
   position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 700px; /* Justér efter dine elementer */
-  display: flex;
-  align-items: center;
-}
-
-.slider-track {
-  display: flex;
-  white-space: nowrap;
-}
-
-.slider-item {
-  position: relative; /* Ensure the pseudo-elements are positioned relative to the slider item */
-  flex: 0 0 auto;
-  width: 400px;
   border-radius: 50px;
-  margin: 0 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   background: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  white-space: normal;
-  overflow: hidden; /* Hide the overflow of pseudo-elements */
+  overflow: hidden;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.slider-item::before {
+.grid-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.grid-item::before {
   transition: all 0.5s ease;
   content: "";
   position: absolute;
@@ -791,19 +786,17 @@ input[type=radio]:checked + label {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #333;
-  transform: scale(0);
-  z-index: 1; /* Ensure it appears above the image */
-}
-
-.slider-item:hover::before {
-  opacity: 0.3;
-  border-radius: 50px;
-  transform: scale(1);
   background: #7A5190;
+  transform: scale(0);
+  z-index: 1;
 }
 
-.slider-item::after {
+.grid-item:hover::before {
+  opacity: 0.3;
+  transform: scale(1);
+}
+
+.grid-item::after {
   transition: all 0.6s ease 0.2s;
   content: "";
   position: absolute;
@@ -814,27 +807,25 @@ input[type=radio]:checked + label {
   border: 1px solid #aaa;
   background: #EEE7F1;
   opacity: 0;
-  border-radius: 50px;
   transform: scale(0);
-  z-index: 2; /* Ensure it appears above the ::before element */
+  z-index: 2;
 }
 
-.slider-item:hover::after {
+.grid-item:hover::after {
   opacity: 0.3;
-  border-radius: 50px;
   transform: scale(1);
 }
 
-.slider-image {
-  width: 100%;
-  height: 400px;
-  border-radius: 200px;
+.grid-image {
+  width: 500px;
+  height: 600px;
+  border-radius: 50px;
   object-fit: cover;
 }
 
-.slider-content h4 {
+.grid-content h4 {
   position: absolute;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   top: 0;
   left: 0;
   right: 0;
@@ -842,26 +833,17 @@ input[type=radio]:checked + label {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0);
   opacity: 0;
   transition: opacity 0.3s ease;
   color: #FFFFFF;
-  border-radius: 50px;
   z-index: 4;
 }
 
-.slider-item:hover .slider-content h4 {
+.grid-item:hover .grid-content h4 {
   opacity: 1;
 }
 
-@keyframes scroll {
-  from {
-    transform: translateX(0%);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
 /* Brand Section Styling */
 .brand-section {
   position: relative;
@@ -960,10 +942,48 @@ input[type=radio]:checked + label {
   background-color: #EEE7F1;
   color: #7A5190;
   text-align: center;
-  padding: 1rem 0;
+  padding: 2rem 0;
   position: relative;
   bottom: 0;
   width: 100%;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin: 1rem;
+}
+
+.footer-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 0.5rem 0;
+}
+
+.footer-section ul li a {
+  color: #7A5190;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #4A2C5C;
 }
 
 /* Media size adaptation */
