@@ -23,47 +23,60 @@
             </div>
         </div>
     </section>
-
-    <section class="carousel">
-        <div class="carousel-container">
-            <div class="carousel-track">
-                <div class="carousel-item">
-                    <div class="carousel-content">
-                        <h2>Spring</h2>
-                        <p>Spring collection.</p>
-                    </div>
-                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Spring.png') }}');"></div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Winter.png') }}');"></div>
-                    <div class="carousel-content">
-                        <h2>Winter</h2>
-                        <p>Winter collection.</p>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="carousel-content">
-                        <h2>Autumn</h2>
-                        <p>Coming soon.</p>
-                    </div>
-                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Autumn.png') }}');"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='assets/img/Summer.png') }}');"></div>
-                    <div class="carousel-content">
-                        <h2>Summer</h2>
-                        <p>Coming soon.</p>
-                    </div>
-                </div>
+    <div id="scene">
+        <!-- Radio inputs er flyttet til toppen af #scene -->
+        <input type="radio" id="winter" name="season" checked="checked" hidden>
+        <input type="radio" id="spring" name="season" hidden>
+        <input type="radio" id="autumn" name="season" hidden>
+        <input type="radio" id="summer" name="season" hidden>
+        <div id="left-zone">
+            <ul class="list">
+                <li class="item">
+                    <label for="winter">
+                        <span class="icon"></span> Winter
+                    </label>
+                </li>
+                <li class="item">
+                    <label for="spring">
+                        <span class="icon"></span> Spring
+                    </label>
+                </li>
+                <li class="item">
+                    <label for="autumn">
+                        <span class="icon"></span> Autumn
+                    </label>
+                </li>
+                <li class="item">
+                    <label for="summer">
+                        <span class="icon"></span> Summer
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div id="middle-border"></div>
+        <div id="right-zone">
+            <div class="content" data-season="winter">
+                <img src="/static/assets/img/Winter.png" alt="Winter" class="carousel-image">
+                <h3>Winter Collection</h3>
+                <p>Discover our cozy and elegant winter lingerie, perfect for those chilly nights.</p>
+            </div>
+            <div class="content" data-season="spring">
+                <img src="/static/assets/img/Spring.png" alt="Spring" class="carousel-image">
+                <h3>Spring Collection</h3>
+                <p>Embrace the freshness of spring with our light and colorful lingerie pieces.</p>
+            </div>
+            <div class="content" data-season="autumn">
+                <img src="/static/assets/img/Autumn.png" alt="Autumn" class="carousel-image">
+                <h3>Autumn Collection</h3>
+                <p>Coming soon.</p>
+            </div>
+            <div class="content" data-season="summer">
+                <img src="/static/assets/img/Summer.png" alt="Summer" class="carousel-image">
+                <h3>Summer Collection</h3>
+                <p>Coming soon.</p>
             </div>
         </div>
-        <div class="carousel-controls">
-            <button id="next" class="carousel-btn next-btn">❮</button>
-            <button id="prev" class="carousel-btn prev-btn">❯</button>
-        </div>
-    </section>
+    </div>
 
 
 

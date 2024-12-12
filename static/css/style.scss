@@ -1,3 +1,5 @@
+@use "sass:map";
+
 /* General styling */
 
 @font-face {
@@ -79,6 +81,7 @@ p {
     margin-top: 20px;
     margin-bottom: 20px;
     animation: fadeIn 2s ease-in;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .shop-button:hover {
@@ -378,7 +381,7 @@ p {
 
 .text-block {
     position: relative;
-    max-height: 400px;
+    max-height: 300px;
     text-align: center;
     animation: fadeIn 3s forwards;
     transform: translateY(20px);
@@ -456,120 +459,175 @@ p {
 
 /* Seasonal carousel styling */
 
-.carousel {
+$menu-width: 350px;
+$scene-width: 200px;
+$scene-height: 400px;
+
+$sections: winter, spring, autumn, summer;
+
+$pictograms: (
+  winter: url('/static/assets/img/Winter.png'),
+  spring: url('/static/assets/img/Spring.png'),
+  autumn: url('/static/assets/img/Autumn.png'),
+  summer: url('/static/assets/img/Summer.png')
+);
+
+@keyframes slidein {
+  0% {
+    top: -#{$scene-height};
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 1;
+    top: 0px;
+  }
+}
+
+@keyframes slideout {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+
+  100% {
+    top: -#{$scene-height};
+    opacity: 0;
+  }
+}
+
+#scene {
+    display: flex;
+    height: 600px;
+    width: 80%;
+    overflow: visible;
     position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 700px; // Juster højden efter behov
+    box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+    margin: 0 auto;
 }
 
-.carousel-container {
-    width: 100%;
-    height: 100%;
+#left-zone {
+    width: 20%;
     background-color: #EEE7F1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.carousel-track {
-    display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
+#middle-border {
+    width: 1px;
+    background-color: #4C008A;
 }
 
-.carousel-item {
-    flex: 0 0 100%;
+#right-zone {
+    width: 80%;
+    background-color: #EEE7F1;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    height: 100%;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
 }
 
-.carousel-content {
-    flex: 0 0 45%; // Reducer bredden lidt
-    padding: 2rem;
-    background-color: rgba(238, 231, 241, 0.9);
-    border-radius: 50px;
-    max-width: 300px; // Reducer maksimal bredde
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 0 5%; // Tilføj lidt padding på siderne
+.list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.item {
+    position: relative;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: rgba(122, 81, 144, 0.1);
+    }
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+input[type="radio"]:checked ~ #right-zone .content {
+    opacity: 0; // Skjul alt indhold som standard
+    visibility: hidden; // Skjul alt indhold som standard
+}
+
+@each $season in (winter, spring, autumn, summer) {
+    ##{$season}:checked ~ #right-zone .content[data-season="#{$season}"] {
+        opacity: 1;
+        visibility: visible;
+        animation: slidein 0.5s forwards;
+    }
+}
+
+input[type="radio"]:checked + label {
+    background-color: rgba(76, 0, 138, 0.3);
 }
 
 .carousel-image {
-    flex: 0 0 65%; // Reducer bredden
-    height: 80%; // Reducer højden
-    background-size: 40%;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 50px; // Tilføj afrundede hjørner
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Tilføj skygge
-}
-
-
-.carousel-controls {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-}
-
-.carousel-item {
-    flex: 0 0 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.carousel-content {
-    flex: 0 0 45%;
-    padding: 2rem;
-    background-color: rgba(238, 231, 241, 0.9);
-    border-radius: 50px;
-    max-width: 300px;
-    margin: 0;
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(122, 81, 144, 0.7);
-    color: #EEE7F1;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+    box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+    margin-bottom: 20px;
     z-index: 10;
-
-    &:hover {
-        background-color: rgba(76, 0, 138, 0.9);
-    }
-
-    &.prev-btn {
-        left: 20px;
-    }
-
-    &.next-btn {
-        right: 20px;
-    }
+    display: block;
 }
 
-// Tilføj denne nye regel for at justere knappernes position
-.carousel-controls {
-    position: absolute;
-    bottom: 40px; // Juster denne værdi efter behov
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
+.list .item .icon {
+    display: inline-block;
+    width: 80px; /* Adjust the size as needed */
+    height: 80px; /* Adjust the size as needed */
+    margin-right: 10px; /* Space between icon and text */
+    background-size: cover;
+    vertical-align: middle;
+    object-fit: contain;
 }
+
+.list .item:nth-child(1) .icon {
+    background-image: url('/static/assets/img/Winter.png');
+}
+
+.list .item:nth-child(2) .icon {
+    background-image: url('/static/assets/img/Spring.png');
+}
+
+.list .item:nth-child(3) .icon {
+    background-image: url('/static/assets/img/Autumn.png');
+}
+
+.list .item:nth-child(4) .icon {
+    background-image: url('/static/assets/img/Summer.png');
+}
+
+
+
+// Tilføj styles for .picto, h1, og p inde i .content efter behov
+
 
 
 
@@ -583,6 +641,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 150px;
 }
 
 .picture-inner {
@@ -600,8 +659,8 @@ p {
     width: 500px;
     height: 500px;
     object-fit: cover;
-    border-radius: 10%;
     border: 2px solid #7A5190;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .picture-text {
