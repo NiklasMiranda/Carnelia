@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, redirect, flash
+from flask_caching import Cache
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+
 @app.route("/")
+@cache.cached(timeout=60)
 def home():
     return render_template("index.html")
 
