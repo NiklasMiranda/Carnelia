@@ -76,7 +76,7 @@ p {
   margin-top: 20px;
   margin-bottom: 20px;
   animation: fadeIn 2s ease-in;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
 }
 
 .shop-button:hover {
@@ -356,7 +356,7 @@ p {
 }
 
 .hero-button:hover {
-  background-color: rgba(122, 81, 144, 0.5);
+  background-color: rgba(76, 0, 138, 0.5);
   color: #EEE7F1;
   border-color: #EEE7F1;
 }
@@ -364,7 +364,6 @@ p {
 /* Text block styling */
 .text-block {
   position: relative;
-  max-height: 300px;
   text-align: center;
   animation: fadeIn 3s forwards;
   transform: translateY(20px);
@@ -440,6 +439,14 @@ p {
 }
 
 /* Seasonal carousel styling */
+.carousel-container {
+  width: 70%; /* Adjust the width of the container */
+  border-radius: 50px; /* Adjust the radius as needed */
+  overflow: hidden; /* Ensures child elements respect the border radius */
+  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5); /* Optional: Add a shadow for better visual effect */
+  margin: 150px auto; /* Center the container */
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -459,12 +466,11 @@ p {
 #scene {
   display: flex;
   height: 600px;
-  width: 80%;
+  width: 100%; /* Keep the carousel full width within the container */
   overflow: visible;
   position: relative;
   box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
   margin: 0 auto;
-  border-radius: 50px;
 }
 
 #left-zone {
@@ -473,7 +479,6 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 50px;
 }
 
 #middle-border {
@@ -490,7 +495,6 @@ p {
   position: relative;
   overflow: visible;
   z-index: 1;
-  border-radius: 50px;
 }
 
 .list {
@@ -614,11 +618,10 @@ input[type=radio]:checked + label {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 150px;
 }
 
 .picture-inner {
-  padding: 50px;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -759,7 +762,7 @@ input[type=radio]:checked + label {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
   justify-items: center;
 }
 
@@ -767,7 +770,7 @@ input[type=radio]:checked + label {
   position: relative;
   border-radius: 50px;
   background: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(76, 0, 138, 0.5);
   overflow: hidden;
   padding: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -775,7 +778,7 @@ input[type=radio]:checked + label {
 
 .grid-item:hover {
   transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px rgba(76, 0, 138, 0.5);
 }
 
 .grid-item::before {
@@ -818,7 +821,7 @@ input[type=radio]:checked + label {
 
 .grid-image {
   width: 500px;
-  height: 600px;
+  height: 400px;
   border-radius: 50px;
   object-fit: cover;
 }
@@ -906,6 +909,85 @@ input[type=radio]:checked + label {
   padding: 60px 60px 60px 60px;
 }
 
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 20px; /* Tilføjer luft i siderne */
+}
+
+.product-item {
+  flex: 1 1 300px; /* Gør produktet fleksibelt og sætter en minimumsbredde */
+  margin: 10px;
+  max-width: 300px; /* Sætter en maksimal bredde for hvert produkt */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.add-to-cart {
+  display: block;
+  height: 40px;
+  width: 150px;
+  padding: 10px 20px;
+  color: #EEE7F1;
+  background-color: #7A5190;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: "Raleway", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease-in;
+  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+}
+
+.add-to-cart:hover {
+  background-color: #4C008A;
+}
+
+.filter-options {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #7A5190;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Tilføjer mellemrum mellem filtreringsmulighederne */
+}
+
+.filter-container label {
+  color: #EEE7F1;
+  margin-right: 5px;
+}
+
+.filter-container select {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.filter-container select:hover {
+  border-color: #888;
+}
+
 /* Media queries for responsive design */
 @media (max-width: 768px) {
   .brand-section {
@@ -986,6 +1068,17 @@ input[type=radio]:checked + label {
   color: #4A2C5C;
 }
 
+.social-icon {
+  width: 50%; /* Adjust the size as needed */
+  height: 50%;
+  margin-right: 10px; /* Space between icons */
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1); /* Slightly enlarge the icon on hover */
+}
+
 /* Media size adaptation */
 /* Mobiltelefoner (op til 600px) */
 @media (max-width: 600px) {
@@ -1023,7 +1116,7 @@ input[type=radio]:checked + label {
     padding: 9px 18px;
   }
   .text-block {
-    padding: 1.5rem;
+    padding: 1rem;
     height: auto;
   }
   .carousel-body {
@@ -1044,7 +1137,7 @@ input[type=radio]:checked + label {
   }
   .text-block {
     padding: 2rem;
-    height: 700px;
+    height: 400px;
   }
   .carousel-body {
     padding: 100px;

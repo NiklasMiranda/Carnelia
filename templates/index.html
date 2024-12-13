@@ -9,7 +9,7 @@
             <img src="/static/assets/img/frontpage_hero.jpg" alt="Hero Image" class="hero-img">
             <div class="hero-title">
                 <h1 class="hero-header">Fighting unrealistic beauty standards</h1>
-                <a href="din-landingpage.html" class="hero-button">Shop</a>
+                <a href="{{ url_for('shop') }}" class="hero-button">Shop</a>
             </div>
         </div>
     </section>
@@ -24,57 +24,59 @@
             <button type="submit" class="shop-button">Contact</button>
         </div>
     </section>
-    <div id="scene">
-        <!-- Radio inputs er flyttet til toppen af #scene -->
-        <input type="radio" id="winter" name="season" checked="checked" hidden>
-        <input type="radio" id="spring" name="season" hidden>
-        <input type="radio" id="autumn" name="season" hidden>
-        <input type="radio" id="summer" name="season" hidden>
-        <div id="left-zone">
-            <ul class="list">
-                <li class="item">
-                    <label for="winter">
-                        <span class="icon"></span> Winter
-                    </label>
-                </li>
-                <li class="item">
-                    <label for="spring">
-                        <span class="icon"></span> Spring
-                    </label>
-                </li>
-                <li class="item">
-                    <label for="autumn">
-                        <span class="icon"></span> Autumn
-                    </label>
-                </li>
-                <li class="item">
-                    <label for="summer">
-                        <span class="icon"></span> Summer
-                    </label>
-                </li>
-            </ul>
-        </div>
-        <div id="middle-border"></div>
-        <div id="right-zone">
-            <div class="content" data-season="winter">
-                <img src="/static/assets/img/Winter.png" alt="Winter" class="carousel-image">
-                <h3>Winter Collection</h3>
-                <p>Discover our cozy and elegant winter lingerie, perfect for those chilly nights.</p>
+    <div class="carousel-container">
+        <div id="scene">
+            <!-- Radio inputs er flyttet til toppen af #scene -->
+            <input type="radio" id="winter" name="season" checked="checked" hidden>
+            <input type="radio" id="spring" name="season" hidden>
+            <input type="radio" id="autumn" name="season" hidden>
+            <input type="radio" id="summer" name="season" hidden>
+            <div id="left-zone">
+                <ul class="list">
+                    <li class="item">
+                        <label for="winter">
+                            <span class="icon"></span> Winter
+                        </label>
+                    </li>
+                    <li class="item">
+                        <label for="spring">
+                            <span class="icon"></span> Spring
+                        </label>
+                    </li>
+                    <li class="item">
+                        <label for="autumn">
+                            <span class="icon"></span> Autumn
+                        </label>
+                    </li>
+                    <li class="item">
+                        <label for="summer">
+                            <span class="icon"></span> Summer
+                        </label>
+                    </li>
+                </ul>
             </div>
-            <div class="content" data-season="spring">
-                <img src="/static/assets/img/Spring.png" alt="Spring" class="carousel-image">
-                <h3>Spring Collection</h3>
-                <p>Embrace the freshness of spring with our light and colorful lingerie pieces.</p>
-            </div>
-            <div class="content" data-season="autumn">
-                <img src="/static/assets/img/Autumn.png" alt="Autumn" class="carousel-image">
-                <h3>Autumn Collection</h3>
-                <p>Coming soon.</p>
-            </div>
-            <div class="content" data-season="summer">
-                <img src="/static/assets/img/Summer.png" alt="Summer" class="carousel-image">
-                <h3>Summer Collection</h3>
-                <p>Coming soon.</p>
+            <div id="middle-border"></div>
+            <div id="right-zone">
+                <div class="content" data-season="winter">
+                    <img src="/static/assets/img/Winter.png" alt="Winter" class="carousel-image">
+                    <h3>Winter Collection</h3>
+                    <p>Discover our cozy and elegant winter lingerie, perfect for those chilly nights.</p>
+                </div>
+                <div class="content" data-season="spring">
+                    <img src="/static/assets/img/Spring.png" alt="Spring" class="carousel-image">
+                    <h3>Spring Collection</h3>
+                    <p>Embrace the freshness of spring with our light and colorful lingerie pieces.</p>
+                </div>
+                <div class="content" data-season="autumn">
+                    <img src="/static/assets/img/Autumn.png" alt="Autumn" class="carousel-image">
+                    <h3>Autumn Collection</h3>
+                    <p>Coming soon.</p>
+                </div>
+                <div class="content" data-season="summer">
+                    <img src="/static/assets/img/Summer.png" alt="Summer" class="carousel-image">
+                    <h3>Summer Collection</h3>
+                    <p>Coming soon.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -95,6 +97,7 @@
             <p>
                 Today, to achieve lingerie’s main purpose, a change is needed. At Carnelia, we call this change Modern Lingerie. From social gatherings to brand operations, follow our journey towards our goal.
             </p>
+            <button type="submit" class="shop-button">Discover</button>
         </div>
     </section>
     <section>
