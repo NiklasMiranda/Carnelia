@@ -168,6 +168,18 @@ def responsibility_self_defined_femininity():
 def responsibility_eco_consciousness():
     return render_template("responsibility_eco_consciousness.html")
 
+@app.route("/policies")
+def policies():
+    return render_template("policies.html")
+
+@app.route("/certifications")
+def certifications():
+    return render_template("certifications.html")
+
+@app.route("/faq")
+def faq():
+    return render_template("faq.html")
+
 @app.route("/shop/find-your-size")
 def find_your_size():
     return render_template("find_your_size.html")

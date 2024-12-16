@@ -150,6 +150,16 @@ p {
     text-align: center; /* Sørger for, at dropdown-indholdet er centreret */
 }
 
+.navbar .dropdown .dropbtn {
+    position: relative;
+    margin-right: 1rem;
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+
 .navbar .dropdown-content {
     display: none;
     position: absolute;

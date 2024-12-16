@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Carnelia - Modern and eco-conscious lingerie{% endblock %}
+
+{% block content %}
+
+    <section class="hero">
+        <div class="hero-inner">
+            <img src="/static/assets/img/frontpage_hero.jpg" alt="Hero Image" class="hero-img">
+            <div class="hero-title">
+                <h1 class="hero-header">Fighting unrealistic beauty standards</h1>
+                <a href="{{ url_for('shop') }}" class="hero-button">Shop</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

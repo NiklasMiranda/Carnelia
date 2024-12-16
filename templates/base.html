@@ -22,14 +22,14 @@
                 </div>
             </div>
             <div class="dropdown">
-                <a href="{{ url_for('brand') }}" class="dropbtn">Brand</a>
+                <span class="dropbtn">Brand</span>
                 <div class="dropdown-content">
                     <a href="{{ url_for('brand_community') }}">Community</a>
                     <a href="{{ url_for('brand_purpose') }}">Purpose</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="{{ url_for('responsibility') }}">Responsibility</a>
+                <span class="dropbtn">Responsibility</span>
                 <div class="dropdown-content">
                     <a href="{{ url_for('responsibility_comfort') }}">Comfort</a>
                     <a href="{{ url_for('responsibility_self_defined_femininity') }}">Self-defined Feminity</a>
@@ -88,11 +88,11 @@
             <div class="footer-section">
                 <h3>Help</h3>
                 <ul>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Policies</a></li>
+                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                    <li><a href="{{ url_for('policies') }}">Policies</a></li>
                     <li><a href="#">Newsletter</a></li>
-                    <li><a href="#">Certifications</a></li>
+                    <li><a href="{{ url_for('certifications') }}">Certifications</a></li>
+                    <li><a href="#">Blog (coming soon)</a></li>
                 </ul>
             </div>
 
