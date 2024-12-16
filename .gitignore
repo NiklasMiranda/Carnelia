@@ -4,11 +4,6 @@ __pycache__/
 *.pyo
 *.log
 
-# Virtuelt miljø
-.venv/
-env/
-venv/
-
 # PyCharm-projektfiler
 .idea/
 
