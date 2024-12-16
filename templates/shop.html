@@ -48,7 +48,7 @@
     {% for product in products %}
     <div class="product-item">
         <img src="{{ url_for('static', filename='assets/img/' ~ product[3]) }}" alt="{{ product[0] }}" class="product-image">
-        <h2>{{ product[0] }}</h2>
+        <h4>{{ product[0] }}</h4>
         <p>{{ product[1] }}</p>
         <p>Price: ${{ product[2] }}</p>
         <button class="add-to-cart">Add to Cart</button>
