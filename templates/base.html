@@ -32,7 +32,7 @@
                 <a href="{{ url_for('responsibility') }}">Responsibility</a>
                 <div class="dropdown-content">
                     <a href="{{ url_for('responsibility_comfort') }}">Comfort</a>
-                    <a href="{{ url_for('responsibility_self_defined_feminity') }}">Self-defined Feminity</a>
+                    <a href="{{ url_for('responsibility_self_defined_femininity') }}">Self-defined Feminity</a>
                     <a href="{{ url_for('responsibility_eco_consciousness') }}">Eco-consciousness</a>
                 </div>
             </div>
@@ -69,21 +69,19 @@
             <div class="footer-section">
                 <h3>Shopping</h3>
                 <ul>
-                    <li><a href="#">Shop</a></li>
+                    <li><a href="{{ url_for('shop') }}">Shop</a></li>
                     <li><a href="#">Find your size</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
-                <h3>About Us</h3>
+                <h3>About us</h3>
                 <ul>
-                    <li><a href="#">Brand</a></li>
-                    <li><a href="#">Community</a></li>
-                    <li><a href="#">Purpose</a></li>
-                    <li><a href="#">Responsibility</a></li>
-                    <li><a href="#">Comfort</a></li>
-                    <li><a href="#">Self-defined femininity</a></li>
-                    <li><a href="#">Eco-consciousness</a></li>
+                    <li><a href="{{ url_for('brand_community') }}">Community</a></li>
+                    <li><a href="{{ url_for('brand_purpose') }}">Purpose</a></li>
+                    <li><a href="{{ url_for('responsibility_comfort') }}">Comfort</a></li>
+                    <li><a href="{{ url_for('responsibility_self_defined_femininity') }}">Self-defined femininity</a></li>
+                    <li><a href="{{ url_for('responsibility_eco_consciousness') }}">Eco-consciousness</a></li>
                 </ul>
             </div>
 
@@ -109,7 +107,7 @@
 
             <div class="footer-section">
                 <h3>Socials</h3>
-                <ul>
+                <ul class="footer-socials">
                     <li>
                         <a href="#">
                             <img src="{{ url_for('static', filename='assets/icons/facebook.plum.png') }}" alt="Facebook" class="social-icon">

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, flash, session
 from flask_caching import Cache
 import sqlite3
+import feedparser
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -74,7 +76,41 @@ print("Database and tables created successfully.")
 @app.route("/")
 @cache.cached(timeout=60)
 def home():
-    return render_template("index.html")
+    # Substack RSS-feed URL
+    rss_url = "https://carnelialingerie.substack.com/feed"
+
+    # Parse RSS-feedet
+    feed = feedparser.parse(rss_url)
+
+    # Hent den seneste post
+    latest_post = None
+    if feed.entries:
+        entry = feed.entries[0]
+
+        # Find billed-URL (hvis tilgængelig)
+        image_url = None
+        if 'content' in entry:
+            soup = BeautifulSoup(entry.content[0].value, 'html.parser')
+            img_tag = soup.find('img')
+            if img_tag:
+                image_url = img_tag['src']
+        elif 'summary' in entry:
+            soup = BeautifulSoup(entry.summary, 'html.parser')
+            img_tag = soup.find('img')
+            if img_tag:
+                image_url = img_tag['src']
+
+        # Tilføj post-data
+        latest_post = {
+            "title": entry.title,
+            "summary": entry.summary,
+            "published": entry.published,
+            "link": entry.link,
+            "image": image_url
+        }
+
+    return render_template("index.html", latest_post=latest_post)
+
 
 @app.route('/shop')
 def shop():
@@ -124,9 +160,9 @@ def brand_purpose():
 def responsibility_comfort():
     return render_template("responsibility_comfort.html")
 
-@app.route("/responsibility/self-defined-feminity")
-def responsibility_self_defined_feminity():
-    return render_template("responsibility_self_defined_feminity.html")
+@app.route("/responsibility/self-defined-femininity")
+def responsibility_self_defined_femininity():
+    return render_template("responsibility_self_defined_femininity.html")
 
 @app.route("/responsibility/eco-consciousness")
 def responsibility_eco_consciousness():

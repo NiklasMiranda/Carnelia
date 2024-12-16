@@ -58,26 +58,28 @@
             <div id="middle-border"></div>
             <div id="right-zone">
                 <div class="content" data-season="winter">
-                    <img src="/static/assets/img/Winter.png" alt="Winter" class="carousel-image">
                     <h3>Winter Collection</h3>
-                    <p>Discover our cozy and elegant winter lingerie, perfect for those chilly nights.</p>
+                    <img src="/static/assets/img/Winter.png" alt="Winter" class="carousel-image">
+                    <button type="submit" class="shop-button">Shop the look</button>
                 </div>
                 <div class="content" data-season="spring">
-                    <img src="/static/assets/img/Spring.png" alt="Spring" class="carousel-image">
                     <h3>Spring Collection</h3>
-                    <p>Embrace the freshness of spring with our light and colorful lingerie pieces.</p>
+                    <img src="/static/assets/img/Spring.png" alt="Spring" class="carousel-image">
+                    <button type="submit" class="shop-button">Shop the look</button>
                 </div>
                 <div class="content" data-season="autumn">
-                    <img src="/static/assets/img/Autumn.png" alt="Autumn" class="carousel-image">
                     <h3>Autumn Collection</h3>
+                    <img src="/static/assets/img/Autumn.png" alt="Autumn" class="carousel-image">
                     <p>Coming soon.</p>
                 </div>
                 <div class="content" data-season="summer">
-                    <img src="/static/assets/img/Summer.png" alt="Summer" class="carousel-image">
                     <h3>Summer Collection</h3>
+                    <img src="/static/assets/img/Summer.png" alt="Summer" class="carousel-image">
                     <p>Coming soon.</p>
                 </div>
             </div>
+            <button class="carousel-button prev">↩</button>
+            <button class="carousel-button next">↪</button>
         </div>
     </div>
 
@@ -106,6 +108,8 @@
                 <img src="/static/assets/img/Slider_1.png" alt="Popup at Roskilde Festival" class="grid-image">
                 <div class="grid-content">
                     <h4>Popup at Roskilde Festival</h4>
+                    <p>Carnelia set up shop at Roskilde Festival 2024</p>
+                    <a href="{{ url_for('brand_community') }}">Read more</a>
                 </div>
             </div>
             <div class="grid-item">
@@ -115,12 +119,25 @@
                 </div>
             </div>
             <div class="grid-item">
-                <img src="/static/assets/img/Slider_3.png" alt="Design conference" class="grid-image">
+                {% if latest_post %}
                 <div class="grid-content">
-                    <h4>Design conference</h4>
+                    {% if latest_post.image %}
+                    <img src="{{ latest_post.image }}" alt="{{ latest_post.title }}" class="grid-image">
+                    {% else %}
+                    <img src="/static/assets/img/default-placeholder.png" alt="Default Image" class="grid-image">
+                    {% endif %}
+                    <h4>{{ latest_post.title }}</h4>
+                    <p>{{ latest_post.summary|safe }}</p>
+                    <p><small>Published: {{ latest_post.published }}</small></p>
+                    <a href="{{ latest_post.link }}" target="_blank">Read more</a>
                 </div>
+                {% else %}
+                <div class="grid-content">
+                    <h4>No Substack post available</h4>
+                </div>
+                {% endif %}
             </div>
-            <!-- Tilføj flere billeder her -->
+
         </div>
     </section>
 
