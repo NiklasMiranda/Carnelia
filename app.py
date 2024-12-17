@@ -12,60 +12,6 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 conn = sqlite3.connect('webshop.db')
 c = conn.cursor()
 
-# Create tables
-c.execute('''
-CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    description TEXT,
-    price REAL NOT NULL,
-    image TEXT,
-    stock_quantity INTEGER NOT NULL
-)
-''')
-
-c.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
-)
-''')
-
-c.execute('''
-CREATE TABLE IF NOT EXISTS orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    order_date TEXT DEFAULT CURRENT_TIMESTAMP,
-    status TEXT DEFAULT 'Pending',
-    FOREIGN KEY (user_id) REFERENCES users(id)
-)
-''')
-
-c.execute('''
-CREATE TABLE IF NOT EXISTS order_items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    order_id INTEGER NOT NULL,
-    product_id INTEGER NOT NULL,
-    quantity INTEGER NOT NULL,
-    price REAL NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-)
-''')
-
-test_products = [
-    ("Laptop", "A high-performance laptop", 999.99, "laptop.jpg", 10),
-    ("Smartphone", "A latest-gen smartphone", 699.99, "smartphone.jpg", 25),
-    ("Headphones", "Noise-cancelling headphones", 199.99, "headphones.jpg", 50),
-    ("Smartwatch", "A sleek smartwatch", 249.99, "smartwatch.jpg", 15)
-]
-
-c.executemany('''
-INSERT INTO products (name, description, price, image, stock_quantity)
-VALUES (?, ?, ?, ?, ?)
-''', test_products)
 
 # Commit and close the connection
 conn.commit()
@@ -116,9 +62,34 @@ def home():
 def shop():
     with sqlite3.connect('webshop.db') as conn:
         c = conn.cursor()
-        c.execute('SELECT name, description, price, image FROM products')
-        products = c.fetchall()
-    return render_template('shop.html', products=products)
+        # Hent kollektioner og deres tilhørende produkter
+        c.execute('''
+        SELECT collections.id, collections.name, collections.description, 
+               products.name, products.description, products.price, products.image
+        FROM collections
+        LEFT JOIN products ON collections.id = products.collection_id
+        ''')
+        rows = c.fetchall()
+
+    # Gruppér data efter kollektion
+    collections = {}
+    for row in rows:
+        collection_id, collection_name, collection_desc, product_name, product_desc, product_price, product_image = row
+        if collection_id not in collections:
+            collections[collection_id] = {
+                'name': collection_name,
+                'description': collection_desc,
+                'products': []
+            }
+        if product_name:  # Hvis der er produkter
+            collections[collection_id]['products'].append({
+                'name': product_name,
+                'description': product_desc,
+                'price': product_price,
+                'image': product_image
+            })
+
+    return render_template('shop.html', collections=collections)
 
 
 @app.route('/cart')

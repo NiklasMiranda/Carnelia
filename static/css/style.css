@@ -948,6 +948,35 @@ input[type=radio]:checked + label {
   padding: 60px 60px 60px 60px;
 }
 
+/* Webshop styling */
+/* Generel styling for butikken */
+.shop-container {
+  padding: 20px;
+  font-family: "Raleway", sans-serif;
+  background-color: #F8F9FA;
+}
+
+/* Kollektioner */
+.collection {
+  margin-bottom: 40px;
+  border-bottom: 2px solid #7A5190;
+  padding-bottom: 20px;
+}
+
+.collection-title {
+  color: #7A5190;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.collection-description {
+  text-align: center;
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
 .product-list {
   display: flex;
   flex-wrap: wrap;
