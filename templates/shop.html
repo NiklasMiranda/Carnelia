@@ -18,7 +18,7 @@
                 <h2 class="animated-header">Define and shop your look</h2>
             </div>
             <div class="text-content">
-                <p class="animated-text">Insert product text. Insert product text. Insert product text. Insert product text. Insert product text. Insert product text.</p>
+                <p class="animated-text">Insert product text. Insert product text. Insert product text. Insert product text. Insert product text.Insert product text. Insert product text. Insert product text. Insert product text. Insert product text.Insert product text. Insert product text. Insert product text. Insert product text. Insert product text. Insert product text.</p>
             </div>
         </div>
     </section>
@@ -56,13 +56,16 @@
                 <h4 class="product-name">{{ product.name }}</h4>
                 <p class="product-description">{{ product.description }}</p>
                 <p class="product-price">Price: ${{ product.price }}</p>
-                <button class="add-to-cart">Add to Cart</button>
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_name" value="{{ product.name }}">
+                    <input type="hidden" name="product_price" value="{{ product.price }}">
+                    <button type="submit" class="add-to-cart">Add to Cart</button>
+                </form>
             </div>
             {% endfor %}
         </div>
     </div>
     {% endfor %}
-</div>
 
 </div>
 

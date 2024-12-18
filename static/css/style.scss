@@ -992,7 +992,6 @@ input[type="radio"]:checked + label {
 .shop-container {
     padding: 20px;
     font-family: 'Raleway', sans-serif;
-    background-color: #F8F9FA;
 }
 
 /* Kollektioner */
@@ -1003,7 +1002,6 @@ input[type="radio"]:checked + label {
 }
 
 .collection-title {
-    color: #7A5190;
     font-size: 1.8rem;
     text-align: center;
     margin-bottom: 10px;
@@ -1011,7 +1009,6 @@ input[type="radio"]:checked + label {
 
 .collection-description {
     text-align: center;
-    color: #555;
     font-size: 1rem;
     margin-bottom: 20px;
 }
@@ -1286,4 +1283,98 @@ input[type="radio"]:checked + label {
     .carousel-body {
         padding: 100px;
     }
+}
+
+#cookie-popup {
+    z-index: 15;
+    display: none;
+    text-align: center;
+    background-color: #7A5190;
+    position: fixed;
+    border-radius: 50px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%; /* Adjust the width as needed */
+    height: 10%;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+#cookie-popup a {
+    color: #EEE7F1;
+    text-decoration: none;
+}
+#cookie-popup a:hover {
+    text-decoration: underline;
+}
+
+#accept-cookies {
+    display: block;
+    height: 40px;
+    width: 150px;
+    padding: 10px 20px;
+    color: #EEE7F1;
+    background-color: #4C008A;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Raleway', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in;
+    box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+}
+
+.cart-container {
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+    background-color: #F8F9FA;
+}
+
+.cart-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.cart-item-image {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-summary {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.checkout-button, .continue-shopping-button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #FFF;
+    background-color: #7A5190;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.checkout-button:hover, .continue-shopping-button:hover {
+    background-color: #5A3A70;
 }

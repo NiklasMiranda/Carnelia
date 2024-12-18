@@ -98,4 +98,14 @@ document.addEventListener('DOMContentLoaded', function () {
             nextButton.click();
         }
     });
+
+    if (!document.cookie.includes('cookies_accepted=true')) {
+        document.getElementById('cookie-popup').style.display = 'block';
+    }
+
+    // Accept cookies
+    document.getElementById('accept-cookies').onclick = function() {
+        document.cookie = "cookies_accepted=true; max-age=31536000; path=/"; // Cookie i 1 år
+        document.getElementById('cookie-popup').style.display = 'none';
+    }
 });
