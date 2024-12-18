@@ -56,7 +56,7 @@
                 <h4 class="product-name">{{ product.name }}</h4>
                 <p class="product-description">{{ product.description }}</p>
                 <p class="product-price">Price: ${{ product.price }}</p>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
+                <form method="POST" action="{{ url_for('add_to_cart') }}" target="hidden-iframe">
                     <input type="hidden" name="product_name" value="{{ product.name }}">
                     <input type="hidden" name="product_price" value="{{ product.price }}">
                     <button type="submit" class="add-to-cart">Add to Cart</button>
@@ -66,7 +66,20 @@
         </div>
     </div>
     {% endfor %}
+    </div>
 
-</div>
+    <iframe name="hidden-iframe" style="display:none;"></iframe>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    </div>
+
 
 {% endblock %}
