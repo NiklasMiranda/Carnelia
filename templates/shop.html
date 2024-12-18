@@ -56,9 +56,10 @@
                 <h4 class="product-name">{{ product.name }}</h4>
                 <p class="product-description">{{ product.description }}</p>
                 <p class="product-price">Price: ${{ product.price }}</p>
-                <form method="POST" action="{{ url_for('add_to_cart') }}" target="hidden-iframe">
+                <form action="{{ url_for('add_to_cart') }}" method="post" target="hidden-iframe">
                     <input type="hidden" name="product_name" value="{{ product.name }}">
                     <input type="hidden" name="product_price" value="{{ product.price }}">
+                    <input type="hidden" name="product_image" value="{{ product.image }}">
                     <button type="submit" class="add-to-cart">Add to Cart</button>
                 </form>
             </div>
@@ -70,16 +71,33 @@
 
     <iframe name="hidden-iframe" style="display:none;"></iframe>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+    <div id="flash-message" class="flash-messages" style="display: none;">
+        <div class="alert alert-success"></div>
     </div>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const flashMessage = document.getElementById('flash-message');
+        const hiddenIframe = document.getElementsByName('hidden-iframe')[0];
+
+        hiddenIframe.addEventListener('load', function() {
+            const iframeContent = hiddenIframe.contentDocument.body.innerText;
+            if (iframeContent) {
+                try {
+                    const data = JSON.parse(iframeContent);
+                    if (data.status === 'success') {
+                        flashMessage.querySelector('.alert').textContent = data.message;
+                        flashMessage.style.display = 'block';
+                        setTimeout(() => {
+                            flashMessage.style.display = 'none';
+                        }, 3000);
+                    }
+                } catch (e) {
+                    console.error('Error parsing iframe content:', e);
+                }
+            }
+        });
+    });
+    </script>
 
 {% endblock %}

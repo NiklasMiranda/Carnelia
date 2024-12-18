@@ -1,26 +1,43 @@
 {% extends "base.html" %}
 
-{% block title %}Carnelia - Modern and eco-conscious lingerie{% endblock %}
+{% block title %}Carnelia - Your Cart{% endblock %}
 
 {% block content %}
-
     <section class="hero">
         <div class="hero-inner">
             <img src="/static/assets/img/Logo_Hero.png" alt="Hero Image" class="hero-img">
         </div>
     </section>
 
-    <h1>Your Cart</h1>
-    {% if cart_items %}
-        <ul>
-            {% for item in cart_items %}
-            <li>{{ item.name }} - ${{ item.price }}</li>
-            {% endfor %}
-        </ul>
-        <p>Total: ${{ total_price }}</p>
-        <a href="{{ url_for('checkout') }}" class="checkout-button">Proceed to Checkout</a>
-    {% else %}
-        <p>Your cart is empty. Start shopping now!</p>
-    {% endif %}
-
+    <div class="cart-container">
+        <h1 class="cart-title">Your Cart</h1>
+        {% if cart_items %}
+            <div class="cart-items">
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    {% if item.image %}
+                        <img src="{{ url_for('static', filename='assets/img/' + item.image) }}" alt="{{ item.name }}" class="cart-item-image" onerror="this.src='{{ url_for('static', filename='assets/img/placeholder.png') }}';">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='assets/img/placeholder.png') }}" alt="No image available" class="cart-item-image">
+                    {% endif %}
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-name">{{ item.name }}</h3>
+                        <p class="cart-item-description">{{ item.description }}</p>
+                        <p class="cart-item-price">Price: ${{ item.price }}</p>
+                        <form action="{{ url_for('remove_from_cart') }}" method="post">
+                            <input type="hidden" name="item_name" value="{{ item.name }}">
+                            <button type="submit" class="remove-from-cart">Remove</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="cart-summary">
+                <p class="cart-total">Total: ${{ total_price }}</p>
+                <a href="{{ url_for('checkout') }}" class="checkout-button">Proceed to Checkout</a>
+            </div>
+        {% else %}
+            <p class="empty-cart-message">Your cart is empty. <a href="{{ url_for('shop') }}" class="start-shopping">Start shopping now!</a></p>
+        {% endif %}
+    </div>
 {% endblock %}
