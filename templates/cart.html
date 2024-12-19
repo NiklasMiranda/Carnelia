@@ -10,7 +10,7 @@
     </section>
 
     <div class="cart-container">
-        <h1 class="cart-title">Your Cart</h1>
+        <h1 class="cart-title">Your cart</h1>
         {% if cart_items %}
             <div class="cart-items">
                 {% for item in cart_items %}
@@ -33,6 +33,7 @@
                 {% endfor %}
             </div>
             <div class="cart-summary">
+                <a href="{{ url_for('shop') }}" class="back-to-shop-button">Back to Shop</a>
                 <p class="cart-total">Total: ${{ total_price }}</p>
                 <a href="{{ url_for('checkout') }}" class="checkout-button">Proceed to Checkout</a>
             </div>
