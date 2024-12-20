@@ -5,23 +5,12 @@ import sqlite3
 import feedparser
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from requests_oauthlib import OAuth2Session
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import requests
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY') or 'fallback_secret_key_for_development'
 
-# OAuth2 Configuration
-client_id = os.environ.get('OAUTH_CLIENT_ID')
-client_secret = os.environ.get('OAUTH_CLIENT_SECRET')
-tenant_id = os.environ.get('OAUTH_TENANT_ID')
-token_url = f'https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token'
-scope = ['https://graph.microsoft.com/Mail.Send']
 
 cache = Cache(app, config={
     'CACHE_TYPE': 'simple',
@@ -36,83 +25,6 @@ c = conn.cursor()
 conn.commit()
 conn.close()
 
-def get_oauth2_token():
-    try:
-        # Create an OAuth2 session
-        oauth = OAuth2Session(client_id, redirect_uri='https://carnelia.pythonanywhere.com/callback', scope=scope)
-
-        # Redirect the user to the provider's authorization URL
-        authorization_url, state = oauth.authorization_url('https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/authorize')
-        print('Please go to %s and authorize access.' % authorization_url)
-
-        # Get the authorization response URL from the user
-        redirect_response = input('Paste the full redirect URL here: ')
-
-        # Fetch the access token
-        token = oauth.fetch_token(token_url, authorization_response=redirect_response, client_secret=client_secret)
-        print("OAuth2 token retrieved:", token)
-        return token
-    except Exception as e:
-        print(f"An error occurred while retrieving the OAuth2 token: {e}")
-        return None
-
-def send_email_with_graph_api(subject, body, recipients):
-    token = get_oauth2_token()
-    if not token:
-        print("Failed to retrieve OAuth2 token.")
-        return
-
-    access_token = token.get('access_token')
-    if not access_token:
-        print("Access token is missing in the OAuth2 token.")
-        return
-
-    # Create the email message
-    email_msg = {
-        "message": {
-            "subject": subject,
-            "body": {
-                "contentType": "Text",
-                "content": body
-            },
-            "toRecipients": [
-                {"emailAddress": {"address": recipient}} for recipient in recipients
-            ]
-        }
-    }
-
-    try:
-        # Send the email using Microsoft Graph API
-        headers = {
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json'
-        }
-        response = requests.post(
-            'https://graph.microsoft.com/v1.0/me/sendMail',
-            headers=headers,
-            json=email_msg
-        )
-
-        if response.status_code == 202:
-            print("Email sent successfully.")
-        else:
-            print(f"Failed to send email. Status code: {response.status_code}, Response: {response.text}")
-    except Exception as e:
-        print(f"An error occurred while sending the email: {e}")
-
-@app.route('/callback')
-def callback():
-    try:
-        # Create an OAuth2 session
-        oauth = OAuth2Session(client_id, redirect_uri='https://carnelia.pythonanywhere.com/callback', scope=scope)
-
-        # Fetch the access token using the authorization response
-        token = oauth.fetch_token(token_url, authorization_response=request.url, client_secret=client_secret)
-        print("OAuth2 token retrieved:", token)
-        return "Token retrieved successfully!"
-    except Exception as e:
-        print(f"An error occurred while retrieving the OAuth2 token: {e}")
-        return "An error occurred during token retrieval."
 
 
 @app.route("/")
@@ -204,11 +116,13 @@ def shop():
 
     return render_template('shop.html', collections=collections)
 
+
 @app.route('/cart')
 def cart():
     cart_items = session.get('cart', [])
     total_price = sum(float(item['price']) for item in cart_items)
     return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
@@ -252,25 +166,8 @@ def brand():
     return render_template("brand.html")
 
 
-@app.route("/contact", methods=["GET", "POST"])
+@app.route("/contact")
 def contact():
-    if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
-
-        # Create the email content
-        subject = "New message from contact form"
-        body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
-        recipients = ["info@carnelia.net"]
-
-        # Send the email using Microsoft Graph API
-        try:
-            send_email_with_graph_api(subject, body, recipients)
-            flash("Thank you for contacting us! We'll get back to you soon.")
-        except Exception as e:
-            flash(f"An error occurred: {str(e)}")
-
     return render_template("contact.html")
 
 

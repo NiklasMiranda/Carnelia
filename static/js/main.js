@@ -3,17 +3,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Navbar functionality
     const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', function () {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
 
     // Hero header animation
     const heroHeader = document.querySelector('.hero-header');
     function isInViewport(element) {
+        if (!element) return false; // Check if the element exists
         const rect = element.getBoundingClientRect();
         return (
             rect.top >= 0 &&
@@ -30,82 +33,94 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    window.addEventListener('scroll', startAnimation);
-    startAnimation();
+    if (heroHeader) {
+        window.addEventListener('scroll', startAnimation);
+        startAnimation();
+    }
 
     // Carousel functionality
     console.log('DOMContentLoaded event fired');
 
     const rightZone = document.getElementById('right-zone');
-    const items = rightZone.querySelectorAll('.content');
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const nextButton = document.querySelector('.carousel-button.next');
-    const totalItems = items.length;
-    let currentIndex = 0;
+    if (rightZone) {
+        const items = rightZone.querySelectorAll('.content');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const nextButton = document.querySelector('.carousel-button.next');
+        const totalItems = items.length;
+        let currentIndex = 0;
 
-    function showItem(index) {
-        console.log('Showing item at index:', index);
-        items.forEach((item, i) => {
-            if (i === index) {
-                item.style.opacity = '1';
-                item.style.visibility = 'visible';
-            } else {
-                item.style.opacity = '0';
-                item.style.visibility = 'hidden';
+        function showItem(index) {
+            console.log('Showing item at index:', index);
+            items.forEach((item, i) => {
+                if (i === index) {
+                    item.style.opacity = '1';
+                    item.style.visibility = 'visible';
+                } else {
+                    item.style.opacity = '0';
+                    item.style.visibility = 'hidden';
+                }
+            });
+        }
+
+        function updateRadioButtons(index) {
+            const radioButtons = document.querySelectorAll('#scene input[type="radio"]');
+            if (radioButtons[index]) {
+                radioButtons[index].checked = true;
+            }
+        }
+
+        if (prevButton && nextButton) {
+            prevButton.addEventListener('click', function (event) {
+                console.log('Previous button clicked', event);
+                currentIndex = (currentIndex === 0) ? totalItems - 1 : currentIndex - 1;
+                console.log('New index:', currentIndex);
+                showItem(currentIndex);
+                updateRadioButtons(currentIndex);
+            });
+
+            nextButton.addEventListener('click', function (event) {
+                console.log('Next button clicked', event);
+                currentIndex = (currentIndex === totalItems - 1) ? 0 : currentIndex + 1;
+                console.log('New index:', currentIndex);
+                showItem(currentIndex);
+                updateRadioButtons(currentIndex);
+            });
+        }
+
+        // Initialize the carousel by showing the first item
+        console.log('Initializing carousel with first item');
+        showItem(currentIndex);
+
+        // Add event listeners to radio buttons
+        const radioButtons = document.querySelectorAll('#scene input[type="radio"]');
+        radioButtons.forEach((radio, index) => {
+            radio.addEventListener('change', function() {
+                currentIndex = index;
+                showItem(currentIndex);
+            });
+        });
+
+        // Optional: Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevButton.click();
+            } else if (e.key === 'ArrowRight') {
+                nextButton.click();
             }
         });
     }
 
-    function updateRadioButtons(index) {
-        const radioButtons = document.querySelectorAll('#scene input[type="radio"]');
-        radioButtons[index].checked = true;
-    }
-
-    prevButton.addEventListener('click', function (event) {
-        console.log('Previous button clicked', event);
-        currentIndex = (currentIndex === 0) ? totalItems - 1 : currentIndex - 1;
-        console.log('New index:', currentIndex);
-        showItem(currentIndex);
-        updateRadioButtons(currentIndex);
-    });
-
-    nextButton.addEventListener('click', function (event) {
-        console.log('Next button clicked', event);
-        currentIndex = (currentIndex === totalItems - 1) ? 0 : currentIndex + 1;
-        console.log('New index:', currentIndex);
-        showItem(currentIndex);
-        updateRadioButtons(currentIndex);
-    });
-
-    // Initialize the carousel by showing the first item
-    console.log('Initializing carousel with first item');
-    showItem(currentIndex);
-
-    // Add event listeners to radio buttons
-    const radioButtons = document.querySelectorAll('#scene input[type="radio"]');
-    radioButtons.forEach((radio, index) => {
-        radio.addEventListener('change', function() {
-            currentIndex = index;
-            showItem(currentIndex);
-        });
-    });
-
-    // Optional: Add keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') {
-            prevButton.click();
-        } else if (e.key === 'ArrowRight') {
-            nextButton.click();
+    const cookiePopup = document.getElementById('cookie-popup');
+    const acceptCookiesButton = document.getElementById('accept-cookies');
+    if (cookiePopup && acceptCookiesButton) {
+        if (!document.cookie.includes('cookies_accepted=true')) {
+            cookiePopup.style.display = 'block';
         }
-    });
 
-    if (!document.cookie.includes('cookies_accepted=true')) {
-        document.getElementById('cookie-popup').style.display = 'block';
-    }
-
-    // Accept cookies
-    document.getElementById('accept-cookies').onclick = function() {
-        document.cookie = "cookies_accepted=true; max-age=31536000; path=/"; // Cookie i 1 år
-        document.getElementById('cookie-popup').style.display = 'none';
+        // Accept cookies
+        acceptCookiesButton.onclick = function() {
+            document.cookie = "cookies_accepted=true; max-age=31536000; path=/"; // Cookie i 1 år
+            cookiePopup.style.display = 'none';
+        }
     }
 });
