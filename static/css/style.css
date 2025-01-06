@@ -1,9 +1,5 @@
 @charset "UTF-8";
 /* General styling */
-@font-face {
-  font-family: "Francescas Handwriting";
-  src: url("/static/assets/fonts/Francescas-handwriting.ttf");
-}
 body {
   margin: 0;
   padding: 0;
@@ -57,6 +53,40 @@ h4, h5, h6 {
 
 p {
   animation: fadeIn 2s ease-in;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 0.8rem;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1.2rem;
+  }
+}
+/* Buttons styling */
+.hero-button {
+  display: inline-block;
+  height: 15px;
+  width: 80px;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  color: #EEE7F1;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #EEE7F1;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-family: "Raleway", sans-serif;
+  text-decoration: none;
+  animation: fadeIn 2s ease-in;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-button:hover {
+  background-color: rgba(76, 0, 138, 0.5);
+  color: #EEE7F1;
+  border-color: #EEE7F1;
 }
 
 .shop-button {
@@ -260,7 +290,7 @@ p {
   position: absolute;
   top: 75px; /* Juster efter din navbar højde */
   left: 0;
-  width: 50%;
+  width: 40%;
   z-index: 100;
 }
 
@@ -383,31 +413,16 @@ p {
     opacity: 1;
   }
 }
-.hero-button {
-  display: inline-block;
-  height: 15px;
-  width: 80px;
-  padding: 10px 20px;
-  font-size: 0.8rem;
-  color: #EEE7F1;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #EEE7F1;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-  font-family: "Raleway", sans-serif;
-  text-decoration: none;
-  animation: fadeIn 2s ease-in;
-  position: relative;
-  z-index: 2;
+@media (max-width: 768px) {
+  .hero-img {
+    height: 80vh;
+    object-position: center 20%;
+    transform: scale(1.1);
+  }
+  .hero {
+    height: 50vh;
+  }
 }
-
-.hero-button:hover {
-  background-color: rgba(76, 0, 138, 0.5);
-  color: #EEE7F1;
-  border-color: #EEE7F1;
-}
-
 /* Text block styling */
 .text-block {
   position: relative;
@@ -433,43 +448,13 @@ p {
   line-height: 1.6;
 }
 
-/* Hero banner styling */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.hero-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  filter: brightness(50%);
-}
-
 /* Seasonal carousel styling */
 .carousel-container {
-  width: 70%; /* Adjust the width of the container */
-  border-radius: 50px; /* Adjust the radius as needed */
-  overflow: hidden; /* Ensures child elements respect the border radius */
-  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5); /* Optional: Add a shadow for better visual effect */
-  margin: 150px auto; /* Center the container */
+  width: 70%;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+  margin: 150px auto;
 }
 
 @keyframes fadeIn {
@@ -641,7 +626,7 @@ input[type=radio]:checked + label {
   background-color: rgba(76, 0, 138, 0.7);
   color: #EEE7F1;
   border: none;
-  padding: 9px 13px;
+  padding: 9px 11px;
   cursor: pointer;
   border-radius: 100px;
   z-index: 10;
@@ -669,6 +654,44 @@ input[type=radio]:checked + label {
   visibility: hidden;
 }
 
+@media (max-width: 768px) {
+  .carousel-container {
+    width: 95%;
+    margin: 30px auto;
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .list .item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .list .item .icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 10px;
+    margin-right: 15px;
+  }
+  .list .item label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+    width: 100%;
+  }
+  .carousel-image {
+    max-width: 200px;
+  }
+  .carousel-button {
+    padding: 6px 8px;
+  }
+}
 /* Picture section styling */
 .picture-section {
   position: relative;
