@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    hamburgerMenu.addEventListener('click', function() {
+        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
     // Hero header animation
     const heroHeader = document.querySelector('.hero-header');
     function isInViewport(element) {
