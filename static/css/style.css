@@ -92,7 +92,7 @@ p {
 .shop-button {
   display: block;
   height: 40px;
-  width: 150px;
+  width: 120px;
   padding: 10px 20px;
   color: #EEE7F1;
   background-color: #7A5190;
@@ -107,6 +107,28 @@ p {
   margin-bottom: 20px;
   animation: fadeIn 2s ease-in;
   box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+  text-decoration: none;
+}
+
+.text-block .shop-button {
+  display: block;
+  height: 20px;
+  width: 100px;
+  padding: 10px 20px;
+  color: #EEE7F1;
+  background-color: #7A5190;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: "Raleway", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease-in;
+  box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+  text-decoration: none;
 }
 
 .shop-button:hover {
@@ -420,7 +442,7 @@ p {
     transform: scale(1.1);
   }
   .hero {
-    height: 50vh;
+    height: 80vh;
   }
 }
 /* Text block styling */
@@ -429,9 +451,11 @@ p {
   text-align: center;
   animation: fadeIn 3s forwards;
   transform: translateY(20px);
-  display: flex; /* Tilføj denne linje */
-  justify-content: center; /* Tilføj denne linje */
-  align-items: center; /* Tilføj denne linje */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 .text-container {
@@ -448,6 +472,13 @@ p {
   line-height: 1.6;
 }
 
+@media (max-width: 768px) {
+  .text-block {
+    padding: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
 /* Seasonal carousel styling */
 .carousel-container {
   width: 70%;
@@ -657,7 +688,7 @@ input[type=radio]:checked + label {
 @media (max-width: 768px) {
   .carousel-container {
     width: 95%;
-    margin: 30px auto;
+    margin: 100px auto;
   }
   .list {
     display: flex;
@@ -725,8 +756,9 @@ input[type=radio]:checked + label {
 
 .picture-text {
   flex: 0 0 40%;
-  max-width: 40%;
+  max-width: 100%;
   text-align: left;
+  line-height: 1.6;
 }
 
 .picture-section.reverse .picture-inner {
@@ -741,8 +773,13 @@ input[type=radio]:checked + label {
 }
 
 @media (max-width: 768px) {
+  .picture-section {
+    padding: 2rem 0rem;
+  }
   .picture-inner {
     flex-direction: column;
+    gap: 30px;
+    align-items: center;
   }
   .picture-img, .picture-text {
     flex: 0 0 100%;
@@ -751,37 +788,26 @@ input[type=radio]:checked + label {
   .picture-img {
     margin-bottom: 20px;
   }
-}
-.text-block {
-  padding: 50px 0;
-  background-color: #FFFFFF;
-}
-
-.image-container {
-  padding-top: 5%;
-}
-
-.contact-image {
-  width: 20%;
-  display: block;
-  margin: 0 auto;
-  height: auto;
-  border-radius: 50px;
-  box-shadow: 0 4px 10px rgba(76, 0, 138, 0.5);
-  background-color: #EEE7F1;
-  padding: 10 10;
-}
-
-@media (max-width: 768px) {
-  .text-container {
-    flex-direction: column;
+  .picture-img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    margin: 0 auto 20px;
   }
-  .text-content {
-    padding-right: 0;
-    padding-bottom: 30px;
+  .picture-text {
+    flex: 1 1 auto;
+    max-width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+  .picture-text button {
+    margin: 20px auto 0;
+  }
+  .picture-section.reverse .picture-inner {
+    flex-direction: column !important;
   }
 }
-/* Slider styling */
+/* Grid styling */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -825,11 +851,11 @@ input[type=radio]:checked + label {
   .grid-container {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
-    padding: 15px;
+    padding: 35px;
   }
   .grid-item {
     border-radius: 30px;
-    padding: 8px;
+    padding: 25px;
   }
   .grid-image {
     border-radius: 25px;
@@ -843,68 +869,31 @@ input[type=radio]:checked + label {
     max-width: 100%;
   }
 }
-/* Brand Section Styling */
-.brand-section {
-  position: relative;
-  background: linear-gradient(to bottom, rgba(76, 0, 138, 0.3) 50%, rgba(122, 81, 144, 0.3) 50%); /* Halvdelene af baggrunden */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  padding: 0 20px;
-  font-family: "Raleway", sans-serif;
-  overflow: hidden;
-  height: 180vh; /* Skalerer sektionen baseret på viewport-højden */
+/* Contact page styling */
+.image-container {
+  padding-top: 5%;
 }
 
-.brand-section .brand-content {
-  max-width: 800px;
-  z-index: 5; /* Sikrer at teksten ligger ovenpå billedet */
-  padding: 20px;
-}
-
-.brand-section h1 {
-  margin-bottom: 20px;
-  letter-spacing: 2px;
-  font-size: 3rem; /* Størrelse på overskrift */
-  color: #4C008A;
-}
-
-.brand-section p {
-  margin-bottom: 40px;
-  font-size: 1.25rem; /* Størrelse på tekst */
-}
-
-.brand-section .btn {
-  background-color: #EEE7F1; /* Farven på knappen */
-  color: #7A5190; /* Tekstfarve på knappen */
-  padding: 15px 40px;
-  font-size: 1.25rem;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.brand-section .btn:hover {
-  background-color: #7A5190;
-  color: #EEE7F1;
-}
-
-.brand-section .brand-image {
-  position: absolute;
-  top: 50%; /* Løft billedet til midten af sektionen */
-  left: 50%; /* Løft billedet til midten af sektionen */
-  width: 55%; /* Juster bredden */
-  height: 100%; /* Bevar billedets proportioner */
-  max-height: 70%; /* Sætter max-højde for at undgå, at billedet bliver for stort */
-  object-fit: cover;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+.contact-image {
+  width: 20%;
+  display: block;
+  margin: 0 auto;
+  height: auto;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(76, 0, 138, 0.5);
   background-color: #EEE7F1;
-  padding: 60px 60px 60px 60px;
+  padding: 10 10;
 }
 
+@media (max-width: 768px) {
+  .text-container {
+    flex-direction: column;
+  }
+  .text-content {
+    padding-right: 0;
+    padding-bottom: 30px;
+  }
+}
 /* Webshop styling */
 .shop-container {
   padding: 20px;
@@ -1287,69 +1276,6 @@ input[type=radio]:checked + label {
 }
 
 /* Media size adaptation */
-/* Mobiltelefoner (op til 600px) */
-@media (max-width: 600px) {
-  body {
-    font-size: 0.8rem;
-  }
-  .navbar {
-    height: 60px;
-  }
-  .hero {
-    height: 80vh;
-  }
-  .shop-button, .view-button {
-    width: 100px;
-    padding: 8px 16px;
-  }
-  .text-block {
-    padding: 1rem;
-    height: auto;
-  }
-  .carousel-body {
-    padding: 50px;
-  }
-}
-/* Tablets (op til 768px) */
-@media (max-width: 768px) {
-  .navbar {
-    height: 70px;
-  }
-  .hero {
-    height: 90vh;
-  }
-  .shop-button, .view-button {
-    width: 120px;
-    padding: 9px 18px;
-  }
-  .text-block {
-    padding: 1rem;
-    height: auto;
-  }
-  .carousel-body {
-    padding: 75px;
-  }
-}
-/* Desktops og større skærme */
-@media (min-width: 769px) {
-  .navbar {
-    height: 75px;
-  }
-  .hero {
-    height: 100vh;
-  }
-  .shop-button, .view-button {
-    width: 150px;
-    padding: 10px 20px;
-  }
-  .text-block {
-    padding: 2rem;
-    height: 400px;
-  }
-  .carousel-body {
-    padding: 100px;
-  }
-}
 #cookie-popup {
   z-index: 15;
   display: none;
