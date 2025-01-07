@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Sustainable Fashion{% endblock %}
+
+{% block content %}
+
+    <section class="hero">
+        <div class="hero-inner">
+            <img src="/static/assets/img/Logo_Hero.png" alt="Hero Image" class="hero-img">
+        </div>
+    </section>
+
+    <div class="admin-dashboard-container">
+        <h2>Velkommen til Admin Dashboard</h2>
+        <p>Hej, {{ current_user.username }}! Du er logget ind som administrator.</p>
+        <a href="{{ url_for('logout') }}">Log ud</a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Sustainable Fashion{% endblock %}
+
+{% block content %}
+
+    <section class="hero">
+        <div class="hero-inner">
+            <img src="/static/assets/img/Logo_Hero.png" alt="Hero Image" class="hero-img">
+        </div>
+    </section>
+
+    <body>
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+
+{% endblock %}

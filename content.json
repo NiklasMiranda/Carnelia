@@ -1,0 +1,44 @@
+{
+    "hero_section_index": {
+        "title": "Fighting unrealistic beauty standards",
+        "image": "/static/assets/img/Frontpage_Hero.jpg",
+        "button_text": "Shop",
+        "button_link": "/shop"
+    },
+    "text_section1_index": {
+        "title": "Eco-consciousness in lingerie",
+        "text": "Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. The core of lingerie is making people feel beautiful, confident, and at ease in their body. This goes beyond their size, gender, or how they define their femininity.",
+        "button_text": "Contact",
+        "button_link": "/contact"
+    },
+    "picture_section_text_index": {
+        "title": "Explore the Carnelia identity",
+        "text": "We aim to redefine the outdated idea that comfort, aesthetic and sustainability are mutually exclusive.\r\n\r\nThis means fighting unrealistic beauty standards, unhealthy body images, and predetermined notions of femininity by returning to the true subject: the female body.",
+        "button_text": "Read more",
+        "button_link": "/purpose"
+    },
+    "text_section2_index": {
+        "title": "Stories from the Carnelian archives",
+        "text": "Today, to achieve lingerie's main purpose, a change is needed. At Carnelia, we call this change Modern Lingerie. From social gatherings to brand operations, follow our journey towards our goal."
+    },
+    "eco_section": {
+        "title": "Eco-consciousness in lingerie",
+        "content": "Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. The core of lingerie is making people feel beautiful, confident, and at ease in their body. This goes beyond their size, gender, or how they define their femininity.",
+        "button_text": "Contact",
+        "button_link": "/contact"
+    },
+    "carousel": {
+        "winter": {
+            "title": "Winter Collection",
+            "image": "/static/assets/img/Winter.png",
+            "button_text": "Shop",
+            "button_link": "/shop"
+        },
+        "spring": {
+            "title": "Spring Collection",
+            "image": "/static/assets/img/Spring.png",
+            "button_text": "Shop",
+            "button_link": "/shop"
+        }
+    }
+}

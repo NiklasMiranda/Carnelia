@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Flask App{% endblock %}</title>
+    {% block meta_description %}
+    <meta name="description" content="Default description for the site.">
+    {% endblock %}
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='assets/icons/favicon.png') }}" type="image/x-icon">
@@ -66,9 +69,10 @@
         </div>
 
         <div class="navbar-right">
-            <a href="{{ url_for('cart') }}">
-                <img src="{{ url_for('static', filename='assets/icons/cart.png') }}" alt="Shopping Cart" class="icon">
-            </a>
+            {% if current_user.is_authenticated and current_user.username == 'Francesca' %}
+                <a href="{{ url_for('admin') }}">Admin</a>
+            {% endif %}
+            <a href="{{ url_for('contact') }}">Contact</a>
         </div>
 
     </nav>

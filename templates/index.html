@@ -2,28 +2,33 @@
 
 {% block title %}Carnelia - Modern and eco-conscious lingerie{% endblock %}
 
+{% block meta_description %}
+<meta name="description" content="Welcome to Carnelia Lingerie. We make eco-conscious and feminine clothing.">
+{% endblock %}
+
 {% block content %}
 
     <section class="hero">
         <div class="hero-inner">
-            <img src="/static/assets/img/Frontpage_Hero.jpg" alt="Hero Image" class="hero-img">
+            <img src="{{ content['hero_section_index']['image'] }}" alt="Hero Image" class="hero-img">
             <div class="hero-title">
-                <h1 class="hero-header">Fighting unrealistic beauty standards</h1>
-                <a href="{{ url_for('shop') }}" class="hero-button">Shop</a>
+                <h1 class="hero-header">{{ content['hero_section_index']['title'] }}</h1>
+                <a href="{{ content['hero_section_index']['button_link'] }}" class="hero-button">{{ content['hero_section_index']['button_text'] }}</a>
             </div>
         </div>
     </section>
     <section class="text-block">
         <div class="text-container">
             <div class="text-title">
-                <h2 class="animated-header">Eco-consciousness in lingerie</h2>
+                <h2 class="animated-header">{{ content['text_section1_index']['title'] }}</h2>
             </div>
             <div class="text-content">
-                <p class="animated-text">Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. The core of lingerie is making people feel beautiful, confident, and at ease in their body. This goes beyond their size, gender, or how they define their femininity.</p>
+                <p class="animated-text">{{ content['text_section1_index']['text'] }}</p>
             </div>
-            <a href="{{ url_for('contact') }}" class="shop-button">Contact</a>
+            <a href="{{ content['text_section1_index']['button_link'] }}" class="shop-button">{{ content['text_section1_index']['button_text'] }}</a>
         </div>
     </section>
+
     <div class="carousel-container">
         <div id="scene">
             <input type="radio" id="winter" name="season" checked="checked" hidden>
@@ -86,18 +91,16 @@
         <div class="picture-inner">
             <img src="/static/assets/img/Frontpage_Picture.jpg" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Explore the Carnelia identity</h3>
-                <p>We aim to redefine the outdated idea that comfort, aesthetic and sustainability are mutually exclusive. <br><br> This means fighting unrealistic beauty standards, unhealthy body images, and predetermined notions of femininity by returning to the true subject: the female body.</p>
-                <button type="submit" class="shop-button">Read more</button>
+                <h3>{{ content['picture_section_text_index']['title'] }}</h3>
+                <p>{{ content['picture_section_text_index']['text'] }}</p>
+                <button type="submit" class="shop-button">{{ content['picture_section_text_index']['button_text'] }}</button>
             </div>
         </div>
     </section>
     <section class="text-block">
         <div class="text-container">
-            <h3>Stories from the Carnelian archives</h3>
-            <p>
-                Today, to achieve lingerie’s main purpose, a change is needed. At Carnelia, we call this change Modern Lingerie. From social gatherings to brand operations, follow our journey towards our goal.
-            </p>
+            <h3>{{ content['text_section2_index']['title'] }}</h3>
+            <p>{{ content['text_section2_index']['text'] }}</p>
         </div>
     </section>
     <section>

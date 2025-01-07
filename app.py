@@ -1,16 +1,32 @@
 import os
-from flask import Flask, render_template, request, redirect, flash, session, make_response, url_for, jsonify
+from flask import Flask, render_template, request, redirect, session, make_response, url_for, jsonify
 from flask_caching import Cache
 import sqlite3
 import feedparser
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+import json
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY') or 'fallback_secret_key_for_development'
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+admin_user = {
+    'username': 'Francesca',
+    'password': 'password123',
+}
+
+class User(UserMixin):
+    def __init__(self, username):
+        self.id = username
+        self.username = username  # Tilføj denne linje
+
+content_file = 'content.json'
 
 cache = Cache(app, config={
     'CACHE_TYPE': 'simple',
@@ -26,12 +42,21 @@ conn.commit()
 conn.close()
 
 
+# @app.before_request
+# def redirect_to_primary_domain():
+#     if not request.host.startswith("www."):
+#         return redirect(f"https://www.carnelialingerie.com{request.path}", code=301)
 
 @app.route("/")
 @cache.cached(timeout=60)
 def home():
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+
+    username = 'admin'
+
     # Læs en cookie (hvis den eksisterer)
-    username = request.cookies.get('username')
+    username = current_user.username if current_user.is_authenticated else 'Guest'
 
     # Substack RSS-feed URL
     rss_url = "https://carnelialingerie.substack.com/feed"
@@ -66,7 +91,7 @@ def home():
             "image": image_url
         }
 
-    return render_template("index.html", latest_post=latest_post, username=username)
+    return render_template("index.html", latest_post=latest_post, username=username, content=content)
 
 
 @app.route('/setcookie/<username>')
@@ -219,6 +244,104 @@ def faq():
 @app.route("/shop/find-your-size")
 def find_your_size():
     return render_template("find_your_size.html")
+
+
+@login_manager.user_loader
+def load_user(username):
+    return User(username)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == admin_user['username'] and password == admin_user['password']:
+            user = User(username)
+            login_user(user)
+            return redirect(url_for('admin'))
+        else:
+            error = "Forkert brugernavn eller adgangskode"
+            return render_template('login.html', error=error)
+    return render_template('login.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('logout'))
+
+
+@app.route('/admin')
+@login_required
+def admin():
+    return render_template('admin.html')
+
+
+@app.route('/admin/edit', methods=['GET', 'POST'])
+@login_required
+def edit_content():
+    if request.method == 'POST':
+        # Get updated values from the form
+        new_title = request.form.get('hero_title')
+        new_image = request.form.get('hero_image')
+        new_button_text = request.form.get('hero_button_text')
+
+        # Load the current content from JSON
+        with open('content.json', 'r') as f:
+            content = json.load(f)
+
+        # Update the hero section
+        content['hero_section']['title'] = new_title
+        content['hero_section']['image'] = new_image
+        content['hero_section']['button_text'] = new_button_text
+
+        # Save the updated content back to the JSON file
+        with open('content.json', 'w') as f:
+            json.dump(content, f, indent=4)
+
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('edit_content.html')
+
+
+@app.route('/admin_dashboard', methods=['GET', 'POST'])
+@login_required
+def admin_dashboard():
+    with open(content_file, 'r') as f:
+        content = json.load(f)
+
+    if request.method == 'POST':
+        # Update the Hero Section
+        content['hero_section_index']['image'] = request.form['hero_image']
+        content['hero_section_index']['title'] = request.form['hero_title']
+        content['hero_section_index']['button_text'] = request.form['hero_button_text']
+        content['hero_section_index']['button_link'] = request.form['hero_button_link']
+
+        # Update the First Text Block
+        content['text_section1_index']['title'] = request.form['text_section1_title']
+        content['text_section1_index']['text'] = request.form['text_section1_text']
+        content['text_section1_index']['button_text'] = request.form['text_section1_button_text']
+        content['text_section1_index']['button_link'] = request.form['text_section1_button_link']
+
+        # Update the Picture Section
+        content['picture_section_text_index']['title'] = request.form['picture_section_title']
+        content['picture_section_text_index']['text'] = request.form['picture_section_text']
+        content['picture_section_text_index']['button_text'] = request.form['picture_section_button_text']
+        content['picture_section_text_index']['button_link'] = request.form['picture_section_button_link']
+
+        # Update the Second Text Block
+        content['text_section2_index']['title'] = request.form['text_section2_title']
+        content['text_section2_index']['text'] = request.form['text_section2_text']
+
+        # Save the updated content back to the JSON file
+        with open(content_file, 'w') as f:
+            json.dump(content, f, indent=4)
+
+        return redirect(url_for('admin_dashboard'))  # Redirect to show updated data
+
+    return render_template('admin_dashboard.html', content=content)
 
 
 if __name__ == '__main__':
