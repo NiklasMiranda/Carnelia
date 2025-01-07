@@ -163,7 +163,7 @@ p {
   position: fixed;
   width: 100%;
   height: 75px;
-  z-index: 50;
+  z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -906,7 +906,7 @@ input[type=radio]:checked + label {
 
 .collection {
   margin-bottom: 40px;
-  border-bottom: 2px solid #7A5190;
+  border-top: 1px solid #7A5190;
   padding-bottom: 20px;
 }
 
@@ -944,6 +944,7 @@ input[type=radio]:checked + label {
   height: auto;
 }
 
+/* Cart styling */
 .add-to-cart {
   display: block;
   height: 40px;
@@ -1005,7 +1006,7 @@ input[type=radio]:checked + label {
   position: fixed;
   top: 20px;
   right: 8%;
-  z-index: 15;
+  z-index: 30;
   padding: 10px;
   background-color: #4C008A;
   color: #FFFFFF;

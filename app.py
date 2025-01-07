@@ -1,16 +1,48 @@
 import os
-from flask import Flask, render_template, request, redirect, flash, session, make_response, url_for, jsonify
+from flask import Flask, render_template, request, redirect, session, make_response, url_for, jsonify
 from flask_caching import Cache
 import sqlite3
+from flask_sqlalchemy import SQLAlchemy
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin
+from werkzeug.security import generate_password_hash
+from app import db, user_datastore
 import feedparser
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from flask import abort
+from flask_security import current_user
+
+
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY') or 'fallback_secret_key_for_development'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///admin.db'
+app.config['SECRET_KEY'] = 'super-secret-key'
+app.config['SECURITY_PASSWORD_SALT'] = 'super-secret-salt'
+app.config['SECURITY_REGISTERABLE'] = False  # Ingen offentlig brugerregistrering
+app.config['SECURITY_SEND_REGISTER_EMAIL'] = False  # Undgå at sende e-mails
 
+db = SQLAlchemy(app)
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    active = db.Column(db.Boolean(), default=True)
+    is_admin = db.Column(db.Boolean(), default=False)
+
+# UserDatastore opsætning
+user_datastore = SQLAlchemyUserDatastore(db, User, None)
+security = Security(app, user_datastore)
+
+admin_user = user_datastore.create_user(
+    email='admin@example.com',
+    password=generate_password_hash('admin_password'),
+    is_admin=True
+)
+db.session.commit()
 
 cache = Cache(app, config={
     'CACHE_TYPE': 'simple',
@@ -26,6 +58,14 @@ conn.commit()
 conn.close()
 
 
+def admin_required(f):
+    from functools import wraps
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.is_admin:
+            abort(403)  # Forbidden
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route("/")
 @cache.cached(timeout=60)
@@ -219,6 +259,12 @@ def faq():
 @app.route("/shop/find-your-size")
 def find_your_size():
     return render_template("find_your_size.html")
+
+
+@app.route('/admin')
+@admin_required
+def admin_dashboard():
+    return "Velkommen til admin-panelet!"
 
 
 if __name__ == '__main__':

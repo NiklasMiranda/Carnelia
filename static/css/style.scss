@@ -168,7 +168,7 @@ p {
     position: fixed;
     width: 100%;
     height: 75px;
-    z-index: 50;
+    z-index: 20;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -961,7 +961,7 @@ input[type="radio"]:checked + label {
 
 .collection {
     margin-bottom: 40px;
-    border-bottom: 2px solid #7A5190;
+    border-top: 1px solid #7A5190;
     padding-bottom: 20px;
 }
 
@@ -998,6 +998,8 @@ input[type="radio"]:checked + label {
     max-width: 100%;
     height: auto;
 }
+
+/* Cart styling */
 
 .add-to-cart {
     display: block;
@@ -1060,10 +1062,10 @@ input[type="radio"]:checked + label {
     position: fixed;
     top: 20px;
     right: 8%;
-    z-index: 15;
+    z-index: 30;
     padding: 10px;
     background-color: #4C008A;
-    color: #FFFFFF; // Ændrer tekstfarven til hvid
+    color: #FFFFFF;
     border-radius: 5px;
     text-align: center;
     max-width: 250px;
