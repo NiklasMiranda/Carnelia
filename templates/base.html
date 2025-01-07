@@ -14,9 +14,11 @@
 <body>
     <div id="cookie-popup">
         <p>We use cookies in order to improve your experience on our website. By continuous use of the site you accept our <a href="/privacy-policy">cookie policiy.</a>.</p>
-        <button id="accept-cookies">Accept</button>
+        <div class="cookie-buttons">
+            <button id="accept-cookies">Accept cookies</button>
+            <button id="decline-cookies">Decline cookies</button>
+        </div>
     </div>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-left">
             <a href="{{ url_for('home') }}" class="logo-link">
@@ -110,7 +112,7 @@
                 <ul>
                     <li><a href="{{ url_for('faq') }}">FAQ</a></li>
                     <li><a href="{{ url_for('policies') }}">Policies</a></li>
-                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="https://carnelialingerie.substack.com/" target="_blank" rel="noopener noreferrer">Newsletter</a></li>
                     <li><a href="{{ url_for('certifications') }}">Certifications</a></li>
                     <li><a href="#">Blog (coming soon)</a></li>
                 </ul>
@@ -121,7 +123,6 @@
                 <ul>
                     <li><a href="#">info@carnelia.net</a></li>
                     <li><a href="#">+ 45 99 99 99 99</a></li>
-                    <li><a href="#">Address</a></li>
                 </ul>
             </div>
 

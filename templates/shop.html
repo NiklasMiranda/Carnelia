@@ -23,27 +23,6 @@
         </div>
     </section>
 
-    <section class="filter-options">
-        <div class="filter-container">
-            <label for="category">Category:</label>
-            <select id="category" name="category">
-                <option value="all">All</option>
-                <option value="laptops">Laptops</option>
-                <option value="smartphones">Smartphones</option>
-                <option value="headphones">Headphones</option>
-                <option value="smartwatches">Smartwatches</option>
-            </select>
-
-            <label for="price-range">Price Range:</label>
-            <select id="price-range" name="price-range">
-                <option value="all">All</option>
-                <option value="0-100">$0 - $100</option>
-                <option value="100-500">$100 - $500</option>
-                <option value="500-1000">$500 - $1000</option>
-            </select>
-        </div>
-    </section>
-
     <div class="shop-container">
     {% for collection_id, collection in collections.items() %}
     <div class="collection">
