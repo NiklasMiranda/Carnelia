@@ -11,9 +11,10 @@
     </section>
 
     <div class="admin-dashboard-container">
-        <h2>Velkommen til Admin Dashboard</h2>
-        <p>Hej, {{ current_user.username }}! Du er logget ind som administrator.</p>
-        <a href="{{ url_for('logout') }}">Log ud</a>
+        <h2>Welcome, admin</h2>
+        <p>Hi, {{ current_user.username }}! You are logged in as administrator.</p>
+        <a href="{{ url_for('logout') }}">Log out</a>
+        <a href="{{ url_for('admin_dashboard') }}">Go to admin dashboard</a>
     </div>
 
 {% endblock %}

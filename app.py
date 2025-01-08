@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, session, make_response, url_for, jsonify
+from flask import Flask, render_template, request, redirect, flash, session, make_response, url_for, jsonify
 from flask_caching import Cache
 import sqlite3
 import feedparser
@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import json
+from werkzeug.utils import secure_filename
+import time
 
 load_dotenv()
 
@@ -21,12 +23,23 @@ admin_user = {
     'password': 'password123',
 }
 
+UPLOAD_FOLDER = 'static/assets/img'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'assets', 'img')
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 class User(UserMixin):
     def __init__(self, username):
         self.id = username
         self.username = username  # Tilføj denne linje
 
+
 content_file = 'content.json'
+
 
 cache = Cache(app, config={
     'CACHE_TYPE': 'simple',
@@ -41,7 +54,6 @@ c = conn.cursor()
 conn.commit()
 conn.close()
 
-
 # @app.before_request
 # def redirect_to_primary_domain():
 #     if not request.host.startswith("www."):
@@ -50,19 +62,23 @@ conn.close()
 @app.route("/")
 @cache.cached(timeout=60)
 def home():
+    print("Entering home function")
     with open('content.json', 'r') as f:
         content = json.load(f)
 
     username = 'admin'
+    print("Loaded content and set username")
 
     # Læs en cookie (hvis den eksisterer)
     username = current_user.username if current_user.is_authenticated else 'Guest'
+    print(f"Username: {username}")
 
     # Substack RSS-feed URL
     rss_url = "https://carnelialingerie.substack.com/feed"
 
     # Parse RSS-feedet
     feed = feedparser.parse(rss_url)
+    print("Parsed RSS feed")
 
     # Hent den seneste post
     latest_post = None
@@ -90,9 +106,8 @@ def home():
             "link": entry.link,
             "image": image_url
         }
-
+    print("Rendering index.html")
     return render_template("index.html", latest_post=latest_post, username=username, content=content)
-
 
 @app.route('/setcookie/<username>')
 def set_cookie(username):
@@ -309,40 +324,57 @@ def edit_content():
 @app.route('/admin_dashboard', methods=['GET', 'POST'])
 @login_required
 def admin_dashboard():
-    with open(content_file, 'r') as f:
-        content = json.load(f)
+    # Load content from JSON file
+    try:
+        with open(content_file, 'r') as f:
+            content = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        content = {
+            'hero_section_index': {'image': '', 'title': '', 'button_text': '', 'button_link': ''},
+            'text_section1_index': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
+            'picture_section_text_index': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
+            'text_section2_index': {'title': '', 'text': ''},
+        }
 
     if request.method == 'POST':
-        # Update the Hero Section
-        content['hero_section_index']['image'] = request.form['hero_image']
-        content['hero_section_index']['title'] = request.form['hero_title']
-        content['hero_section_index']['button_text'] = request.form['hero_button_text']
-        content['hero_section_index']['button_link'] = request.form['hero_button_link']
+        try:
+            if 'new_image' in request.files:
+                file = request.files['new_image']
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    flash('Image uploaded successfully!', 'success')
+                else:
+                    flash('Invalid file type. Allowed types are png, jpg, jpeg, gif.', 'error')
 
-        # Update the First Text Block
-        content['text_section1_index']['title'] = request.form['text_section1_title']
-        content['text_section1_index']['text'] = request.form['text_section1_text']
-        content['text_section1_index']['button_text'] = request.form['text_section1_button_text']
-        content['text_section1_index']['button_link'] = request.form['text_section1_button_link']
+            # Update sections
+            sections = [
+                ('hero_section_index', ['title', 'button_text', 'button_link']),
+                ('text_section1_index', ['title', 'text', 'button_text', 'button_link']),
+                ('picture_section_text_index', ['title', 'text', 'button_text', 'button_link']),
+                ('text_section2_index', ['title', 'text']),
+            ]
 
-        # Update the Picture Section
-        content['picture_section_text_index']['title'] = request.form['picture_section_title']
-        content['picture_section_text_index']['text'] = request.form['picture_section_text']
-        content['picture_section_text_index']['button_text'] = request.form['picture_section_button_text']
-        content['picture_section_text_index']['button_link'] = request.form['picture_section_button_link']
+            for section, fields in sections:
+                for field in fields:
+                    form_field = f"{section.split('_')[0]}_{field}"
+                    if form_field in request.form:
+                        content[section][field] = request.form.get(form_field)
 
-        # Update the Second Text Block
-        content['text_section2_index']['title'] = request.form['text_section2_title']
-        content['text_section2_index']['text'] = request.form['text_section2_text']
+            # Save updated content back to JSON
+            with open(content_file, 'w') as f:
+                json.dump(content, f, indent=4)
 
-        # Save the updated content back to the JSON file
-        with open(content_file, 'w') as f:
-            json.dump(content, f, indent=4)
+            flash('Content updated successfully', 'success')
+        except Exception as e:
+            flash(f'An error occurred: {str(e)}', 'error')
 
-        return redirect(url_for('admin_dashboard'))  # Redirect to show updated data
+        return redirect(url_for('admin_dashboard'))
 
-    return render_template('admin_dashboard.html', content=content)
+    # List images in the upload folder
+    images = [img for img in os.listdir(app.config['UPLOAD_FOLDER']) if allowed_file(img)]
 
+    return render_template('admin_dashboard.html', content=content, images=images)
 
 if __name__ == '__main__':
     app.run(debug=True)
