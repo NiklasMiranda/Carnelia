@@ -8,25 +8,26 @@ from dotenv import load_dotenv
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import json
 from werkzeug.utils import secure_filename
-import time
+from flask_sitemap import Sitemap
 
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('FLASK_SECRET_KEY') or 'fallback_secret_key_for_development'
+ext = Sitemap(app=app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 admin_user = {
-    'username': 'Francesca',
-    'password': 'password123',
+    'username': os.environ.get('ADMIN_USERNAME'),
+    'password': os.environ.get('ADMIN_PASSWORD'),
 }
 
 UPLOAD_FOLDER = 'static/assets/img'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'assets', 'img')
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -59,6 +60,7 @@ conn.close()
 #     if not request.host.startswith("www."):
 #         return redirect(f"https://www.carnelialingerie.com{request.path}", code=301)
 
+
 @app.route("/")
 @cache.cached(timeout=60)
 def home():
@@ -66,7 +68,6 @@ def home():
     with open('content.json', 'r') as f:
         content = json.load(f)
 
-    username = 'admin'
     print("Loaded content and set username")
 
     # Læs en cookie (hvis den eksisterer)
@@ -108,6 +109,7 @@ def home():
         }
     print("Rendering index.html")
     return render_template("index.html", latest_post=latest_post, username=username, content=content)
+
 
 @app.route('/setcookie/<username>')
 def set_cookie(username):
@@ -195,6 +197,7 @@ def remove_from_cart():
         session['cart'] = [item for item in session['cart'] if item['name'] != item_name]
         session.modified = True
     return redirect(url_for('cart'))
+
 
 @app.route('/checkout')
 def checkout():
@@ -332,12 +335,15 @@ def admin_dashboard():
         content = {
             'hero_section_index': {'image': '', 'title': '', 'button_text': '', 'button_link': ''},
             'text_section1_index': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
-            'picture_section_text_index': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
+            'picture_section_text_index': {'image': '', 'title': '', 'text': '', 'button_text': '', 'button_link': ''},
             'text_section2_index': {'title': '', 'text': ''},
+            'metadata_index': {'og_title': '', 'og_description': ''},
+            'page_metadata': {'title': '', 'meta_description': ''}
         }
 
     if request.method == 'POST':
         try:
+            # Handle new image upload
             if 'new_image' in request.files:
                 file = request.files['new_image']
                 if file and allowed_file(file.filename):
@@ -347,11 +353,29 @@ def admin_dashboard():
                 else:
                     flash('Invalid file type. Allowed types are png, jpg, jpeg, gif.', 'error')
 
+            # Handle hero image selection
+            hero_image = request.form.get('hero_image_select')
+            if hero_image:
+                content['hero_section_index']['image'] = hero_image
+
+            # Handle picture section image selection
+            picture_image = request.form.get('picture_section_image_select')
+            if picture_image:
+                content['picture_section_text_index']['image'] = picture_image
+
+            # Handle picture section image upload
+            if 'picture_section_image_upload' in request.files:
+                file = request.files['picture_section_image_upload']
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    content['picture_section_text_index']['image'] = filename
+
             # Update sections
             sections = [
                 ('hero_section_index', ['title', 'button_text', 'button_link']),
                 ('text_section1_index', ['title', 'text', 'button_text', 'button_link']),
-                ('picture_section_text_index', ['title', 'text', 'button_text', 'button_link']),
+                ('picture_section_text_index', ['image', 'title', 'text', 'button_text', 'button_link']),
                 ('text_section2_index', ['title', 'text']),
             ]
 
@@ -360,6 +384,18 @@ def admin_dashboard():
                     form_field = f"{section.split('_')[0]}_{field}"
                     if form_field in request.form:
                         content[section][field] = request.form.get(form_field)
+
+            # Update og_title and og_description
+            if 'og_title' in request.form:
+                content['metadata_index']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['metadata_index']['og_description'] = request.form.get('og_description')
+
+            # Update page title and meta description
+            if 'page_title' in request.form:
+                content['page_metadata']['title'] = request.form.get('page_title')
+            if 'meta_description' in request.form:
+                content['page_metadata']['meta_description'] = request.form.get('meta_description')
 
             # Save updated content back to JSON
             with open(content_file, 'w') as f:
@@ -372,9 +408,15 @@ def admin_dashboard():
         return redirect(url_for('admin_dashboard'))
 
     # List images in the upload folder
-    images = [img for img in os.listdir(app.config['UPLOAD_FOLDER']) if allowed_file(img)]
+    images = [f"/static/assets/img/{img}" for img in os.listdir(app.config['UPLOAD_FOLDER']) if allowed_file(img)]
 
     return render_template('admin_dashboard.html', content=content, images=images)
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return ext.generate()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

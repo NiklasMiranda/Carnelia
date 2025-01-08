@@ -12,6 +12,7 @@
         "button_link": "/contact"
     },
     "picture_section_text_index": {
+        "image": "/static/assets/img/Frontpage_Picture.jpg",
         "title": "Explore the Carnelia identity",
         "text": "We aim to redefine the outdated idea that comfort, aesthetic and sustainability are mutually exclusive.\r\n\r\nThis means fighting unrealistic beauty standards, unhealthy body images, and predetermined notions of femininity by returning to the true subject: the female body.",
         "button_text": "Read more",
@@ -20,6 +21,14 @@
     "text_section2_index": {
         "title": "Stories from the Carnelian archives",
         "text": "Today, to achieve lingerie's main purpose, a change is needed. At Carnelia, we call this change Modern Lingerie. From social gatherings to brand operations, follow our journey towards our goal."
+    },
+    "metadata_index": {
+        "title": "Carnelia - Modern and eco-conscious lingerie",
+        "meta_description": "Welcome to Carnelia Lingerie. We make eco-conscious and feminine clothing."
+    },
+    "opengraph_index": {
+        "og_title": "Carnelia - Modern and eco-conscious lingerie",
+        "og_description": "Welcome to Carnelia Lingerie. We make eco-conscious and feminine clothing."
     },
     "eco_section": {
         "title": "Eco-consciousness in lingerie",

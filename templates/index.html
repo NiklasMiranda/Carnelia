@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Carnelia - Modern and eco-conscious lingerie{% endblock %}
+{% block title %}{{ content['page_title'] }}{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="Welcome to Carnelia Lingerie. We make eco-conscious and feminine clothing.">
+<meta name="description" content="{{ content['meta_description'] }}">
 {% endblock %}
+
+{% set og_title = content['og_title'] %}
+{% set og_description = content['og_description'] %}
 
 {% block content %}
 

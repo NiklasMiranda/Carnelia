@@ -7,6 +7,12 @@
     {% block meta_description %}
     <meta name="description" content="Default description for the site.">
     {% endblock %}
+    <meta property="og:title" content="{{ og_title if og_title else title if title else 'Standard Titel' }}">
+    <meta property="og:description" content="{{ og_description if og_description else 'Standard Beskrivelse' }}">
+    <meta property="og:image" content="{{ url_for('static', filename='/static/assets/img/Logo.png') }}">
+    <meta property="og:url" content="{{ og_url if og_url else request.url }}">
+    <meta property="og:type" content="website">
+    <meta name="google-site-verification" content="gAMqclCT7qEts-Fk2G6dU00KHoBH-4CO_TgFJE2P1cA" />
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='assets/icons/favicon.png') }}" type="image/x-icon">
