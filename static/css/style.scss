@@ -1298,19 +1298,20 @@ input[type=radio]:checked + label {
   transform: scale(1.1); /* Slightly enlarge the icon on hover */
 }
 
-/* Media size adaptation */
+
+/* Cookie styling */
+
 #cookie-popup {
   z-index: 15;
   display: none;
   text-align: center;
   background-color: #7A5190;
   position: fixed;
-  border-radius: 50px;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 50%; /* Adjust the width as needed */
-  height: 10%;
+  width: 100%; /* Adjust the width as needed */
+  height: 15%;
   color: white;
   padding: 10px 0;
   text-align: center;
@@ -1325,7 +1326,13 @@ input[type=radio]:checked + label {
   text-decoration: underline;
 }
 
-#accept-cookies {
+.cookie-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0; /* Remove space between the buttons */
+}
+
+.cookie-button {
   display: block;
   height: 40px;
   width: 150px;
@@ -1337,12 +1344,15 @@ input[type=radio]:checked + label {
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: "Raleway", sans-serif;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   animation: fadeIn 2s ease-in;
   box-shadow: 0 4px 6px rgba(76, 0, 138, 0.5);
+}
+
+#accept-cookies,
+#decline-cookies {
+  @extend .cookie-button;
 }
 
 /* Login styling */

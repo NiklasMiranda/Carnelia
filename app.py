@@ -13,6 +13,7 @@ from flask_sitemap import Sitemap
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('FLASK_SECRET_KEY') or 'fallback_secret_key_for_development'
 ext = Sitemap(app=app)
 
 login_manager = LoginManager()
@@ -288,7 +289,12 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('logout'))
+    return redirect(url_for('logout_page'))
+
+
+@app.route('/logout_page')
+def logout_page():
+    return render_template('logout.html')
 
 
 @app.route('/admin')
@@ -297,31 +303,7 @@ def admin():
     return render_template('admin.html')
 
 
-@app.route('/admin/edit', methods=['GET', 'POST'])
-@login_required
-def edit_content():
-    if request.method == 'POST':
-        # Get updated values from the form
-        new_title = request.form.get('hero_title')
-        new_image = request.form.get('hero_image')
-        new_button_text = request.form.get('hero_button_text')
 
-        # Load the current content from JSON
-        with open('content.json', 'r') as f:
-            content = json.load(f)
-
-        # Update the hero section
-        content['hero_section']['title'] = new_title
-        content['hero_section']['image'] = new_image
-        content['hero_section']['button_text'] = new_button_text
-
-        # Save the updated content back to the JSON file
-        with open('content.json', 'w') as f:
-            json.dump(content, f, indent=4)
-
-        return redirect(url_for('admin_dashboard'))
-
-    return render_template('edit_content.html')
 
 
 @app.route('/admin_dashboard', methods=['GET', 'POST'])

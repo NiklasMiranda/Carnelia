@@ -119,7 +119,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const cookiePopup = document.getElementById('cookie-popup');
     const acceptCookiesButton = document.getElementById('accept-cookies');
-    if (cookiePopup && acceptCookiesButton) {
+    const declineCookiesButton = document.getElementById('decline-cookies'); // Add this line
+
+    if (cookiePopup && acceptCookiesButton && declineCookiesButton) { // Include declineCookiesButton in the check
         if (!document.cookie.includes('cookies_accepted=true')) {
             cookiePopup.style.display = 'block';
         }
@@ -128,6 +130,13 @@ document.addEventListener('DOMContentLoaded', function () {
         acceptCookiesButton.onclick = function() {
             document.cookie = "cookies_accepted=true; max-age=31536000; path=/"; // Cookie i 1 år
             cookiePopup.style.display = 'none';
+        }
+
+        // Decline cookies
+        declineCookiesButton.onclick = function() {
+            cookiePopup.style.display = 'none';
+            // Optionally, you can set a different cookie or perform another action here
+            console.log('Cookies declined');
         }
     }
 });
