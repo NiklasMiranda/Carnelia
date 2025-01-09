@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ content['page_title'] }}{% endblock %}
+{% block title %}{{ content['metadata_index']['title'] }}{% endblock %}
 
 {% block meta_description %}
-<meta name="description" content="{{ content['meta_description'] }}">
+<meta name="description" content="{{ content['metadata_index']['meta_description'] }}">
 {% endblock %}
 
-{% set og_title = content['og_title'] %}
-{% set og_description = content['og_description'] %}
+{% set og_title = content['opengraph_index']['og_title'] %}
+{% set og_description = content['opengraph_index']['og_description'] %}
 
 {% block content %}
 
@@ -92,7 +92,7 @@
 
     <section class="picture-section">
         <div class="picture-inner">
-            <img src="/static/assets/img/Frontpage_Picture.jpg" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text_index']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
                 <h3>{{ content['picture_section_text_index']['title'] }}</h3>
                 <p>{{ content['picture_section_text_index']['text'] }}</p>

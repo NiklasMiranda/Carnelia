@@ -222,12 +222,16 @@ def responsibility():
 
 @app.route("/brand/community")
 def brand_community():
-    return render_template("brand_community.html")
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+    return render_template("brand_community.html", content=content)
 
 
 @app.route("/brand/purpose")
 def brand_purpose():
-    return render_template("brand_purpose.html")
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+    return render_template("brand_purpose.html", content=content)
 
 
 @app.route("/responsibility/comfort")
@@ -303,97 +307,293 @@ def admin():
     return render_template('admin.html')
 
 
-
-
-
 @app.route('/admin_dashboard', methods=['GET', 'POST'])
 @login_required
 def admin_dashboard():
-    # Load content from JSON file
+    # Indlæs JSON-indhold
     try:
         with open(content_file, 'r') as f:
             content = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
+        # Default struktur, hvis filen ikke findes eller ikke kan læses
         content = {
-            'hero_section_index': {'image': '', 'title': '', 'button_text': '', 'button_link': ''},
-            'text_section1_index': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
-            'picture_section_text_index': {'image': '', 'title': '', 'text': '', 'button_text': '', 'button_link': ''},
-            'text_section2_index': {'title': '', 'text': ''},
-            'metadata_index': {'og_title': '', 'og_description': ''},
-            'page_metadata': {'title': '', 'meta_description': ''}
+            'hero_section_brand_community': {'image': '', 'title': '', 'button_text': '', 'button_link': ''},
+            'text_section1_brand_community': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
+            'picture_section_text_brand_community': {'image': '', 'title': '', 'text': '', 'button_text': '', 'button_link': ''},
+            'text_section2_brand_community': {'title': '', 'text': ''},
+            'metadata_brand_community': {'title': '', 'meta_description': ''},
+            'opengraph_brand_community': {'og_title': '', 'og_description': ''}
         }
 
     if request.method == 'POST':
         try:
-            # Handle new image upload
+
+            # Håndtering af billedupload
             if 'new_image' in request.files:
                 file = request.files['new_image']
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    flash('Image uploaded successfully!', 'success')
+                    flash('Billedet blev uploadet med succes!', 'success')
                 else:
-                    flash('Invalid file type. Allowed types are png, jpg, jpeg, gif.', 'error')
+                    flash('Ugyldig filtype. Tilladte typer er png, jpg, jpeg, gif.', 'error')
 
-            # Handle hero image selection
+            # Opdatering af billeder
             hero_image = request.form.get('hero_image_select')
             if hero_image:
                 content['hero_section_index']['image'] = hero_image
 
-            # Handle picture section image selection
             picture_image = request.form.get('picture_section_image_select')
             if picture_image:
                 content['picture_section_text_index']['image'] = picture_image
 
-            # Handle picture section image upload
-            if 'picture_section_image_upload' in request.files:
-                file = request.files['picture_section_image_upload']
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    content['picture_section_text_index']['image'] = filename
+            # Opdatering af sektioner
 
-            # Update sections
-            sections = [
-                ('hero_section_index', ['title', 'button_text', 'button_link']),
-                ('text_section1_index', ['title', 'text', 'button_text', 'button_link']),
-                ('picture_section_text_index', ['image', 'title', 'text', 'button_text', 'button_link']),
-                ('text_section2_index', ['title', 'text']),
-            ]
+            # Hero Section
+            if 'hero_title' in request.form:
+                content['hero_section_index']['title'] = request.form.get('hero_title')
+            if 'hero_section_index_button_text' in request.form:
+                content['hero_section_index']['button_text'] = request.form.get('hero_section_index_button_text')
+            if 'hero_section_index_button_link' in request.form:
+                content['hero_section_index']['button_link'] = request.form.get('hero_section_index_button_link')
 
-            for section, fields in sections:
-                for field in fields:
-                    form_field = f"{section.split('_')[0]}_{field}"
-                    if form_field in request.form:
-                        content[section][field] = request.form.get(form_field)
+            # Text Section 1
+            if 'text_section1_title' in request.form:
+                content['text_section1_index']['title'] = request.form.get('text_section1_title')
+            if 'text_section1_index_text' in request.form:
+                content['text_section1_index']['text'] = request.form.get('text_section1_index_text')
+            if 'text_section1_index_button_text' in request.form:
+                content['text_section1_index']['button_text'] = request.form.get('text_section1_index_button_text')
+            if 'text_section1_index_button_link' in request.form:
+                content['text_section1_index']['button_link'] = request.form.get('text_section1_index_button_link')
 
-            # Update og_title and og_description
-            if 'og_title' in request.form:
-                content['metadata_index']['og_title'] = request.form.get('og_title')
-            if 'og_description' in request.form:
-                content['metadata_index']['og_description'] = request.form.get('og_description')
+            # Picture Section
+            if 'picture_section_text_index_title' in request.form:
+                content['picture_section_text_index']['title'] = request.form.get('picture_section_text_index_title')
+            if 'picture_section_text_index_text' in request.form:
+                content['picture_section_text_index']['text'] = request.form.get('picture_section_text_index_text')
+            if 'picture_section_text_index_button_text' in request.form:
+                content['picture_section_text_index']['button_text'] = request.form.get(
+                    'picture_section_text_index_button_text')
+            if 'picture_section_text_index_button_link' in request.form:
+                content['picture_section_text_index']['button_link'] = request.form.get(
+                    'picture_section_text_index_button_link')
 
-            # Update page title and meta description
+            # Text Section 2
+            if 'text_section2_index_title' in request.form:
+                content['text_section2_index']['title'] = request.form.get('text_section2_index_title')
+            if 'text_section2_index_text' in request.form:
+                content['text_section2_index']['text'] = request.form.get('text_section2_index_text')
+
+            # Opdatering af sidetitel og meta description
             if 'page_title' in request.form:
-                content['page_metadata']['title'] = request.form.get('page_title')
+                content['metadata_index']['title'] = request.form.get('page_title')
             if 'meta_description' in request.form:
-                content['page_metadata']['meta_description'] = request.form.get('meta_description')
+                content['metadata_index']['meta_description'] = request.form.get('meta_description')
 
-            # Save updated content back to JSON
+            # Opdatering af metadata
+            if 'og_title' in request.form:
+                content['opengraph_index']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['opengraph_index']['og_description'] = request.form.get('og_description')
+
             with open(content_file, 'w') as f:
                 json.dump(content, f, indent=4)
 
-            flash('Content updated successfully', 'success')
+            flash('Content successfully updated', 'success')
         except Exception as e:
-            flash(f'An error occurred: {str(e)}', 'error')
+            flash(f'Error in updating the content: {str(e)}', 'error')
 
         return redirect(url_for('admin_dashboard'))
 
-    # List images in the upload folder
-    images = [f"/static/assets/img/{img}" for img in os.listdir(app.config['UPLOAD_FOLDER']) if allowed_file(img)]
+    # Hent billeder fra upload-mappen
+    images = [
+        f"/static/assets/img/{img}"
+        for img in os.listdir(app.config['UPLOAD_FOLDER'])
+        if allowed_file(img)
+    ]
 
     return render_template('admin_dashboard.html', content=content, images=images)
 
+
+@app.route('/admin_dashboard_brand_community', methods=['GET', 'POST'])
+@login_required
+def admin_brand_community():
+    # Load JSON content
+    try:
+        with open(content_file, 'r') as f:
+            content = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Default structure if the file does not exist or cannot be read
+        content = {
+            'hero_section_brand_community': {'title': '', 'image': ''},
+            'text_section_brand_community': {'title': '', 'text': ''},
+            'picture_section_text1_brand_community': {'image': '', 'title': '', 'text': ''},
+            'picture_section_text2_brand_community': {'image': '', 'title': '', 'text': ''},
+            'metadata_brand_community': {'title': '', 'meta_description': ''},
+            'opengraph_brand_community': {'og_title': '', 'og_description': ''}
+        }
+
+    if request.method == 'POST':
+        try:
+
+            # Update images
+
+            hero_image = request.form.get('hero_image_select')
+            if hero_image:
+                content['hero_section_brand_community']['image'] = hero_image
+
+            picture_image1 = request.form.get('picture_section1_image_select')
+            if picture_image1:
+                content['picture_section_text1_brand_community']['image'] = picture_image1
+
+            picture_image2 = request.form.get('picture_section2_image_select')
+            if picture_image2:
+                content['picture_section_text2_brand_community']['image'] = picture_image2
+
+            # Update sections
+            # Hero Section
+            if 'hero_title' in request.form:
+                content['hero_section_brand_community']['title'] = request.form.get('hero_title')
+
+            # Text Section
+            if 'text_section_title' in request.form:
+                content['text_section_brand_community']['title'] = request.form.get('text_section_title')
+            if 'text_section_text' in request.form:
+                content['text_section_brand_community']['text'] = request.form.get('text_section_text')
+
+            # Picture Section 1
+            if 'picture_section_text_brand_community_title' in request.form:
+                content['picture_section_text1_brand_community']['title'] = request.form.get('picture_section_text_brand_community_title')
+            if 'picture_section_text_brand_community_text' in request.form:
+                content['picture_section_text1_brand_community']['text'] = request.form.get('picture_section_text_brand_community_text')
+
+            # Picture Section 2
+            if 'picture_section_text_brand_community_title' in request.form:
+                content['picture_section_text2_brand_community']['title'] = request.form.get('picture_section_text_brand_community_title')
+            if 'picture_section_text_brand_community_text' in request.form:
+                content['picture_section_text2_brand_community']['text'] = request.form.get('picture_section_text_brand_community_text')
+
+            # Update page title and meta description
+            if 'page_title' in request.form:
+                content['metadata_brand_community']['title'] = request.form.get('page_title')
+            if 'meta_description' in request.form:
+                content['metadata_brand_community']['meta_description'] = request.form.get('meta_description')
+
+            # Update metadata
+            if 'og_title' in request.form:
+                content['opengraph_brand_community']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['opengraph_brand_community']['og_description'] = request.form.get('og_description')
+
+            # Save updated content back to the JSON file
+            with open(content_file, 'w') as f:
+                json.dump(content, f, indent=4)
+
+            flash('Content successfully updated', 'success')
+        except Exception as e:
+            flash(f'Error in updating the content: {str(e)}', 'error')
+
+        return redirect(url_for('admin_brand_community'))
+
+    # Fetch images from the upload folder
+    images = [
+        f"/static/assets/img/{img}"
+        for img in os.listdir(app.config['UPLOAD_FOLDER'])
+        if allowed_file(img)
+    ]
+
+    return render_template('admin_brand_community.html', content=content, images=images)
+
+
+@app.route('/admin_dashboard_brand_purpose', methods=['GET', 'POST'])
+@login_required
+def admin_brand_purpose():
+    # Load JSON content
+    try:
+        with open(content_file, 'r') as f:
+            content = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Default structure if the file does not exist or cannot be read
+        content = {
+            'hero_section_brand_purpose': {'title': '', 'image': ''},
+            'text_section_brand_purpose': {'title': '', 'text': ''},
+            'picture_section_text1_brand_purpose': {'image': '', 'title': '', 'text': ''},
+            'picture_section_text2_brand_purpose': {'image': '', 'title': '', 'text': ''},
+            'metadata_brand_purpose': {'title': '', 'meta_description': ''},
+            'opengraph_brand_purpose': {'og_title': '', 'og_description': ''}
+        }
+
+    if request.method == 'POST':
+        try:
+
+            # Update images
+
+            hero_image = request.form.get('hero_image_select')
+            if hero_image:
+                content['hero_section_brand_purpose']['image'] = hero_image
+
+            picture_image1 = request.form.get('picture_section1_image_select')
+            if picture_image1:
+                content['picture_section_text1_brand_purpose']['image'] = picture_image1
+
+            picture_image2 = request.form.get('picture_section2_image_select')
+            if picture_image2:
+                content['picture_section_text2_brand_purpose']['image'] = picture_image2
+
+            # Update sections
+            # Hero Section
+            if 'hero_title' in request.form:
+                content['hero_section_brand_purpose']['title'] = request.form.get('hero_title')
+
+            # Text Section
+            if 'text_section_title' in request.form:
+                content['text_section_brand_purpose']['title'] = request.form.get('text_section_title')
+            if 'text_section_text' in request.form:
+                content['text_section_brand_purpose']['text'] = request.form.get('text_section_text')
+
+            # Picture Section 1
+            if 'picture_section_text_brand_purpose_title' in request.form:
+                content['picture_section_text1_brand_purpose']['title'] = request.form.get('picture_section_text_brand_purpose_title')
+            if 'picture_section_text_brand_purpose_text' in request.form:
+                content['picture_section_text1_brand_purpose']['text'] = request.form.get('picture_section_text_brand_purpose_text')
+
+            # Picture Section 2
+            if 'picture_section_text_brand_purpose_title' in request.form:
+                content['picture_section_text2_brand_purpose']['title'] = request.form.get('picture_section_text_brand_purpose_title')
+            if 'picture_section_text_brand_purpose_text' in request.form:
+                content['picture_section_text2_brand_purpose']['text'] = request.form.get('picture_section_text_brand_purpose_text')
+
+            # Update page title and meta description
+            if 'page_title' in request.form:
+                content['metadata_brand_purpose']['title'] = request.form.get('page_title')
+            if 'meta_description' in request.form:
+                content['metadata_brand_purpose']['meta_description'] = request.form.get('meta_description')
+
+            # Update metadata
+            if 'og_title' in request.form:
+                content['opengraph_brand_purpose']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['opengraph_brand_purpose']['og_description'] = request.form.get('og_description')
+
+            # Save updated content back to the JSON file
+            with open(content_file, 'w') as f:
+                json.dump(content, f, indent=4)
+
+            flash('Content successfully updated', 'success')
+        except Exception as e:
+            flash(f'Error in updating the content: {str(e)}', 'error')
+
+        return redirect(url_for('admin_brand_purpose'))
+
+    # Fetch images from the upload folder
+    images = [
+        f"/static/assets/img/{img}"
+        for img in os.listdir(app.config['UPLOAD_FOLDER'])
+        if allowed_file(img)
+    ]
+
+    return render_template('admin_brand_purpose.html', content=content, images=images)
 
 @app.route('/sitemap.xml')
 def sitemap():

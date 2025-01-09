@@ -1,51 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Brand Purpose{% endblock %}
+{% block title %}{{ content['metadata_brand_purpose']['title'] }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ content['metadata_brand_purpose']['meta_description'] }}">
+{% endblock %}
+
+{% set og_title = content['opengraph_brand_purpose']['og_title'] %}
+{% set og_description = content['opengraph_brand_purpose']['og_description'] %}
 
 {% block content %}
     <section class="hero">
         <div class="hero-inner">
-            <img src="/static/assets/img/Purpose_Hero.jpg" alt="Hero Image" class="hero-img">
+            <img src="{{ content['hero_section_brand_purpose']['image'] }}" alt="Hero Image" class="hero-img">
             <div class="hero-title">
-                <h1 class="hero-header">A meaningful purpose</h1>
+                <h1 class="hero-header">{{ content['hero_section_brand_purpose']['title'] }}</h1>
             </div>
         </div>
     </section>
     <section class="text-block">
         <div class="text-container">
-            <h3>Our mission and guiding light</h3>
+            <h3>{{ content['text_section_brand_purpose']['title'] }}</h3>
             <p>
-                We have re-centered the focus of what a modern lingerie brand should be,
-                with an eye directed toward the future. Carnelia represents a new way of crafting lingerie,
-                offering a more inclusive and comfortable design. This design accommodates every body shape and size
-                — and those in between — ensuring both physical support and psychological uplift.
+                {{ content['text_section_brand_purpose']['text'] }}
             </p>
         </div>
     </section>
     <section class="picture-section reverse">
         <div class="picture-inner">
-            <img src="/static/assets/img/Purpose_Board.jpg" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text1_brand_purpose']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>The values that define us</h3>
+                <h3>{{ content['picture_section_text1_brand_purpose']['title'] }}</h3>
                 <p>
-                    We embody eco-conscious care as a holistic approach. Our focus is on recycled materials,
-                    fewer productions, quality over quantity, longer product lifespans, ethical manufacturing,
-                    and a sustainable aesthetic. Moreover, we are not a defining force;
-                    our job is to provide you with the product you need, whoever "you" are.
+                    {{ content['picture_section_text1_brand_purpose']['text'] }}
                 </p>
             </div>
         </div>
     </section>
     <section class="picture-section">
         <div class="picture-inner">
-            <img src="/static/assets/img/Purpose_Future.jpg" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text2_brand_purpose']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>A clear vision for the future</h3>
+                <h3>{{ content['picture_section_text2_brand_purpose']['title'] }}</h3>
                 <p>
-                    Carnelia stands firmly and communicates openly about where we stand,
-                    especially on matters that closely touch our customers. We envision a world where anyone who
-                    needs a bra has access to a product that truly meets their needs, is comfortable to wear,
-                    sustainable, and allows them the freedom to define their own femininity.
+                    {{ content['picture_section_text2_brand_purpose']['text'] }}
                 </p>
             </div>
         </div>

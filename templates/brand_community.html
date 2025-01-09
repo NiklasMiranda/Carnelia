@@ -1,46 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Brand Community{% endblock %}
+{% block title %}{{ content['metadata_brand_community']['title'] }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ content['metadata_brand_community']['meta_description'] }}">
+{% endblock %}
+
+{% set og_title = content['opengraph_brand_community']['og_title'] %}
+{% set og_description = content['opengraph_brand_community']['og_description'] %}
 
 {% block content %}
     <section class="hero">
         <div class="hero-inner">
-            <img src="/static/assets/img/Community_Hero.jpg" alt="Hero Image" class="hero-img">
+            <img src="{{ content['hero_section_brand_community']['image'] }}" alt="Hero Image" class="hero-img">
             <div class="hero-title">
-                <h1 class="hero-header">In touch with our community</h1>
+                <h1 class="hero-header">{{ content['hero_section_brand_community']['title'] }}</h1>
             </div>
         </div>
     </section>
     <section class="text-block">
         <div class="text-container">
-            <h3>At Carnelia people are our core value</h3>
+            <h3>{{ content['text_section_brand_community']['title'] }}</h3>
             <p>
-                We are a community, A space where people regain ownership over their own bodies.
-                A reality where customers don’t have to settle for a product that doesn’t fully meet
-                their needs, values, or self-definition. Carnelia is about choice. One’s only concern should be
-                their personal preferences, knowing that the brand they’re investing in cares for their comfort, physical
-                needs, and the planet we live on.
+                {{ content['text_section_brand_community']['text'] }}
             </p>
         </div>
     </section>
     <section class="picture-section reverse">
         <div class="picture-inner">
-            <img src="/static/assets/img/Roskilde_Community.jpg" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text1_brand_community']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Roskilde Festival 2024</h3>
+                <h3>{{ content['picture_section_text1_brand_community']['title'] }}</h3>
                 <p>
-                    Something about our meeting with our community at Roskilde Festival 2024.
+                    {{ content['picture_section_text1_brand_community']['text'] }}
                 </p>
             </div>
         </div>
     </section>
     <section class="picture-section">
         <div class="picture-inner">
-            <img src="/static/assets/img/Roskilde_Satisfaction.jpg" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text2_brand_community']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Total satisfaction</h3>
+                <h3>{{ content['picture_section_text2_brand_community']['title'] }}</h3>
                 <p>
-                    Positive reviews from our satisfied customers and from our community.
+                    {{ content['picture_section_text2_brand_community']['text'] }}
                 </p>
             </div>
         </div>

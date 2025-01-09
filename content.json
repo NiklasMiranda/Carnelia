@@ -30,24 +30,56 @@
         "og_title": "Carnelia - Modern and eco-conscious lingerie",
         "og_description": "Welcome to Carnelia Lingerie. We make eco-conscious and feminine clothing."
     },
-    "eco_section": {
-        "title": "Eco-consciousness in lingerie",
-        "content": "Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. The core of lingerie is making people feel beautiful, confident, and at ease in their body. This goes beyond their size, gender, or how they define their femininity.",
-        "button_text": "Contact",
-        "button_link": "/contact"
+    "hero_section_brand_community": {
+        "title": "In touch with our community",
+        "image": "/static/assets/img/Community_Hero.jpg"
     },
-    "carousel": {
-        "winter": {
-            "title": "Winter Collection",
-            "image": "/static/assets/img/Winter.png",
-            "button_text": "Shop",
-            "button_link": "/shop"
-        },
-        "spring": {
-            "title": "Spring Collection",
-            "image": "/static/assets/img/Spring.png",
-            "button_text": "Shop",
-            "button_link": "/shop"
-        }
+    "text_section_brand_community": {
+        "title": "At Carnelia people are our core value",
+        "text": "We are a community, A space where people regain ownership over their own bodies. A reality where customers don\u00e2\u20ac\u2122t have to settle for a product that doesn\u00e2\u20ac\u2122t fully meet their needs, values, or self-definition. Carnelia is about choice. One\u00e2\u20ac\u2122s only concern should be their personal preferences, knowing that the brand they\u00e2\u20ac\u2122re investing in cares for their comfort, physical needs, and the planet we live on."
+    },
+    "picture_section_text1_brand_community": {
+        "image": "/static/assets/img/Roskilde_Community.jpg",
+        "title": "Roskilde Festival 2024",
+        "text": "Something about our meeting with our community at Roskilde Festival 2024."
+    },
+    "picture_section_text2_brand_community": {
+        "image": "/static/assets/img/Roskilde_Satisfaction.jpg",
+        "title": "Total satisfaction",
+        "text": "Positive reviews from our satisfied customers and from our community."
+    },
+    "metadata_brand_community": {
+        "title": "Title tag",
+        "meta_description": "Meta description."
+    },
+    "opengraph_brand_community": {
+        "og_title": "Open Graph Title",
+        "og_description": "Open Graph Description."
+    },
+    "hero_section_brand_purpose": {
+        "title": "A meaningful purpose",
+        "image": "/static/assets/img/Purpose_Hero.jpg"
+    },
+    "text_section_brand_purpose": {
+        "title": "Our mission and guiding light",
+        "text": "We have re-centered the focus of what a modern lingerie brand should be, with an eye directed toward the future. Carnelia represents a new way of crafting lingerie, offering a more inclusive and comfortable design. This design accommodates every body shape and size \u00e2\u20ac\u201d and those in between \u00e2\u20ac\u201d ensuring both physical support and psychological uplift."
+    },
+    "picture_section_text1_brand_purpose": {
+        "image": "/static/assets/img/Purpose_Board.jpg",
+        "title": "The values that define us",
+        "text": "We embody eco-conscious care as a holistic approach. Our focus is on recycled materials, fewer productions, quality over quantity, longer product lifespans, ethical manufacturing, and a sustainable aesthetic. Moreover, we are not a defining force; our job is to provide you with the product you need, whoever \"you\" are."
+    },
+    "picture_section_text2_brand_purpose": {
+        "image": "/static/assets/img/Purpose_Future.jpg",
+        "title": "A clear vision for the future",
+        "text": "Carnelia stands firmly and communicates openly about where we stand, especially on matters that closely touch our customers. We envision a world where anyone who needs a bra has access to a product that truly meets their needs, is comfortable to wear, sustainable, and allows them the freedom to define their own femininity."
+    },
+    "metadata_brand_purpose": {
+        "title": "Title tag",
+        "meta_description": "Meta description."
+    },
+    "opengraph_brand_purpose": {
+        "og_title": "Open Graph Title",
+        "og_description": "Open Graph Description."
     }
 }

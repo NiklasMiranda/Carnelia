@@ -1,17 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Sustainable Fashion{% endblock %}
+{% block title %}Logged Out - Carnelia{% endblock %}
 
 {% block content %}
+<section class="hero">
+    <div class="hero-inner">
+        <img src="/static/assets/img/Logo_Hero.png" alt="Hero Image" class="hero-img">
+    </div>
+</section>
 
-    <section class="hero">
-        <div class="hero-inner">
-            <img src="/static/assets/img/Logo_Hero.png" alt="Hero Image" class="hero-img">
-        </div>
-    </section>
+<div class="logout-container">
     <h1>Successful Logout</h1>
-    <p>You have been successfully logged out.</p>
-    <a href="{{ url_for('login') }}">Click here to log in again</a>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
+    <p class="logout-message">You have been successfully logged out.</p>
+    <a href="{{ url_for('login') }}" class="login-link">Click here to log in again</a>
+</div>
 {% endblock %}
