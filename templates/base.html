@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNEGJEJSEP"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V0GCTTLQH"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-FNEGJEJSEP');
+      gtag('config', 'G-8V0GCTTLQH');
     </script>
     <title>{% block title %}My Flask App{% endblock %}</title>
     {% block meta_description %}
@@ -38,12 +38,6 @@
                 <img src="{{ url_for('static', filename='assets/img/Logo.png') }}" alt="Logo" class="logo">
             </a>
             <div class="dropdown">
-                <a href="{{ url_for('shop') }}">Shop</a>
-                <div class="dropdown-content">
-                    <a href="{{ url_for('shop') }}">Go to shop</a>
-                </div>
-            </div>
-            <div class="dropdown">
                 <span class="dropbtn">Brand</span>
                 <div class="dropdown-content">
                     <a href="{{ url_for('brand_community') }}">Community</a>
@@ -67,7 +61,6 @@
         </button>
         <div class="mobile-menu" id="mobile-menu">
             <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('shop') }}">Shop</a>
             <a href="{{ url_for('brand_community') }}">Community</a>
             <a href="{{ url_for('brand_purpose') }}">Purpose</a>
             <a href="{{ url_for('responsibility_comfort') }}">Comfort</a>
@@ -78,7 +71,9 @@
 
         <div class="navbar-center">
             <div class="company-name-container">
-                <img src="{{ url_for('static', filename='assets/img/Company_Name.png') }}" alt="Company Name" class="company-name">
+                <a href="{{ url_for('home') }}">
+                    <img src="{{ url_for('static', filename='assets/img/Company_Name.png') }}" alt="Company Name" class="company-name">
+                </a>
             </div>
         </div>
 
@@ -101,18 +96,18 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
+
             <div class="footer-section">
-                <h3>Shopping</h3>
+                <h3>Brand</h3>
                 <ul>
-                    <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('brand_community') }}">Community</a></li>
+                    <li><a href="{{ url_for('brand_purpose') }}">Purpose</a></li>
                 </ul>
             </div>
 
             <div class="footer-section">
-                <h3>About us</h3>
+                <h3>Responsibility</h3>
                 <ul>
-                    <li><a href="{{ url_for('brand_community') }}">Community</a></li>
-                    <li><a href="{{ url_for('brand_purpose') }}">Purpose</a></li>
                     <li><a href="{{ url_for('responsibility_comfort') }}">Comfort</a></li>
                     <li><a href="{{ url_for('responsibility_self_defined_femininity') }}">Self-defined femininity</a></li>
                     <li><a href="{{ url_for('responsibility_eco_consciousness') }}">Eco-consciousness</a></li>
@@ -122,11 +117,9 @@
             <div class="footer-section">
                 <h3>Help</h3>
                 <ul>
-                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
                     <li><a href="{{ url_for('policies') }}">Policies</a></li>
                     <li><a href="https://carnelialingerie.substack.com/" target="_blank" rel="noopener noreferrer">Newsletter</a></li>
-                    <li><a href="{{ url_for('certifications') }}">Certifications</a></li>
-                    <li><a href="#">Blog (coming soon)</a></li>
+                    <li><a href="https://carnelialingerie.substack.com/archive" target="_blank" rel="noopener noreferrer">Blog (coming soon)</a></li>
                 </ul>
             </div>
 
@@ -134,7 +127,7 @@
                 <h3>Contact</h3>
                 <ul>
                     <li><a href="#">info@carnelia.net</a></li>
-                    <li><a href="#">+ 45 99 99 99 99</a></li>
+                    <li><a href="#">+45 55 21 58 77</a></li>
                 </ul>
             </div>
 
@@ -143,7 +136,7 @@
                 <ul class="footer-socials">
                     <li>
                         <a href="#">
-                            <img src="{{ url_for('static', filename='assets/icons/facebook.plum.png') }}" alt="Facebook" class="social-icon">
+                            <img src="{{ url_for('static', filename='assets/icons/tiktok.png') }}" alt="TikTok" class="social-icon">
                         </a>
                     </li>
                     <li>

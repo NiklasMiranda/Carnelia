@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, flash, session, make_response, url_for, jsonify
+from flask import Flask, render_template, render_template_string, send_file, request, redirect, flash, make_response, url_for
 from flask_caching import Cache
 import sqlite3
 import feedparser
@@ -9,6 +9,8 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import json
 from werkzeug.utils import secure_filename
 from flask_sitemap import Sitemap
+from datetime import datetime
+import io
 
 load_dotenv()
 
@@ -48,13 +50,6 @@ cache = Cache(app, config={
     'CACHE_DEFAULT_TIMEOUT': 0
 })
 
-conn = sqlite3.connect('webshop.db')
-c = conn.cursor()
-
-
-# Commit and close the connection
-conn.commit()
-conn.close()
 
 # @app.before_request
 # def redirect_to_primary_domain():
@@ -160,64 +155,10 @@ def shop():
     return render_template('shop.html', collections=collections)
 
 
-@app.route('/cart')
-def cart():
-    cart_items = session.get('cart', [])
-    total_price = sum(float(item['price']) for item in cart_items)
-    return render_template('cart.html', cart_items=cart_items, total_price=total_price)
-
-
-@app.route('/add_to_cart', methods=['POST'])
-def add_to_cart():
-    product_name = request.form.get('product_name')
-    product_price = request.form.get('product_price')
-    product_image = request.form.get('product_image')
-
-    if 'cart' not in session:
-        session['cart'] = []
-
-    session['cart'].append({
-        'name': product_name,
-        'price': product_price,
-        'image': product_image
-    })
-    session.modified = True
-
-    response = jsonify({
-        'status': 'success',
-        'message': f'{product_name} added to cart!',
-        'cart_count': len(session['cart'])
-    })
-    return response
-
-
-@app.route('/remove_from_cart', methods=['POST'])
-def remove_from_cart():
-    item_name = request.form.get('item_name')
-    if 'cart' in session:
-        session['cart'] = [item for item in session['cart'] if item['name'] != item_name]
-        session.modified = True
-    return redirect(url_for('cart'))
-
-
-@app.route('/checkout')
-def checkout():
-    return render_template('checkout.html')
-
-
-@app.route("/brand")
-def brand():
-    return render_template("brand.html")
-
-
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
 
-
-@app.route("/responsibility")
-def responsibility():
-    return render_template("responsibility.html")
 
 
 @app.route("/brand/community")
@@ -252,21 +193,6 @@ def responsibility_eco_consciousness():
 @app.route("/policies")
 def policies():
     return render_template("policies.html")
-
-
-@app.route("/certifications")
-def certifications():
-    return render_template("certifications.html")
-
-
-@app.route("/faq")
-def faq():
-    return render_template("faq.html")
-
-
-@app.route("/shop/find-your-size")
-def find_your_size():
-    return render_template("find_your_size.html")
 
 
 @login_manager.user_loader
@@ -595,9 +521,46 @@ def admin_brand_purpose():
 
     return render_template('admin_brand_purpose.html', content=content, images=images)
 
+
+pages = [
+    {'loc': '/', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'daily', 'priority': '1.0'},
+    {'loc': '/brand_community', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.8'},
+    {'loc': '/brand_purpose', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.8'},
+    {'loc': '/contact', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'monthly', 'priority': '0.5'},
+    {'loc': '/index', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'daily', 'priority': '1.0'},
+    {'loc': '/policies', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'monthly', 'priority': '0.5'},
+    {'loc': '/responsibility_comfort', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.7'},
+    {'loc': '/responsibility_eco_consciousness', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.7'},
+    {'loc': '/responsibility_self_defined_femininity', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.7'}
+]
+
 @app.route('/sitemap.xml')
 def sitemap():
-    return ext.generate()
+    # Omformater lastmod til string i ønsket format
+    for page in pages:
+        page['lastmod'] = page['lastmod'].strftime('%Y-%m-%d')
+
+    xml_content = render_template_string("""
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="/static/sitemap.xsl"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+        {% for page in pages %}
+        <url>
+            <loc>{{ page.loc }}</loc>
+            <lastmod>{{ page.lastmod }}</lastmod>
+            <changefreq>{{ page.changefreq }}</changefreq>
+            <priority>{{ page.priority }}</priority>
+        </url>
+        {% endfor %}
+    </urlset>
+    """, pages=pages)
+
+    # Opret en byte-strøm fra xml_content og send filen som en XML
+    xml_bytes = io.BytesIO(xml_content.encode('utf-8'))
+
+    return send_file(xml_bytes, as_attachment=True, download_name="sitemap.xml", mimetype="application/xml")
 
 
 if __name__ == '__main__':
