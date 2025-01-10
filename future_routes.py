@@ -67,3 +67,36 @@
 # def find_your_size():
 #     return render_template("find_your_size.html")
 
+
+# @app.route('/shop')
+# def shop():
+#     with sqlite3.connect('webshop.db') as conn:
+#         c = conn.cursor()
+#         # Hent kollektioner og deres tilhørende produkter
+#         c.execute('''
+#         SELECT collections.id, collections.name, collections.description,
+#                products.name, products.description, products.price, products.image
+#         FROM collections
+#         LEFT JOIN products ON collections.id = products.collection_id
+#         ''')
+#         rows = c.fetchall()
+#
+#     # Gruppér data efter kollektion
+#     collections = {}
+#     for row in rows:
+#         collection_id, collection_name, collection_desc, product_name, product_desc, product_price, product_image = row
+#         if collection_id not in collections:
+#             collections[collection_id] = {
+#                 'name': collection_name,
+#                 'description': collection_desc,
+#                 'products': []
+#             }
+#         if product_name:  # Hvis der er produkter
+#             collections[collection_id]['products'].append({
+#                 'name': product_name,
+#                 'description': product_desc,
+#                 'price': product_price,
+#                 'image': product_image
+#             })
+#
+#     return render_template('shop.html', collections=collections)

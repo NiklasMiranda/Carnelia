@@ -3,13 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8V0GCTTLQH"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-8V0GCTTLQH');
-    </script>
     <title>{% block title %}My Flask App{% endblock %}</title>
     {% block meta_description %}
     <meta name="description" content="Default description for the site.">
@@ -26,7 +19,7 @@
 </head>
 <body>
     <div id="cookie-popup">
-        <p>We use cookies in order to improve your experience on our website. By continuous use of the site you accept our <a href="/privacy-policy">cookie policiy.</a>.</p>
+        <p>We use cookies in order to improve your experience on our website. By continuous use of the site you accept our <a href="/policies">cookie policiy.</a>.</p>
         <div class="cookie-buttons">
             <button id="accept-cookies">Accept cookies</button>
             <button id="decline-cookies">Decline cookies</button>
@@ -154,6 +147,7 @@
         </div>
         <p>&copy; <span id="year"></span> Carnelia. All rights reserved.</p>
     </footer>
+
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>

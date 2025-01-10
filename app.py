@@ -1,25 +1,23 @@
 import os
-from flask import Flask, render_template, render_template_string, send_file, request, redirect, flash, make_response, url_for
+from flask import (Flask, render_template, request, redirect, flash, make_response,
+                   url_for)
 from flask_caching import Cache
-import sqlite3
 import feedparser
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import json
 from werkzeug.utils import secure_filename
-from flask_sitemap import Sitemap
-from datetime import datetime
-import io
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY') or 'fallback_secret_key_for_development'
-ext = Sitemap(app=app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+content_file = 'content.json'
 
 admin_user = {
     'username': os.environ.get('ADMIN_USERNAME'),
@@ -42,9 +40,6 @@ class User(UserMixin):
         self.username = username  # Tilføj denne linje
 
 
-content_file = 'content.json'
-
-
 cache = Cache(app, config={
     'CACHE_TYPE': 'simple',
     'CACHE_DEFAULT_TIMEOUT': 0
@@ -54,7 +49,7 @@ cache = Cache(app, config={
 # @app.before_request
 # def redirect_to_primary_domain():
 #     if not request.host.startswith("www."):
-#         return redirect(f"https://www.carnelialingerie.com{request.path}", code=301)
+#         return redirect(f"https://127.0.0.1:5000{request.path}", code=301)
 
 
 @app.route("/")
@@ -107,58 +102,9 @@ def home():
     return render_template("index.html", latest_post=latest_post, username=username, content=content)
 
 
-@app.route('/setcookie/<username>')
-def set_cookie(username):
-    resp = make_response(redirect('/'))
-    resp.set_cookie('username', username)
-    return resp
-
-
-@app.route('/deletecookie')
-def delete_cookie():
-    resp = make_response(redirect('/'))
-    resp.delete_cookie('username')
-    return resp
-
-
-@app.route('/shop')
-def shop():
-    with sqlite3.connect('webshop.db') as conn:
-        c = conn.cursor()
-        # Hent kollektioner og deres tilhørende produkter
-        c.execute(''' 
-        SELECT collections.id, collections.name, collections.description, 
-               products.name, products.description, products.price, products.image
-        FROM collections
-        LEFT JOIN products ON collections.id = products.collection_id
-        ''')
-        rows = c.fetchall()
-
-    # Gruppér data efter kollektion
-    collections = {}
-    for row in rows:
-        collection_id, collection_name, collection_desc, product_name, product_desc, product_price, product_image = row
-        if collection_id not in collections:
-            collections[collection_id] = {
-                'name': collection_name,
-                'description': collection_desc,
-                'products': []
-            }
-        if product_name:  # Hvis der er produkter
-            collections[collection_id]['products'].append({
-                'name': product_name,
-                'description': product_desc,
-                'price': product_price,
-                'image': product_image
-            })
-
-    return render_template('shop.html', collections=collections)
-
-
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
-
 
 
 @app.route("/brand/community")
@@ -245,7 +191,8 @@ def admin_dashboard():
         content = {
             'hero_section_brand_community': {'image': '', 'title': '', 'button_text': '', 'button_link': ''},
             'text_section1_brand_community': {'title': '', 'text': '', 'button_text': '', 'button_link': ''},
-            'picture_section_text_brand_community': {'image': '', 'title': '', 'text': '', 'button_text': '', 'button_link': ''},
+            'picture_section_text_brand_community': {'image': '', 'title': '', 'text': '', 'button_text': '',
+                                                     'button_link': ''},
             'text_section2_brand_community': {'title': '', 'text': ''},
             'metadata_brand_community': {'title': '', 'meta_description': ''},
             'opengraph_brand_community': {'og_title': '', 'og_description': ''}
@@ -390,15 +337,19 @@ def admin_brand_community():
 
             # Picture Section 1
             if 'picture_section_text_brand_community_title' in request.form:
-                content['picture_section_text1_brand_community']['title'] = request.form.get('picture_section_text_brand_community_title')
+                content['picture_section_text1_brand_community']['title'] = request.form.get(
+                    'picture_section_text_brand_community_title')
             if 'picture_section_text_brand_community_text' in request.form:
-                content['picture_section_text1_brand_community']['text'] = request.form.get('picture_section_text_brand_community_text')
+                content['picture_section_text1_brand_community']['text'] = request.form.get(
+                    'picture_section_text_brand_community_text')
 
             # Picture Section 2
             if 'picture_section_text_brand_community_title' in request.form:
-                content['picture_section_text2_brand_community']['title'] = request.form.get('picture_section_text_brand_community_title')
+                content['picture_section_text2_brand_community']['title'] = request.form.get(
+                    'picture_section_text_brand_community_title')
             if 'picture_section_text_brand_community_text' in request.form:
-                content['picture_section_text2_brand_community']['text'] = request.form.get('picture_section_text_brand_community_text')
+                content['picture_section_text2_brand_community']['text'] = request.form.get(
+                    'picture_section_text_brand_community_text')
 
             # Update page title and meta description
             if 'page_title' in request.form:
@@ -480,15 +431,19 @@ def admin_brand_purpose():
 
             # Picture Section 1
             if 'picture_section_text_brand_purpose_title' in request.form:
-                content['picture_section_text1_brand_purpose']['title'] = request.form.get('picture_section_text_brand_purpose_title')
+                content['picture_section_text1_brand_purpose']['title'] = request.form.get(
+                    'picture_section_text_brand_purpose_title')
             if 'picture_section_text_brand_purpose_text' in request.form:
-                content['picture_section_text1_brand_purpose']['text'] = request.form.get('picture_section_text_brand_purpose_text')
+                content['picture_section_text1_brand_purpose']['text'] = request.form.get(
+                    'picture_section_text_brand_purpose_text')
 
             # Picture Section 2
             if 'picture_section_text_brand_purpose_title' in request.form:
-                content['picture_section_text2_brand_purpose']['title'] = request.form.get('picture_section_text_brand_purpose_title')
+                content['picture_section_text2_brand_purpose']['title'] = request.form.get(
+                    'picture_section_text_brand_purpose_title')
             if 'picture_section_text_brand_purpose_text' in request.form:
-                content['picture_section_text2_brand_purpose']['text'] = request.form.get('picture_section_text_brand_purpose_text')
+                content['picture_section_text2_brand_purpose']['text'] = request.form.get(
+                    'picture_section_text_brand_purpose_text')
 
             # Update page title and meta description
             if 'page_title' in request.form:
@@ -522,45 +477,18 @@ def admin_brand_purpose():
     return render_template('admin_brand_purpose.html', content=content, images=images)
 
 
-pages = [
-    {'loc': '/', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'daily', 'priority': '1.0'},
-    {'loc': '/brand_community', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.8'},
-    {'loc': '/brand_purpose', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.8'},
-    {'loc': '/contact', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'monthly', 'priority': '0.5'},
-    {'loc': '/index', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'daily', 'priority': '1.0'},
-    {'loc': '/policies', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'monthly', 'priority': '0.5'},
-    {'loc': '/responsibility_comfort', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.7'},
-    {'loc': '/responsibility_eco_consciousness', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.7'},
-    {'loc': '/responsibility_self_defined_femininity', 'lastmod': datetime(2025, 1, 10), 'changefreq': 'weekly', 'priority': '0.7'}
-]
+@app.route('/setcookie/<username>')
+def set_cookie(username):
+    resp = make_response(redirect('/'))
+    resp.set_cookie('username', username)
+    return resp
 
-@app.route('/sitemap.xml')
-def sitemap():
-    # Omformater lastmod til string i ønsket format
-    for page in pages:
-        page['lastmod'] = page['lastmod'].strftime('%Y-%m-%d')
 
-    xml_content = render_template_string("""
-    <?xml version="1.0" encoding="UTF-8"?>
-    <?xml-stylesheet type="text/xsl" href="/static/sitemap.xsl"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-        {% for page in pages %}
-        <url>
-            <loc>{{ page.loc }}</loc>
-            <lastmod>{{ page.lastmod }}</lastmod>
-            <changefreq>{{ page.changefreq }}</changefreq>
-            <priority>{{ page.priority }}</priority>
-        </url>
-        {% endfor %}
-    </urlset>
-    """, pages=pages)
-
-    # Opret en byte-strøm fra xml_content og send filen som en XML
-    xml_bytes = io.BytesIO(xml_content.encode('utf-8'))
-
-    return send_file(xml_bytes, as_attachment=True, download_name="sitemap.xml", mimetype="application/xml")
+@app.route('/deletecookie')
+def delete_cookie():
+    resp = make_response(redirect('/'))
+    resp.delete_cookie('username')
+    return resp
 
 
 if __name__ == '__main__':

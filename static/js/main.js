@@ -119,24 +119,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const cookiePopup = document.getElementById('cookie-popup');
     const acceptCookiesButton = document.getElementById('accept-cookies');
-    const declineCookiesButton = document.getElementById('decline-cookies'); // Add this line
+    const declineCookiesButton = document.getElementById('decline-cookies');
 
-    if (cookiePopup && acceptCookiesButton && declineCookiesButton) { // Include declineCookiesButton in the check
+    if (cookiePopup && acceptCookiesButton && declineCookiesButton) {
+        // Hvis brugeren ikke har accepteret cookies endnu, vis popup'en
         if (!document.cookie.includes('cookies_accepted=true')) {
             cookiePopup.style.display = 'block';
         }
 
-        // Accept cookies
+        // Når brugeren accepterer cookies
         acceptCookiesButton.onclick = function() {
             document.cookie = "cookies_accepted=true; max-age=31536000; path=/"; // Cookie i 1 år
             cookiePopup.style.display = 'none';
+
+            // Læs Google Analytics scriptet, når cookies er accepteret
+            loadGoogleAnalytics();
         }
 
-        // Decline cookies
+        // Når brugeren afviser cookies
         declineCookiesButton.onclick = function() {
             cookiePopup.style.display = 'none';
-            // Optionally, you can set a different cookie or perform another action here
             console.log('Cookies declined');
         }
     }
+
+    // Funktion til at loade Google Analytics scriptet
+    function loadGoogleAnalytics() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-8V0GCTTLQH";
+        script.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8V0GCTTLQH');
+        };
+        document.head.appendChild(script); // Indsæt scriptet i dokumentets <head>
+    }
+
 });
