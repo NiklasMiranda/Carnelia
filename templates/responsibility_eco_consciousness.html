@@ -1,49 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}Eco-Consciousness{% endblock %}
+{% block title %}{{ content['metadata_responsibility_eco_consciousness']['title'] }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ content['metadata_responsibility_eco_consciousness']['meta_description'] }}">
+{% endblock %}
+
+{% set og_title = content['opengraph_responsibility_eco_consciousness']['og_title'] %}
+{% set og_description = content['opengraph_responsibility_eco_consciousness']['og_description'] %}
 
 {% block content %}
     <section class="hero">
         <div class="hero-inner">
-            <img src="/static/assets/img/Frontpage_Hero.jpg" alt="Hero Image" class="hero-img">
+            <img src="{{ content['hero_section_responsibility_eco_consciousness']['image'] }}" alt="Hero Image" class="hero-img">
             <div class="hero-title">
-                <h1 class="hero-header">Awareness of the environment</h1>
+                <h1 class="hero-header">{{ content['hero_section_responsibility_eco_consciousness']['title'] }}</h1>
             </div>
         </div>
     </section>
     <section class="text-block">
         <div class="text-container">
-            <div class="text-title">
-                <h2 class="animated-header">Taking eco-responsibility is vital</h2>
-            </div>
-            <div class="text-content">
-                <p class="animated-text">
-                    Along with our responsibility to our community in terms of size, support and comfort, we also have a responsibility towards the planet.
-                    It’s our top priority to produce lingerie in an eco-conscious and ethical way
+            <h3>{{ content['text_section_responsibility_eco_consciousness']['title'] }}</h3>
+            <p>
+                {{ content['text_section_responsibility_eco_consciousness']['text'] }}
+            </p>
+        </div>
+    </section>
+    <section class="picture-section reverse">
+        <div class="picture-inner">
+            <img src="{{ content['picture_section_text1_responsibility_eco_consciousness']['image'] }}" alt="Picture Image" class="picture-img">
+            <div class="picture-text">
+                <h3>{{ content['picture_section_text1_responsibility_eco_consciousness']['title'] }}</h3>
+                <p>
+                    {{ content['picture_section_text1_responsibility_eco_consciousness']['text'] }}
                 </p>
             </div>
         </div>
     </section>
     <section class="picture-section">
         <div class="picture-inner">
-            <img src="/static/assets/img/Production.jpg" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text2_responsibility_eco_consciousness']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Production is sourced close to home</h3>
+                <h3>{{ content['picture_section_text2_responsibility_eco_consciousness']['title'] }}</h3>
                 <p>
-                    We do so by using certified, recycled fabrics, designing aesthetically sustainable, and sourcing our materials in the near vicinity of our manufacturer.
-                    All of our production and sourcing is in Italy, thus reducing our Co2 emissions of transport and also ensuring high-quality and ethical production.
-                </p>
-            </div>
-        </div>
-    </section>
-        <section class="picture-section reverse">
-        <div class="picture-inner">
-            <img src="/static/assets/img/Textiles.jpg" alt="Picture Image" class="picture-img">
-            <div class="picture-text">
-                <h3>In search of the very best fabric</h3>
-                <p>
-                    All of our recycled fabrics are Global Recycled Standard certified and OEKO-Tex certified and we aspire to provide our community with the best quality products to adorn their bodies with.
-                    <br><br>At Carnelia we are not just crafting lingerie. We are creating a positive, lasting impact that supports and cares for both people and the planet.
+                    {{ content['picture_section_text2_responsibility_eco_consciousness']['text'] }}
                 </p>
             </div>
         </div>

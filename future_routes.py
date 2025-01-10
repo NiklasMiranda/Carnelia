@@ -100,3 +100,6 @@
 #             })
 #
 #     return render_template('shop.html', collections=collections)
+
+
+

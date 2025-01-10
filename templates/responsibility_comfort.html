@@ -1,65 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Responsibility Comfort{% endblock %}
+{% block title %}{{ content['metadata_responsibility_comfort']['title'] }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ content['metadata_responsibility_comfort']['meta_description'] }}">
+{% endblock %}
+
+{% set og_title = content['opengraph_responsibility_comfort']['og_title'] %}
+{% set og_description = content['opengraph_responsibility_comfort']['og_description'] %}
 
 {% block content %}
-
     <section class="hero">
         <div class="hero-inner">
-            <img src="/static/assets/img/Comfort.jpg" alt="Hero Image" class="hero-img">
+            <img src="{{ content['hero_section_responsibility_comfort']['image'] }}" alt="Hero Image" class="hero-img">
             <div class="hero-title">
-                <h1 class="hero-header">Tailored to your comfort</h1>
+                <h1 class="hero-header">{{ content['hero_section_responsibility_comfort']['title'] }}</h1>
             </div>
         </div>
     </section>
     <section class="text-block">
         <div class="text-container">
             <div class="text-title">
-                <h2 class="animated-header">Striving towards comfort for everyone</h2>
+                <h2 class="animated-header">{{ content['text_section_responsibility_comfort']['title'] }}</h2>
             </div>
             <div class="text-content">
-                <p class="animated-text">As a modern lingerie brand, we aim to adhere to the highest standards and we take on the responsibility of making lingerie for everyone.
-                    Our purpose is to fight unrealistic beauty standards, unhealthy body images and standardized ideas of what defines femininity.
-                    At Carnelia we have designed new technologies to ensure the support needed for the different sizes we offer. The three size ranges come with different backs.</p>
+                <p class="animated-text">{{ content['text_section_responsibility_comfort']['text'] }}</p>
             </div>
         </div>
     </section>
     <section class="picture-section">
         <div class="picture-inner">
-            <img src="/static/assets/img/Classic.png" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text1_responsibility_comfort']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Classic</h3>
-                <p>
-                    The classic back is for the lowest size range. It’s well-known and well-loved and is a design that works great for bodies
-                    that don’t require maximum support. It has adjustable straps to ensure a perfect fit and extra lines of hooks to adjust the circumference.
-                </p>
+                <h3>{{ content['picture_section_text1_responsibility_comfort']['title'] }}</h3>
+                <p>{{ content['picture_section_text1_responsibility_comfort']['text'] }}</p>
             </div>
         </div>
     </section>
     <section class="picture-section reverse">
         <div class="picture-inner">
-            <img src="/static/assets/img/Signature.png" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text2_responsibility_comfort']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Signature</h3>
-                <p>
-                    This version comes with the signature size range and offers extra support to those with a medium sized chest and moderate need of support.
-                    The back straps work as a rope and pulley, providing four contact points instead of two thus ensuring an even weight distribution.
-                    <br><br>This eases the strain on the shoulder straps and allows a more comfortable wear. The straps are connected via the ring at the shoulder blade area.
-                    This ring connects the shoulder strap and the two straps that connect to the back of the underbust band.
-                </p>
+                <h3>{{ content['picture_section_text2_responsibility_comfort']['title'] }}</h3>
+                <p>{{ content['picture_section_text2_responsibility_comfort']['text'] }}</p>
             </div>
         </div>
     </section>
     <section class="picture-section">
         <div class="picture-inner">
-            <img src="/static/assets/img/Supreme.png" alt="Picture Image" class="picture-img">
+            <img src="{{ content['picture_section_text3_responsibility_comfort']['image'] }}" alt="Picture Image" class="picture-img">
             <div class="picture-text">
-                <h3>Supreme</h3>
-                <p>
-                    This version comes with the supreme size range. This option is for those with a large chest in need of maximum support.
-                    The straps are much wider than the classic and signature, allowing the weight from the front to be more comfortably dispersed on the shoulders.
-                    <br><br> The underbust band is thicker, ensuring even pressure dispersal on the ribcage, allowing the bra to feel more comfortable for someone with a need for utmost support.
-                </p>
+                <h3>{{ content['picture_section_text3_responsibility_comfort']['title'] }}</h3>
+                <p>{{ content['picture_section_text3_responsibility_comfort']['text'] }}</p>
             </div>
         </div>
     </section>

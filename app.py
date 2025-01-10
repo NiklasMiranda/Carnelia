@@ -123,22 +123,30 @@ def brand_purpose():
 
 @app.route("/responsibility/comfort")
 def responsibility_comfort():
-    return render_template("responsibility_comfort.html")
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+    return render_template("responsibility_comfort.html", content=content)
 
 
 @app.route("/responsibility/self-defined-femininity")
 def responsibility_self_defined_femininity():
-    return render_template("responsibility_self_defined_femininity.html")
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+    return render_template("responsibility_self_defined_femininity.html", content=content)
 
 
 @app.route("/responsibility/eco-consciousness")
 def responsibility_eco_consciousness():
-    return render_template("responsibility_eco_consciousness.html")
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+    return render_template("responsibility_eco_consciousness.html", content=content)
 
 
 @app.route("/policies")
 def policies():
-    return render_template("policies.html")
+    with open('content.json', 'r') as f:
+        content = json.load(f)
+    return render_template("policies.html", content=content)
 
 
 @login_manager.user_loader
@@ -336,20 +344,20 @@ def admin_brand_community():
                 content['text_section_brand_community']['text'] = request.form.get('text_section_text')
 
             # Picture Section 1
-            if 'picture_section_text_brand_community_title' in request.form:
+            if 'picture_section1_title' in request.form:
                 content['picture_section_text1_brand_community']['title'] = request.form.get(
-                    'picture_section_text_brand_community_title')
-            if 'picture_section_text_brand_community_text' in request.form:
+                    'picture_section1_title')
+            if 'picture_section1_text' in request.form:
                 content['picture_section_text1_brand_community']['text'] = request.form.get(
-                    'picture_section_text_brand_community_text')
+                    'picture_section1_text')
 
             # Picture Section 2
-            if 'picture_section_text_brand_community_title' in request.form:
+            if 'picture_section2_title' in request.form:
                 content['picture_section_text2_brand_community']['title'] = request.form.get(
-                    'picture_section_text_brand_community_title')
-            if 'picture_section_text_brand_community_text' in request.form:
+                    'picture_section2_title')
+            if 'picture_section2_text' in request.form:
                 content['picture_section_text2_brand_community']['text'] = request.form.get(
-                    'picture_section_text_brand_community_text')
+                    'picture_section2_text')
 
             # Update page title and meta description
             if 'page_title' in request.form:
@@ -430,20 +438,20 @@ def admin_brand_purpose():
                 content['text_section_brand_purpose']['text'] = request.form.get('text_section_text')
 
             # Picture Section 1
-            if 'picture_section_text_brand_purpose_title' in request.form:
+            if 'picture_section1_title' in request.form:
                 content['picture_section_text1_brand_purpose']['title'] = request.form.get(
-                    'picture_section_text_brand_purpose_title')
-            if 'picture_section_text_brand_purpose_text' in request.form:
+                    'picture_section1_title')
+            if 'picture_section1_text' in request.form:
                 content['picture_section_text1_brand_purpose']['text'] = request.form.get(
-                    'picture_section_text_brand_purpose_text')
+                    'picture_section1_text')
 
             # Picture Section 2
-            if 'picture_section_text_brand_purpose_title' in request.form:
+            if 'picture_section2_title' in request.form:
                 content['picture_section_text2_brand_purpose']['title'] = request.form.get(
-                    'picture_section_text_brand_purpose_title')
-            if 'picture_section_text_brand_purpose_text' in request.form:
+                    'picture_section2_title')
+            if 'picture_section2_text' in request.form:
                 content['picture_section_text2_brand_purpose']['text'] = request.form.get(
-                    'picture_section_text_brand_purpose_text')
+                    'picture_section2_text')
 
             # Update page title and meta description
             if 'page_title' in request.form:
@@ -475,6 +483,301 @@ def admin_brand_purpose():
     ]
 
     return render_template('admin_brand_purpose.html', content=content, images=images)
+
+
+@app.route('/admin_dashboard_responsibility_comfort', methods=['GET', 'POST'])
+@login_required
+def admin_responsibility_comfort():
+    # Load JSON content
+    try:
+        with open(content_file, 'r') as f:
+            content = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Default structure if the file does not exist or cannot be read
+        content = {
+            'hero_section_responsibility_comfort': {'title': '', 'image': ''},
+            'text_section_responsibility_comfort': {'title': '', 'text': ''},
+            'picture_section_text1_responsibility_comfort': {'image': '', 'title': '', 'text': ''},
+            'picture_section_text2_responsibility_comfort': {'image': '', 'title': '', 'text': ''},
+            'picture_section_text3_responsibility_comfort': {'image': '', 'title': '', 'text': ''},
+            'metadata_responsibility_comfort': {'title': '', 'meta_description': ''},
+            'opengraph_responsibility_comfort': {'og_title': '', 'og_description': ''}
+        }
+
+    if request.method == 'POST':
+        try:
+
+            # Update images
+
+            hero_image = request.form.get('hero_image_select')
+            if hero_image:
+                content['hero_section_responsibility_comfort']['image'] = hero_image
+
+            picture_image1 = request.form.get('picture_section1_image_select')
+            if picture_image1:
+                content['picture_section_text1_responsibility_comfort']['image'] = picture_image1
+
+            picture_image2 = request.form.get('picture_section2_image_select')
+            if picture_image2:
+                content['picture_section_text2_responsibility_comfort']['image'] = picture_image2
+
+            picture_image3 = request.form.get('picture_section3_image_select')
+            if picture_image3:
+                content['picture_section_text3_responsibility_comfort']['image'] = picture_image3
+
+            # Update sections
+            # Hero Section
+            if 'hero_title' in request.form:
+                content['hero_section_responsibility_comfort']['title'] = request.form.get('hero_title')
+
+            # Text Section
+            if 'text_section_title' in request.form:
+                content['text_section_responsibility_comfort']['title'] = request.form.get('text_section_title')
+            if 'text_section_text' in request.form:
+                content['text_section_responsibility_comfort']['text'] = request.form.get('text_section_text')
+
+            # Picture Section 1
+            if 'picture_section1_title' in request.form:
+                content['picture_section_text1_responsibility_comfort']['title'] = request.form.get(
+                    'picture_section1_title')
+            if 'picture_section1_text' in request.form:
+                content['picture_section_text1_responsibility_comfort']['text'] = request.form.get(
+                    'picture_section1_text')
+
+            # Picture Section 2
+            if 'picture_section2_title' in request.form:
+                content['picture_section_text2_responsibility_comfort']['title'] = request.form.get(
+                    'picture_section2_title')
+            if 'picture_section2_text' in request.form:
+                content['picture_section_text2_responsibility_comfort']['text'] = request.form.get(
+                    'picture_section2_text')
+
+            # Picture Section 3
+            if 'picture_section3_title' in request.form:
+                content['picture_section_text3_responsibility_comfort']['title'] = request.form.get(
+                    'picture_section3_title')
+            if 'picture_section3_text' in request.form:
+                content['picture_section_text3_responsibility_comfort']['text'] = request.form.get(
+                    'picture_section3_text')
+
+            # Update page title and meta description
+            if 'page_title' in request.form:
+                content['metadata_responsibility_comfort']['title'] = request.form.get('page_title')
+            if 'meta_description' in request.form:
+                content['metadata_responsibility_comfort']['meta_description'] = request.form.get('meta_description')
+
+            # Update metadata
+            if 'og_title' in request.form:
+                content['opengraph_responsibility_comfort']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['opengraph_responsibility_comfort']['og_description'] = request.form.get('og_description')
+
+            # Save updated content back to the JSON file
+            with open(content_file, 'w') as f:
+                json.dump(content, f, indent=4)
+
+            flash('Content successfully updated', 'success')
+        except Exception as e:
+            flash(f'Error in updating the content: {str(e)}', 'error')
+
+        return redirect(url_for('admin_responsibility_comfort'))
+
+    # Fetch images from the upload folder
+    images = [
+        f"/static/assets/img/{img}"
+        for img in os.listdir(app.config['UPLOAD_FOLDER'])
+        if allowed_file(img)
+    ]
+
+    return render_template('admin_responsibility_comfort.html', content=content, images=images)
+
+
+@app.route('/admin_dashboard_responsibility_eco_consciousness', methods=['GET', 'POST'])
+@login_required
+def admin_responsibility_eco_consciousness():
+    # Load JSON content
+    try:
+        with open(content_file, 'r') as f:
+            content = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Default structure if the file does not exist or cannot be read
+        content = {
+            'hero_section_responsibility_eco_consciousness': {'title': '', 'image': ''},
+            'text_section_responsibility_eco_consciousness': {'title': '', 'text': ''},
+            'picture_section_text1_responsibility_eco_consciousness': {'image': '', 'title': '', 'text': ''},
+            'picture_section_text2_responsibility_eco_consciousness': {'image': '', 'title': '', 'text': ''},
+            'metadata_responsibility_eco_consciousness': {'title': '', 'meta_description': ''},
+            'opengraph_responsibility_eco_consciousness': {'og_title': '', 'og_description': ''}
+        }
+
+    if request.method == 'POST':
+        try:
+
+            # Update images
+
+            hero_image = request.form.get('hero_image_select')
+            if hero_image:
+                content['hero_section_responsibility_eco_consciousness']['image'] = hero_image
+
+            picture_image1 = request.form.get('picture_section1_image_select')
+            if picture_image1:
+                content['picture_section_text1_responsibility_eco_consciousness']['image'] = picture_image1
+
+            picture_image2 = request.form.get('picture_section2_image_select')
+            if picture_image2:
+                content['picture_section_text2_responsibility_eco_consciousness']['image'] = picture_image2
+
+            # Update sections
+            # Hero Section
+            if 'hero_title' in request.form:
+                content['hero_section_responsibility_eco_consciousness']['title'] = request.form.get('hero_title')
+
+            # Text Section
+            if 'text_section_title' in request.form:
+                content['text_section_responsibility_eco_consciousness']['title'] = request.form.get('text_section_title')
+            if 'text_section_text' in request.form:
+                content['text_section_responsibility_eco_consciousness']['text'] = request.form.get('text_section_text')
+
+            # Picture Section 1
+            if 'picture_section1_title' in request.form:
+                content['picture_section_text1_responsibility_eco_consciousness']['title'] = request.form.get(
+                    'picture_section1_title')
+            if 'picture_section1_text' in request.form:
+                content['picture_section_text1_responsibility_eco_consciousness']['text'] = request.form.get(
+                    'picture_section1_text')
+
+            # Picture Section 2
+            if 'picture_section2_title' in request.form:
+                content['picture_section_text2_responsibility_eco_consciousness']['title'] = request.form.get(
+                    'picture_section2_title')
+            if 'picture_section2_text' in request.form:
+                content['picture_section_text2_responsibility_eco_consciousness']['text'] = request.form.get(
+                    'picture_section2_text')
+
+            # Update page title and meta description
+            if 'page_title' in request.form:
+                content['metadata_responsibility_eco_consciousness']['title'] = request.form.get('page_title')
+            if 'meta_description' in request.form:
+                content['metadata_responsibility_eco_consciousness']['meta_description'] = request.form.get('meta_description')
+
+            # Update metadata
+            if 'og_title' in request.form:
+                content['opengraph_responsibility_eco_consciousness']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['opengraph_responsibility_eco_consciousness']['og_description'] = request.form.get('og_description')
+
+            # Save updated content back to the JSON file
+            with open(content_file, 'w') as f:
+                json.dump(content, f, indent=4)
+
+            flash('Content successfully updated', 'success')
+        except Exception as e:
+            flash(f'Error in updating the content: {str(e)}', 'error')
+
+        return redirect(url_for('admin_responsibility_eco_consciousness'))
+
+    # Fetch images from the upload folder
+    images = [
+        f"/static/assets/img/{img}"
+        for img in os.listdir(app.config['UPLOAD_FOLDER'])
+        if allowed_file(img)
+    ]
+
+    return render_template('admin_responsibility_eco_consciousness.html', content=content, images=images)
+
+
+@app.route('/admin_dashboard_responsibility_self_defined_femininity', methods=['GET', 'POST'])
+@login_required
+def admin_responsibility_self_defined_femininity():
+    # Load JSON content
+    try:
+        with open(content_file, 'r') as f:
+            content = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Default structure if the file does not exist or cannot be read
+        content = {
+            'hero_section_responsibility_self_defined_femininity': {'title': '', 'image': ''},
+            'text_section_responsibility_self_defined_femininity': {'title': '', 'text': ''},
+            'picture_section_text1_responsibility_self_defined_femininity': {'image': '', 'title': '', 'text': ''},
+            'picture_section_text2_responsibility_self_defined_femininity': {'image': '', 'title': '', 'text': ''},
+            'metadata_responsibility_self_defined_femininity': {'title': '', 'meta_description': ''},
+            'opengraph_responsibility_self_defined_femininity': {'og_title': '', 'og_description': ''}
+        }
+
+    if request.method == 'POST':
+        try:
+
+            # Update images
+
+            hero_image = request.form.get('hero_image_select')
+            if hero_image:
+                content['hero_section_responsibility_self_defined_femininity']['image'] = hero_image
+
+            picture_image1 = request.form.get('picture_section1_image_select')
+            if picture_image1:
+                content['picture_section_text1_responsibility_self_defined_femininity']['image'] = picture_image1
+
+            picture_image2 = request.form.get('picture_section2_image_select')
+            if picture_image2:
+                content['picture_section_text2_responsibility_self_defined_femininity']['image'] = picture_image2
+
+            # Update sections
+            # Hero Section
+            if 'hero_title' in request.form:
+                content['hero_section_responsibility_self_defined_femininity']['title'] = request.form.get('hero_title')
+
+            # Text Section
+            if 'text_section_title' in request.form:
+                content['text_section_responsibility_self_defined_femininity']['title'] = request.form.get('text_section_title')
+            if 'text_section_text' in request.form:
+                content['text_section_responsibility_self_defined_femininity']['text'] = request.form.get('text_section_text')
+
+            # Picture Section 1
+            if 'picture_section1_title' in request.form:
+                content['picture_section_text1_responsibility_self_defined_femininity']['title'] = request.form.get(
+                    'picture_section1_title')
+            if 'picture_section1_text' in request.form:
+                content['picture_section_text1_responsibility_self_defined_femininity']['text'] = request.form.get(
+                    'picture_section1_text')
+
+            # Picture Section 2
+            if 'picture_section2_title' in request.form:
+                content['picture_section_text2_responsibility_self_defined_femininity']['title'] = request.form.get(
+                    'picture_section2_title')
+            if 'picture_section2_text' in request.form:
+                content['picture_section_text2_responsibility_self_defined_femininity']['text'] = request.form.get(
+                    'picture_section2_text')
+
+            # Update page title and meta description
+            if 'page_title' in request.form:
+                content['metadata_responsibility_self_defined_femininity']['title'] = request.form.get('page_title')
+            if 'meta_description' in request.form:
+                content['metadata_responsibility_self_defined_femininity']['meta_description'] = request.form.get('meta_description')
+
+            # Update metadata
+            if 'og_title' in request.form:
+                content['opengraph_responsibility_self_defined_femininity']['og_title'] = request.form.get('og_title')
+            if 'og_description' in request.form:
+                content['opengraph_responsibility_self_defined_femininity']['og_description'] = request.form.get('og_description')
+
+            # Save updated content back to the JSON file
+            with open(content_file, 'w') as f:
+                json.dump(content, f, indent=4)
+
+            flash('Content successfully updated', 'success')
+        except Exception as e:
+            flash(f'Error in updating the content: {str(e)}', 'error')
+
+        return redirect(url_for('admin_responsibility_self_defined_femininity'))
+
+    # Fetch images from the upload folder
+    images = [
+        f"/static/assets/img/{img}"
+        for img in os.listdir(app.config['UPLOAD_FOLDER'])
+        if allowed_file(img)
+    ]
+
+    return render_template('admin_responsibility_self_defined_femininity.html', content=content, images=images)
 
 
 @app.route('/setcookie/<username>')

@@ -40,8 +40,8 @@
     },
     "picture_section_text1_brand_community": {
         "image": "/static/assets/img/Roskilde_Community.jpg",
-        "title": "Roskilde Festival 2024",
-        "text": "Something about our meeting with our community at Roskilde Festival 2024."
+        "title": "Total",
+        "text": "Positive reviews from our satisfied customers and from our community."
     },
     "picture_section_text2_brand_community": {
         "image": "/static/assets/img/Roskilde_Satisfaction.jpg",
@@ -49,7 +49,7 @@
         "text": "Positive reviews from our satisfied customers and from our community."
     },
     "metadata_brand_community": {
-        "title": "Title tag",
+        "title": "Title tags",
         "meta_description": "Meta description."
     },
     "opengraph_brand_community": {
@@ -79,6 +79,89 @@
         "meta_description": "Meta description."
     },
     "opengraph_brand_purpose": {
+        "og_title": "Open Graph Title",
+        "og_description": "Open Graph Description."
+    },
+    "hero_section_responsibility_comfort": {
+        "title": "Tailored to your comfort",
+        "image": "/static/assets/img/Comfort.jpg"
+    },
+    "text_section_responsibility_comfort": {
+        "title": "Striving towards comfort for everyone",
+        "text": "As a modern lingerie brand, we aim to adhere to the highest standards and we take on the responsibility of making lingerie for everyone. Our purpose is to fight unrealistic beauty standards, unhealthy body images and standardized ideas of what defines femininity. At Carnelia we have designed new technologies to ensure the support needed for the different sizes we offer. The three size ranges come with different backs."
+    },
+    "picture_section_text1_responsibility_comfort": {
+        "image": "/static/assets/img/Classic.png",
+        "title": "Classic",
+        "text": "This version comes with the signature size range and offers extra support to those with a medium sized chest and moderate need of support. The back straps work as a rope and pulley, providing four contact points instead of two thus ensuring an even weight distribution.\r\n\r\nThis eases the strain on the shoulder straps and allows a more comfortable wear. The straps are connected via the ring at the shoulder blade area. This ring connects the shoulder strap and the two straps that connect to the back of the underbust band."
+    },
+    "picture_section_text2_responsibility_comfort": {
+        "image": "/static/assets/img/Signature.png",
+        "title": "Signature!",
+        "text": "This version comes with the signature size range and offers extra support to those with a medium sized chest and moderate need of support. The back straps work as a rope and pulley, providing four contact points instead of two thus ensuring an even weight distribution.\n\nThis eases the strain on the shoulder straps and allows a more comfortable wear. The straps are connected via the ring at the shoulder blade area. This ring connects the shoulder strap and the two straps that connect to the back of the underbust band."
+    },
+    "picture_section_text3_responsibility_comfort": {
+        "image": "/static/assets/img/Signature.png",
+        "title": "Signature!",
+        "text": "This version comes with the supreme size range. This option is for those with a large chest in need of maximum support. The straps are much wider than the classic and signature, allowing the weight from the front to be more comfortably dispersed on the shoulders.\r\n\r\nThe underbust band is thicker, ensuring even pressure dispersal on the ribcage, allowing the bra to feel more comfortable for someone with a need for utmost support."
+    },
+    "metadata_responsibility_comfort": {
+        "title": "Title tag",
+        "meta_description": "Meta description."
+    },
+    "opengraph_responsibility_comfort": {
+        "og_title": "Open Graph Title",
+        "og_description": "Open Graph Description."
+    },
+    "hero_section_responsibility_eco_consciousness": {
+        "title": "Awareness of the environment!",
+        "image": "/static/assets/img/Frontpage_Hero.jpg"
+    },
+    "text_section_responsibility_eco_consciousness": {
+        "title": "Taking eco-responsibility is vital",
+        "text": "Along with our responsibility to our community in terms of size, support and comfort, we also have a responsibility towards the planet. It\u00e2\u20ac\u2122s our top priority to produce lingerie in an eco-conscious and ethical way."
+    },
+    "picture_section_text1_responsibility_eco_consciousness": {
+        "image": "/static/assets/img/Production.jpg",
+        "title": "Production is sourced close to home",
+        "text": "We do so by using certified, recycled fabrics, designing aesthetically sustainable, and sourcing our materials in the near vicinity of our manufacturer. All of our production and sourcing is in Italy, thus reducing our Co2 emissions of transport and also ensuring high-quality and ethical production."
+    },
+    "picture_section_text2_responsibility_eco_consciousness": {
+        "image": "/static/assets/img/Textiles.jpg",
+        "title": "In search of the very best fabric",
+        "text": "All of our recycled fabrics are Global Recycled Standard certified and OEKO-Tex certified and we aspire to provide our community with the best quality products to adorn their bodies with.\r\n\r\nAt Carnelia we are not just crafting lingerie. We are creating a positive, lasting impact that supports and cares for both people and the planet."
+    },
+    "metadata_responsibility_eco_consciousness": {
+        "title": "Title tag",
+        "meta_description": "Meta description."
+    },
+    "opengraph_responsibility_eco_consciousness": {
+        "og_title": "Open Graph Title",
+        "og_description": "Open Graph Description."
+    },
+    "hero_section_responsibility_self_defined_femininity": {
+        "title": "Making way for defining femininity",
+        "image": "/static/assets/img/Femininity_Hero.jpg"
+    },
+    "text_section_responsibility_self_defined_femininity": {
+        "title": "Your femininity is your choice",
+        "text": "At the core of Carnelia is the idea that femininity can be self-defined. We at Carnelia believe, that every woman has the right to express her own version of femininity with her clothing and our goal is to provide all women with pieces that fit any aesthetic. The Seasons collection is a mix of very different aesthetics, mirroring the feeling the seasons give us and how we want to feel during the season. All of the pieces have been carefully crafted with comfort and fit in mind."
+    },
+    "picture_section_text1_responsibility_self_defined_femininity": {
+        "image": "/static/assets/img/Purpose_Board.jpg",
+        "title": "The values that define us",
+        "text": "We embody eco-conscious care as a holistic approach. Our focus is on recycled materials, fewer productions, quality over quantity, longer product lifespans, ethical manufacturing, and a sustainable aesthetic. Moreover, we are not a defining force; our job is to provide you with the product you need, whoever \"you\" are."
+    },
+    "picture_section_text2_responsibility_self_defined_femininity": {
+        "image": "/static/assets/img/Purpose_Future.jpg",
+        "title": "A clear vision for the future",
+        "text": "Carnelia stands firmly and communicates openly about where we stand, especially on matters that closely touch our customers. We envision a world where anyone who needs a bra has access to a product that truly meets their needs, is comfortable to wear, sustainable, and allows them the freedom to define their own femininity."
+    },
+    "metadata_responsibility_self_defined_femininity": {
+        "title": "Title tag",
+        "meta_description": "Meta description."
+    },
+    "opengraph_responsibility_self_defined_femininity": {
         "og_title": "Open Graph Title",
         "og_description": "Open Graph Description."
     }
